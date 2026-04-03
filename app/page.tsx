@@ -342,7 +342,7 @@ export default function Home() {
           </FadeUp>
           <FadeUp delay={0.1}>
             <div className="flex flex-col">
-              {blogPosts.map((post, i) => (
+              {blogPosts.slice(0, 3).map((post, i) => (
                 <article
                   key={post.slug}
                   className="py-8"
@@ -357,12 +357,14 @@ export default function Home() {
                       {post.readingTime} min read
                     </p>
                   </div>
-                  <h3
-                    className="font-[family-name:var(--font-cormorant)] font-light mb-3"
-                    style={{ fontSize: "clamp(20px, 3vw, 26px)", color: "#1A1A1A" }}
-                  >
-                    {post.title}
-                  </h3>
+                  <Link href={`/blog/${post.slug}`}>
+                    <h3
+                      className="font-[family-name:var(--font-cormorant)] font-light mb-3 hover:text-[#2B3A52] transition-colors"
+                      style={{ fontSize: "clamp(20px, 3vw, 26px)", color: "#1A1A1A" }}
+                    >
+                      {post.title}
+                    </h3>
+                  </Link>
                   <p className="mb-4" style={{ fontSize: "0.9rem", color: "#6B6B6B", maxWidth: 600, lineHeight: 1.7 }}>
                     {post.excerpt}
                   </p>
@@ -376,6 +378,17 @@ export default function Home() {
                 </article>
               ))}
             </div>
+            {blogPosts.length > 3 && (
+              <div className="mt-8 pt-8" style={{ borderTop: "1px solid #D8D3CB" }}>
+                <Link
+                  href="/blog"
+                  className="text-sm uppercase tracking-widest hover:underline"
+                  style={{ color: "#2B3A52" }}
+                >
+                  View all writing
+                </Link>
+              </div>
+            )}
           </FadeUp>
         </div>
       </section>
