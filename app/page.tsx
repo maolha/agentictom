@@ -1,32 +1,10 @@
 import FadeUp from "@/components/FadeUp";
 import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
-
-const blogPosts = [
-  {
-    slug: "agentic-tom-introduction",
-    title: "What Is an Agentic Target Operating Model?",
-    date: "March 2026",
-    excerpt:
-      "Most discussions about AI in banking focus on tools. The more consequential question is how the organisation itself must change to absorb what these tools make possible.",
-  },
-  {
-    slug: "escalation-by-design",
-    title: "Escalation by Design: Why Human Oversight Is an Architecture Decision",
-    date: "February 2026",
-    excerpt:
-      "The failure mode of most automation projects is not that machines make wrong decisions. It is that nobody designed when and how the decision returns to a human.",
-  },
-  {
-    slug: "swiss-banking-agentic-advantage",
-    title: "The Swiss Agentic Advantage",
-    date: "January 2026",
-    excerpt:
-      "Switzerland has attributes that could make it a global leader in responsible agentic deployment. FINMA's principles-based framework, data sovereignty, and the depth of relationship banking all point in the same direction.",
-  },
-];
+import { getAllPosts, formatDate } from "@/lib/blog";
 
 export default function Home() {
+  const blogPosts = getAllPosts();
   return (
     <main
       style={{ background: "#F7F4EF", color: "#1A1A1A" }}
@@ -38,11 +16,12 @@ export default function Home() {
           <span className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide text-[#1A1A1A]">
             agenticTOM
           </span>
-          <div className="flex gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
+          <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
             <a href="#speaking" className="hover:text-[#2B3A52] transition-colors">Speaking</a>
             <a href="#writing" className="hover:text-[#2B3A52] transition-colors">Writing</a>
             <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">LinkedIn</a>
+            <a href="#speaking" className="hidden sm:inline-block px-4 py-2 border border-[#2B3A52] text-[#2B3A52] hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 text-xs tracking-widest">Enquire</a>
           </div>
         </div>
       </nav>
@@ -438,7 +417,7 @@ export default function Home() {
               {blogPosts.map((post) => (
                 <article key={post.slug} className="py-8">
                   <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#8B7355" }}>
-                    {post.date}
+                    {formatDate(post.date)}
                   </p>
                   <h3
                     className="font-[family-name:var(--font-cormorant)] font-light mb-3"
