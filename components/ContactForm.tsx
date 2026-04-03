@@ -14,6 +14,8 @@ export default function ContactForm() {
     const data = {
       name: (form.elements.namedItem("name") as HTMLInputElement).value,
       organisation: (form.elements.namedItem("organisation") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
       format: (form.elements.namedItem("format") as HTMLSelectElement).value,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
     };
@@ -67,6 +69,23 @@ export default function ContactForm() {
         <input
           name="organisation"
           required
+          className="bg-transparent border-b border-[#D8D3CB] py-2 text-[#1A1A1A] focus:outline-none focus:border-[#2B3A52] transition-colors"
+        />
+      </div>
+      <div className="flex flex-col gap-1">
+        <label className="text-xs text-[#6B6B6B] uppercase tracking-widest">Email</label>
+        <input
+          name="email"
+          type="email"
+          required
+          className="bg-transparent border-b border-[#D8D3CB] py-2 text-[#1A1A1A] focus:outline-none focus:border-[#2B3A52] transition-colors"
+        />
+      </div>
+      <div className="flex flex-col gap-1">
+        <label className="text-xs text-[#6B6B6B] uppercase tracking-widest">Phone <span style={{ color: "#8B7355" }}>(optional)</span></label>
+        <input
+          name="phone"
+          type="tel"
           className="bg-transparent border-b border-[#D8D3CB] py-2 text-[#1A1A1A] focus:outline-none focus:border-[#2B3A52] transition-colors"
         />
       </div>
