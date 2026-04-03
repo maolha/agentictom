@@ -85,7 +85,7 @@ export default function Home() {
               className="font-[family-name:var(--font-dm-sans)] mb-10 max-w-[580px]"
               style={{ fontSize: "1rem", color: "#6B6B6B", lineHeight: 1.7 }}
             >
-              This is one possible future. Not a prediction. If you believe it is likely — and you want to act — the time to move is now. Change takes longer than you think.
+              This is one possible future. Not a prediction. If you believe it is likely and you want to act, the time to move is now. Change takes longer than you think.
             </p>
           </FadeUp>
           <FadeUp delay={0.3}>
@@ -117,14 +117,14 @@ export default function Home() {
                   Work is no longer organised around functions.
                 </h2>
                 <p style={{ color: "#1A1A1A", lineHeight: 1.8, maxWidth: 580 }}>
-                  A bank with an Agentic Target Operating Model looks nothing like today. Decision-making authority shifts from human-controlled workflows to dynamically orchestrated, machine-led execution systems — with humans governing exceptions, risk, and intent. The organising principle is not the department or the process. It is the outcome. And outcomes are owned end-to-end by systems that learn.
+                  A bank with an Agentic Target Operating Model looks nothing like today. Decision-making authority moves from human-controlled workflows to dynamically orchestrated, machine-led execution systems, with humans governing exceptions, risk, and intent. The organising principle is no longer the department or the process. It is the outcome. Outcomes are owned end-to-end by systems that learn.
                 </p>
               </div>
             </div>
           </FadeUp>
           <FadeUp delay={0.15}>
             <blockquote
-              className="font-[family-name:var(--font-cormorant)] font-light italic"
+              className="font-[family-name:var(--font-cormorant)] font-light"
               style={{
                 fontSize: "clamp(22px, 3.5vw, 34px)",
                 color: "#2B3A52",
@@ -135,7 +135,7 @@ export default function Home() {
                 borderLeft: "2px solid #8B7355",
               }}
             >
-              "If your mental model still has departments optimising steps, you are not there yet."
+              &ldquo;If your mental model still has departments optimising steps, you are not there yet.&rdquo;
             </blockquote>
           </FadeUp>
         </div>
@@ -158,7 +158,7 @@ export default function Home() {
               {[
                 {
                   label: "Bots",
-                  body: "The industrial backbone. Rule-based, repeatable, auditable. Reconciliations, KYC extraction, settlements. No judgment — by design.",
+                  body: "The industrial backbone. Rule-based, repeatable, auditable. Reconciliations, KYC extraction, settlements. No judgment. By design.",
                 },
                 {
                   label: "Agents",
@@ -210,7 +210,7 @@ export default function Home() {
               className="font-[family-name:var(--font-cormorant)] font-light mb-16"
               style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A", maxWidth: 640 }}
             >
-              Deploying an agent is not a software rollout. It is a hiring decision.
+              Deploying an agent is a hiring decision.
             </h2>
           </FadeUp>
           <FadeUp delay={0.1}>
@@ -218,15 +218,15 @@ export default function Home() {
               {[
                 {
                   phase: "Onboarding",
-                  body: "An agent needs context, scope, and constraints before it acts. This is not configuration. It is orientation. What decisions is it authorised to make? What must it escalate? What values does it carry into ambiguous situations? These are onboarding questions, not technical ones.",
+                  body: "An agent needs context, scope, and constraints before it acts. This is orientation, not configuration. What decisions is it authorised to make? What must it escalate? What values does it carry into ambiguous situations? These are onboarding questions. The hiring manager is the process owner, not IT.",
                 },
                 {
                   phase: "Performance",
-                  body: "How do you evaluate an agent that makes ten thousand micro-decisions per day? Not by auditing each one. By defining performance envelopes — expected error rates, escalation frequency, outcome distributions — and measuring against them. This is performance management, not monitoring.",
+                  body: "An agent making ten thousand micro-decisions per day cannot be evaluated by auditing each one. Define performance envelopes: expected error rates, escalation frequency, outcome distributions. Measure against them continuously. A quarterly human review of agent performance is a governance requirement under any serious reading of DORA or FINMA operational risk principles.",
                 },
                 {
                   phase: "Decommissioning",
-                  body: "Agents that hold institutional memory, relationship context, or audit trails cannot simply be switched off. Decommissioning requires knowledge transfer, accountability handoff, and regulatory notification in some jurisdictions. Treat it as an offboarding, not a deletion.",
+                  body: "An agent trained on a regulatory environment that has since changed is a liability, not an asset. Decommissioning requires evidence that the decision history has been reviewed, open cases transferred, and the model archived in retrievable format for audit. This is an offboarding, not a deletion. Closer to retiring a trader than switching off software.",
                 },
               ].map((item) => (
                 <div key={item.phase} className="py-8 flex gap-8">
@@ -263,15 +263,15 @@ export default function Home() {
               {[
                 {
                   label: "FINMA",
-                  body: "FINMA&rsquo;s principles-based regulatory philosophy is more compatible with agentic systems than the rules-based frameworks of the EU. When the regulator governs outcomes and accountability rather than specifying processes, there is meaningful room to deploy systems that cannot be fully specified in advance — which is, by definition, what intelligent agents are.",
+                  body: "FINMA's principles-based regulatory philosophy is more compatible with agentic systems than the rules-based frameworks of the EU. When the regulator governs outcomes and accountability rather than specifying processes, there is meaningful room to deploy systems that cannot be fully specified in advance. Banks that treat compliance as a design input will move faster.",
                 },
                 {
                   label: "Data residency",
-                  body: "Swiss data sovereignty requirements that have historically been constraints are becoming advantages. Organisations that have been forced to build local infrastructure, local data management, and local governance are better positioned to operate agentic systems within defensible jurisdictional boundaries — a requirement that is only becoming more important globally.",
+                  body: "Swiss data sovereignty requirements have historically been seen as constraints. They are becoming advantages. Organisations forced to build local infrastructure, local data management, and local governance are better positioned to operate agentic systems within defensible jurisdictional boundaries. That requirement is only growing globally.",
                 },
                 {
                   label: "Relationship banking",
-                  body: "Swiss private banking and commercial banking are built on long-term relationships with high-value clients. Agentic systems excel precisely at synthesising deep longitudinal context — everything a client has said, done, and held — into coherent advisory actions. The relationship model is not threatened by agents. It is enabled by them, if the human at the centre uses the enhanced context well.",
+                  body: "Swiss private banking is built on long-term relationships with high-value clients. Agentic systems excel at synthesising deep longitudinal context into coherent advisory actions. The relationship model is strengthened by agents, when the human at the centre uses the enhanced context well. The best private banks will feel more attentive to clients, not more automated.",
                 },
               ].map((item) => (
                 <div key={item.label} className="py-8 flex gap-8">
@@ -283,10 +283,7 @@ export default function Home() {
                       {item.label}
                     </h3>
                   </div>
-                  <p
-                    style={{ fontSize: "0.95rem", color: "#1A1A1A", lineHeight: 1.8 }}
-                    dangerouslySetInnerHTML={{ __html: item.body }}
-                  />
+                  <p style={{ fontSize: "0.95rem", color: "#1A1A1A", lineHeight: 1.8 }}>{item.body}</p>
                 </div>
               ))}
             </div>
@@ -350,7 +347,7 @@ export default function Home() {
               Marc Hauser
             </h2>
             <p className="mb-6" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              I have spent twenty years at the intersection of financial services, technology, and institutional change — at UBS, Trust Square, Tenity, and now UiPath, where I lead banking and financial services in Switzerland. I write this site because I believe the agentic shift is real, consequential, and moving faster than most Swiss banking executives currently assume. This is not vendor material. It is a framework I use in my own work, offered here as a basis for serious conversation.
+              Twenty years at the intersection of financial services, technology, and institutional change. UBS, Trust Square, Tenity, and now UiPath, where I lead banking and financial services in Switzerland. I write this site because I believe the agentic shift is real, consequential, and moving faster than most Swiss banking executives currently assume. This is a framework I use in my own work, offered here as a basis for serious conversation.
             </p>
             <a
               href="https://linkedin.com/in/marcoliverhauser"
@@ -377,7 +374,7 @@ export default function Home() {
               Speaking and workshops
             </h2>
             <p className="mb-12" style={{ maxWidth: 560, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              I speak on agentic AI, operating model transformation, and the future of financial services — for executive audiences who want provocation, not reassurance.
+              I speak on agentic AI, operating model transformation, and the future of financial services, for executive audiences who want provocation, not reassurance.
             </p>
           </FadeUp>
           <FadeUp delay={0.1}>
@@ -385,7 +382,7 @@ export default function Home() {
               {[
                 {
                   format: "Keynote",
-                  duration: "45–60 min",
+                  duration: "45 to 60 min",
                   desc: "A focused provocation for leadership audiences. Structured argument, no slides-as-documents, room for one question that changes the room.",
                 },
                 {
@@ -457,7 +454,7 @@ export default function Home() {
                     className="text-sm uppercase tracking-widest hover:underline"
                     style={{ color: "#2B3A52" }}
                   >
-                    Read →
+                    Read
                   </Link>
                 </article>
               ))}
@@ -470,7 +467,7 @@ export default function Home() {
       <footer className="py-12 px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
         <div className="max-w-[900px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <p className="text-sm" style={{ color: "#6B6B6B" }}>
-            agentictom.com — © 2026 Marc Hauser
+            agentictom.com &copy; 2026 Marc Hauser
           </p>
           <div className="flex gap-6 text-sm" style={{ color: "#6B6B6B" }}>
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
