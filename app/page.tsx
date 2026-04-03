@@ -31,9 +31,9 @@ export default function Home() {
             agenticTOM
           </span>
           <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
-            <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
+            <a href="#thoughts" className="hover:text-[#2B3A52] transition-colors">Thoughts</a>
             <a href="#speaking" className="hover:text-[#2B3A52] transition-colors">Speaking</a>
-            <a href="#writing" className="hover:text-[#2B3A52] transition-colors">Writing</a>
+            <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
             <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">LinkedIn</a>
             <a href="#speaking" className="hidden sm:inline-block px-4 py-2 border border-[#2B3A52] text-[#2B3A52] hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 text-xs tracking-widest">Enquire</a>
           </div>
@@ -64,7 +64,7 @@ export default function Home() {
               className="font-[family-name:var(--font-cormorant)] font-light mb-6"
               style={{ fontSize: "clamp(36px, 6vw, 64px)", lineHeight: 1.15, color: "#1A1A1A" }}
             >
-              The ones that wait are not being prudent.
+              Waiting is not a strategy. It is a default.
             </h1>
           </FadeUp>
           <FadeUp delay={0.2}>
@@ -72,7 +72,7 @@ export default function Home() {
               className="font-[family-name:var(--font-dm-sans)] mb-4 max-w-[620px]"
               style={{ fontSize: "1.15rem", color: "#1A1A1A", lineHeight: 1.7 }}
             >
-              They are deferring a structural reckoning while their window to shape it closes.
+              Defaults do not survive structural shifts.
             </p>
             <p
               className="font-[family-name:var(--font-dm-sans)] mb-10 max-w-[580px]"
@@ -334,29 +334,54 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── ABOUT ── */}
-      <section id="about" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
+      {/* ── THOUGHTS ── */}
+      <section id="thoughts" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
-            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>About</p>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Thoughts</p>
             <h2
-              className="font-[family-name:var(--font-cormorant)] font-light mb-8"
+              className="font-[family-name:var(--font-cormorant)] font-light mb-12"
               style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
             >
-              Marc Hauser
+              Recent thinking
             </h2>
-            <p className="mb-6" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              Twenty years at the intersection of financial services, technology, and institutional change. UBS, Trust Square, Tenity, and now UiPath, where I lead banking and financial services in Switzerland. I write this site because I believe the agentic shift is real, consequential, and moving faster than most Swiss banking executives currently assume. This is a framework I use in my own work, offered here as a basis for serious conversation.
-            </p>
-            <a
-              href="https://linkedin.com/in/marcoliverhauser"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm hover:underline"
-              style={{ color: "#2B3A52" }}
-            >
-              linkedin.com/in/marcoliverhauser
-            </a>
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <div className="flex flex-col">
+              {blogPosts.map((post, i) => (
+                <article
+                  key={post.slug}
+                  className="py-8"
+                  style={i > 0 ? { borderTop: "1px solid #D8D3CB" } : {}}
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                      {formatDate(post.date)}
+                    </p>
+                    <span style={{ color: "#D8D3CB" }}>&middot;</span>
+                    <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                      {post.readingTime} min read
+                    </p>
+                  </div>
+                  <h3
+                    className="font-[family-name:var(--font-cormorant)] font-light mb-3"
+                    style={{ fontSize: "clamp(20px, 3vw, 26px)", color: "#1A1A1A" }}
+                  >
+                    {post.title}
+                  </h3>
+                  <p className="mb-4" style={{ fontSize: "0.9rem", color: "#6B6B6B", maxWidth: 600, lineHeight: 1.7 }}>
+                    {post.excerpt}
+                  </p>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="text-sm uppercase tracking-widest hover:underline"
+                    style={{ color: "#2B3A52" }}
+                  >
+                    Read
+                  </Link>
+                </article>
+              ))}
+            </div>
           </FadeUp>
         </div>
       </section>
@@ -420,54 +445,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── WRITING ── */}
-      <section id="writing" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
+      {/* ── ABOUT ── */}
+      <section id="about" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
-            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Writing</p>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>About</p>
             <h2
-              className="font-[family-name:var(--font-cormorant)] font-light mb-12"
+              className="font-[family-name:var(--font-cormorant)] font-light mb-8"
               style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
             >
-              Writing
+              Marc Hauser
             </h2>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <div className="flex flex-col">
-              {blogPosts.map((post, i) => (
-                <article
-                  key={post.slug}
-                  className="py-8"
-                  style={i > 0 ? { borderTop: "1px solid #D8D3CB" } : {}}
-                >
-                  <div className="flex items-center gap-3 mb-2">
-                    <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
-                      {formatDate(post.date)}
-                    </p>
-                    <span style={{ color: "#D8D3CB" }}>&middot;</span>
-                    <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
-                      {post.readingTime} min read
-                    </p>
-                  </div>
-                  <h3
-                    className="font-[family-name:var(--font-cormorant)] font-light mb-3"
-                    style={{ fontSize: "clamp(20px, 3vw, 26px)", color: "#1A1A1A" }}
-                  >
-                    {post.title}
-                  </h3>
-                  <p className="mb-4" style={{ fontSize: "0.9rem", color: "#6B6B6B", maxWidth: 600, lineHeight: 1.7 }}>
-                    {post.excerpt}
-                  </p>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="text-sm uppercase tracking-widest hover:underline"
-                    style={{ color: "#2B3A52" }}
-                  >
-                    Read
-                  </Link>
-                </article>
-              ))}
-            </div>
+            <p className="mb-6" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
+              Twenty years at the intersection of financial services, technology, and institutional change. UBS, Trust Square, Tenity, and now UiPath, where I lead banking and financial services in Switzerland. I write this site because I believe the agentic shift is real, consequential, and moving faster than most Swiss banking executives currently assume. This is a framework I use in my own work, offered here as a basis for serious conversation.
+            </p>
+            <a
+              href="https://linkedin.com/in/marcoliverhauser"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm hover:underline"
+              style={{ color: "#2B3A52" }}
+            >
+              linkedin.com/in/marcoliverhauser
+            </a>
           </FadeUp>
         </div>
       </section>
@@ -479,9 +479,9 @@ export default function Home() {
             agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
           </p>
           <div className="flex gap-6 text-sm" style={{ color: "#6B6B6B" }}>
-            <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
+            <a href="#thoughts" className="hover:text-[#2B3A52] transition-colors">Thoughts</a>
             <a href="#speaking" className="hover:text-[#2B3A52] transition-colors">Speaking</a>
-            <a href="#writing" className="hover:text-[#2B3A52] transition-colors">Writing</a>
+            <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
             <a
               href="https://linkedin.com/in/marcoliverhauser"
               target="_blank"
