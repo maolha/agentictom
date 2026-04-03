@@ -9,23 +9,30 @@ export type PostMeta = {
   title: string;
   date: string;
   excerpt: string;
+  readingTime: number;
 };
 
 export type Post = PostMeta & {
   content: string;
 };
 
+function estimateReadingTime(text: string): number {
+  const words = text.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 230));
+}
+
 export function getAllPosts(): PostMeta[] {
   const files = fs.readdirSync(contentDir).filter((f) => f.endsWith(".mdx"));
   const posts = files.map((file) => {
     const slug = file.replace(/\.mdx$/, "");
     const raw = fs.readFileSync(path.join(contentDir, file), "utf-8");
-    const { data } = matter(raw);
+    const { data, content } = matter(raw);
     return {
       slug,
       title: data.title,
       date: data.date,
       excerpt: data.excerpt,
+      readingTime: estimateReadingTime(content),
     };
   });
   return posts.sort(
@@ -43,7 +50,20 @@ export function getPost(slug: string): Post | null {
     title: data.title,
     date: data.date,
     excerpt: data.excerpt,
+    readingTime: estimateReadingTime(content),
     content,
+  };
+}
+
+export function getAdjacentPosts(slug: string): {
+  prev: PostMeta | null;
+  next: PostMeta | null;
+} {
+  const posts = getAllPosts();
+  const index = posts.findIndex((p) => p.slug === slug);
+  return {
+    prev: index < posts.length - 1 ? posts[index + 1] : null,
+    next: index > 0 ? posts[index - 1] : null,
   };
 }
 

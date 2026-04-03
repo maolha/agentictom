@@ -3,6 +3,16 @@ import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
 import { getAllPosts, formatDate } from "@/lib/blog";
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Marc Hauser",
+  url: "https://agentictom.com",
+  sameAs: ["https://linkedin.com/in/marcoliverhauser"],
+  jobTitle: "Head of Banking & Financial Services, UiPath Switzerland",
+  knowsAbout: ["Agentic AI", "Target Operating Models", "Swiss Banking", "Financial Services"],
+};
+
 export default function Home() {
   const blogPosts = getAllPosts();
   return (
@@ -10,6 +20,10 @@ export default function Home() {
       style={{ background: "#F7F4EF", color: "#1A1A1A" }}
       className="font-[family-name:var(--font-dm-sans)]"
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-5 md:px-8 py-4" style={{ background: "#F7F4EF", borderBottom: "1px solid #D8D3CB" }}>
         <div className="max-w-[900px] mx-auto flex justify-between items-center">
@@ -416,9 +430,15 @@ export default function Home() {
             <div className="flex flex-col divide-y" style={{ borderColor: "#D8D3CB" }}>
               {blogPosts.map((post) => (
                 <article key={post.slug} className="py-8">
-                  <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#8B7355" }}>
-                    {formatDate(post.date)}
-                  </p>
+                  <div className="flex items-center gap-3 mb-2">
+                    <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                      {formatDate(post.date)}
+                    </p>
+                    <span style={{ color: "#D8D3CB" }}>&middot;</span>
+                    <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                      {post.readingTime} min read
+                    </p>
+                  </div>
                   <h3
                     className="font-[family-name:var(--font-cormorant)] font-light mb-3"
                     style={{ fontSize: "clamp(20px, 3vw, 26px)", color: "#1A1A1A" }}

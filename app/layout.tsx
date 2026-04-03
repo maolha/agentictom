@@ -26,6 +26,11 @@ export const metadata: Metadata = {
     url: "https://agentictom.com",
     siteName: "Agentic TOM",
   },
+  alternates: {
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
+  },
 };
 
 export default function RootLayout({

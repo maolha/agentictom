@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getAllPosts, getPost, formatDate } from "@/lib/blog";
+import { getAllPosts, getPost, getAdjacentPosts, formatDate } from "@/lib/blog";
 import BlogContent from "@/components/BlogContent";
 
 export function generateStaticParams() {
@@ -28,6 +28,11 @@ export async function generateMetadata({
       publishedTime: post.date,
       authors: ["Marc Hauser"],
     },
+    alternates: {
+      types: {
+        "application/rss+xml": "/feed.xml",
+      },
+    },
   };
 }
 
@@ -40,8 +45,34 @@ export default async function BlogPost({
   const post = getPost(slug);
   if (!post) notFound();
 
+  const { prev, next } = getAdjacentPosts(slug);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    author: {
+      "@type": "Person",
+      name: "Marc Hauser",
+      url: "https://linkedin.com/in/marcoliverhauser",
+      jobTitle: "Head of Banking & Financial Services, UiPath Switzerland",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Agentic TOM",
+      url: "https://agentictom.com",
+    },
+    url: `https://agentictom.com/blog/${slug}`,
+  };
+
   return (
     <main style={{ background: "#F7F4EF", color: "#1A1A1A", minHeight: "100vh" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <nav
         className="px-5 md:px-8 py-4 md:py-5"
         style={{ borderBottom: "1px solid #D8D3CB" }}
@@ -64,9 +95,15 @@ export default async function BlogPost({
 
       <article className="px-5 md:px-8 py-16 md:py-20">
         <div className="max-w-[680px] mx-auto">
-          <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "#8B7355" }}>
-            {formatDate(post.date)}
-          </p>
+          <div className="flex items-center gap-3 mb-4">
+            <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+              {formatDate(post.date)}
+            </p>
+            <span style={{ color: "#D8D3CB" }}>&middot;</span>
+            <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+              {post.readingTime} min read
+            </p>
+          </div>
           <h1
             className="font-[family-name:var(--font-cormorant)] font-light mb-10 md:mb-12"
             style={{ fontSize: "clamp(28px, 5vw, 52px)", lineHeight: 1.2, color: "#1A1A1A" }}
@@ -74,14 +111,39 @@ export default async function BlogPost({
             {post.title}
           </h1>
           <BlogContent content={post.content} />
-          <div className="mt-16 pt-8" style={{ borderTop: "1px solid #D8D3CB" }}>
-            <Link
-              href="/#writing"
-              className="text-xs uppercase tracking-widest hover:underline"
-              style={{ color: "#2B3A52" }}
-            >
-              Back to Writing
-            </Link>
+
+          {/* Next / Previous navigation */}
+          <div className="mt-16 pt-8 flex flex-col sm:flex-row justify-between gap-8" style={{ borderTop: "1px solid #D8D3CB" }}>
+            <div>
+              {prev && (
+                <Link href={`/blog/${prev.slug}`} className="group block">
+                  <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#8B7355" }}>
+                    Previous
+                  </p>
+                  <p
+                    className="font-[family-name:var(--font-cormorant)] font-light group-hover:underline"
+                    style={{ fontSize: "1.1rem", color: "#2B3A52" }}
+                  >
+                    {prev.title}
+                  </p>
+                </Link>
+              )}
+            </div>
+            <div className="sm:text-right">
+              {next && (
+                <Link href={`/blog/${next.slug}`} className="group block">
+                  <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#8B7355" }}>
+                    Next
+                  </p>
+                  <p
+                    className="font-[family-name:var(--font-cormorant)] font-light group-hover:underline"
+                    style={{ fontSize: "1.1rem", color: "#2B3A52" }}
+                  >
+                    {next.title}
+                  </p>
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </article>
