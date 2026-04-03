@@ -82,63 +82,55 @@ export default function Home() {
             </p>
           </FadeUp>
           <FadeUp delay={0.3}>
-            <a href="#section01" className="btn-outline-slate">
+            <a href="#the-shift" className="btn-outline-slate">
               Read the framework
             </a>
           </FadeUp>
         </div>
       </section>
 
-      {/* SECTION 01 — THE SHIFT */}
-      <section id="section01" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      {/* ── THE SHIFT ── */}
+      <section id="the-shift" className="py-20 md:py-32 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
-            <div className="flex items-start gap-8 mb-12">
-              <span
-                className="font-[family-name:var(--font-cormorant)] font-light shrink-0"
-                style={{ fontSize: "clamp(80px, 14vw, 140px)", lineHeight: 0.85, color: "#2B3A52", opacity: 0.1 }}
-                aria-hidden="true"
-              >
-                01
-              </span>
-              <div className="pt-4">
-                <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The Shift</p>
-                <h2
-                  className="font-[family-name:var(--font-cormorant)] font-light mb-6"
-                  style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
-                >
-                  Work is no longer organised around functions.
-                </h2>
-                <p style={{ color: "#1A1A1A", lineHeight: 1.8, maxWidth: 580 }}>
-                  A bank with an Agentic Target Operating Model looks nothing like today. Decision-making authority moves from human-controlled workflows to dynamically orchestrated, machine-led execution systems, with humans governing exceptions, risk, and intent. The organising principle is no longer the department or the process. It is the outcome. Outcomes are owned end-to-end by systems that learn.
-                </p>
-              </div>
-            </div>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The Shift</p>
+            <h2
+              className="font-[family-name:var(--font-cormorant)] font-light mb-8"
+              style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
+            >
+              Work is no longer organised around functions.
+            </h2>
+            <p style={{ color: "#1A1A1A", lineHeight: 1.8, maxWidth: 620, fontSize: "0.95rem" }}>
+              A bank with an Agentic Target Operating Model looks nothing like today. Decision-making authority moves from human-controlled workflows to dynamically orchestrated, machine-led execution systems, with humans governing exceptions, risk, and intent. The organising principle is no longer the department or the process. It is the outcome. Outcomes are owned end-to-end by systems that learn.
+            </p>
           </FadeUp>
+        </div>
+        {/* Pull quote — full width feel */}
+        <div className="max-w-[900px] mx-auto mt-16 md:mt-24">
           <FadeUp delay={0.15}>
             <blockquote
-              className="font-[family-name:var(--font-cormorant)] font-light"
+              className="font-[family-name:var(--font-cormorant)] font-light text-center mx-auto"
               style={{
-                fontSize: "clamp(22px, 3.5vw, 34px)",
+                fontSize: "clamp(24px, 4vw, 40px)",
                 color: "#2B3A52",
-                lineHeight: 1.35,
-                maxWidth: 540,
-                marginLeft: "-1rem",
-                paddingLeft: "2rem",
-                borderLeft: "2px solid #8B7355",
+                lineHeight: 1.3,
+                maxWidth: 700,
               }}
             >
               &ldquo;If your mental model still has departments optimising steps, you are not there yet.&rdquo;
             </blockquote>
+            <div className="flex justify-center mt-6">
+              <span style={{ width: 40, height: 2, background: "#8B7355", display: "block" }} />
+            </div>
           </FadeUp>
         </div>
       </section>
 
-      {/* SECTION 02 — THREE LAYERS */}
-      <section id="section02" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      {/* ── THREE LAYERS ── warm tinted background */}
+      <section id="three-layers" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
-            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Three Layers</p>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The Workforce</p>
             <h2
               className="font-[family-name:var(--font-cormorant)] font-light mb-16"
               style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
@@ -165,7 +157,7 @@ export default function Home() {
                 <div
                   key={col.label}
                   className="pt-6 pb-8 md:pr-8"
-                  style={{ borderTop: "1px solid #1A1A1A" }}
+                  style={{ borderTop: "2px solid #2B3A52" }}
                 >
                   <h3
                     className="font-[family-name:var(--font-cormorant)] font-light mb-3"
@@ -180,8 +172,8 @@ export default function Home() {
           </FadeUp>
           <FadeUp delay={0.2}>
             <div
-              className="p-6"
-              style={{ borderLeft: "3px solid #2B3A52", background: "rgba(43,58,82,0.04)" }}
+              className="p-6 md:p-8"
+              style={{ borderLeft: "3px solid #2B3A52", background: "rgba(247,244,239,0.7)" }}
             >
               <p
                 className="font-[family-name:var(--font-dm-sans)]"
@@ -194,11 +186,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 03 — HR FOR AGENTS */}
-      <section id="section03" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      {/* ── HR FOR AGENTS ── numbered phases */}
+      <section id="hr-for-agents" className="py-20 md:py-32 px-5 md:px-8">
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
-            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>HR for Agents</p>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Governance</p>
             <h2
               className="font-[family-name:var(--font-cormorant)] font-light mb-16"
               style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A", maxWidth: 640 }}
@@ -207,23 +199,33 @@ export default function Home() {
             </h2>
           </FadeUp>
           <FadeUp delay={0.1}>
-            <div className="flex flex-col divide-y" style={{ borderColor: "#D8D3CB" }}>
+            <div className="flex flex-col gap-0">
               {[
                 {
+                  num: "01",
                   phase: "Onboarding",
                   body: "An agent needs context, scope, and constraints before it acts. This is orientation, not configuration. What decisions is it authorised to make? What must it escalate? What values does it carry into ambiguous situations? These are onboarding questions. The hiring manager is the process owner, not IT.",
                 },
                 {
+                  num: "02",
                   phase: "Performance",
                   body: "An agent making ten thousand micro-decisions per day cannot be evaluated by auditing each one. Define performance envelopes: expected error rates, escalation frequency, outcome distributions. Measure against them continuously. A quarterly human review of agent performance is a governance requirement under any serious reading of DORA or FINMA operational risk principles.",
                 },
                 {
+                  num: "03",
                   phase: "Decommissioning",
                   body: "An agent trained on a regulatory environment that has since changed is a liability, not an asset. Decommissioning requires evidence that the decision history has been reviewed, open cases transferred, and the model archived in retrievable format for audit. This is an offboarding, not a deletion. Closer to retiring a trader than switching off software.",
                 },
               ].map((item) => (
-                <div key={item.phase} className="py-8 flex flex-col md:flex-row gap-4 md:gap-8">
-                  <div className="md:w-40 md:shrink-0">
+                <div key={item.phase} className="py-8 md:py-10 flex flex-col md:flex-row gap-4 md:gap-8" style={{ borderTop: "1px solid #D8D3CB" }}>
+                  <div className="md:w-48 md:shrink-0 flex items-baseline gap-4">
+                    <span
+                      className="font-[family-name:var(--font-cormorant)] font-light"
+                      style={{ fontSize: "2.5rem", color: "#2B3A52", opacity: 0.2, lineHeight: 1 }}
+                      aria-hidden="true"
+                    >
+                      {item.num}
+                    </span>
                     <h3
                       className="font-[family-name:var(--font-cormorant)] font-light"
                       style={{ fontSize: "1.4rem", color: "#2B3A52" }}
@@ -239,20 +241,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 04 — THE SWISS ANGLE */}
-      <section id="section04" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      {/* ── THE SWISS ANGLE ── right-offset heading */}
+      <section id="swiss-angle" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
-            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The Swiss Angle</p>
-            <h2
-              className="font-[family-name:var(--font-cormorant)] font-light mb-16"
-              style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A", maxWidth: 660 }}
-            >
-              Switzerland has a structural advantage. Most Swiss banks do not know it yet.
-            </h2>
+            <div className="md:ml-auto md:max-w-[660px]">
+              <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The Swiss Angle</p>
+              <h2
+                className="font-[family-name:var(--font-cormorant)] font-light mb-16"
+                style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
+              >
+                Switzerland has a structural advantage. Most Swiss banks do not know it yet.
+              </h2>
+            </div>
           </FadeUp>
           <FadeUp delay={0.1}>
-            <div className="flex flex-col divide-y" style={{ borderColor: "#D8D3CB" }}>
+            <div className="grid md:grid-cols-3 gap-8 md:gap-12">
               {[
                 {
                   label: "FINMA",
@@ -267,16 +271,15 @@ export default function Home() {
                   body: "Swiss private banking is built on long-term relationships with high-value clients. Agentic systems excel at synthesising deep longitudinal context into coherent advisory actions. The relationship model is strengthened by agents, when the human at the centre uses the enhanced context well. The best private banks will feel more attentive to clients, not more automated.",
                 },
               ].map((item) => (
-                <div key={item.label} className="py-8 flex flex-col md:flex-row gap-4 md:gap-8">
-                  <div className="md:w-40 md:shrink-0">
-                    <h3
-                      className="font-[family-name:var(--font-cormorant)] font-light"
-                      style={{ fontSize: "1.4rem", color: "#2B3A52" }}
-                    >
-                      {item.label}
-                    </h3>
-                  </div>
-                  <p style={{ fontSize: "0.95rem", color: "#1A1A1A", lineHeight: 1.8 }}>{item.body}</p>
+                <div key={item.label}>
+                  <div className="mb-4" style={{ width: 32, height: 2, background: "#8B7355" }} />
+                  <h3
+                    className="font-[family-name:var(--font-cormorant)] font-light mb-3"
+                    style={{ fontSize: "1.4rem", color: "#2B3A52" }}
+                  >
+                    {item.label}
+                  </h3>
+                  <p style={{ fontSize: "0.9rem", color: "#1A1A1A", lineHeight: 1.8 }}>{item.body}</p>
                 </div>
               ))}
             </div>
@@ -284,27 +287,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 05 — THE PROVOCATION */}
-      <section id="section05" className="py-16 md:py-24 px-5 md:px-8 border-t overflow-hidden" style={{ borderColor: "#D8D3CB" }}>
+      {/* ── THE PROVOCATION ── dark section */}
+      <section id="the-provocation" className="py-24 md:py-36 px-5 md:px-8 overflow-hidden" style={{ background: "#2B3A52" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
-            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The Provocation</p>
+            <p className="text-xs uppercase tracking-widest mb-6" style={{ color: "#8B7355" }}>The Provocation</p>
             <h2
-              className="font-[family-name:var(--font-cormorant)] font-light mb-16"
-              style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A", maxWidth: 660 }}
+              className="font-[family-name:var(--font-cormorant)] font-light mb-20"
+              style={{ fontSize: "clamp(28px, 4vw, 46px)", color: "#F7F4EF", maxWidth: 700 }}
             >
               If your bank still scales by hiring, you are already structurally uncompetitive.
             </h2>
           </FadeUp>
           <FadeUp delay={0.1}>
-            <div className="relative mb-4">
+            <div className="relative mb-6">
               <span
                 className="font-[family-name:var(--font-cormorant)] font-light select-none"
                 style={{
-                  fontSize: "clamp(100px, 20vw, 180px)",
+                  fontSize: "clamp(120px, 25vw, 240px)",
                   lineHeight: 0.85,
-                  color: "#2B3A52",
-                  opacity: 0.12,
+                  color: "#F7F4EF",
+                  opacity: 0.1,
                   display: "block",
                   marginLeft: "-0.03em",
                 }}
@@ -313,14 +316,17 @@ export default function Home() {
                 97%
               </span>
             </div>
-            <p className="mb-20 text-sm" style={{ color: "#6B6B6B", maxWidth: 480 }}>
+            <p className="mb-24 text-sm" style={{ color: "rgba(247,244,239,0.5)", maxWidth: 480 }}>
               The approximate cost reduction required to absorb a 30x volume increase without proportional headcount growth.
             </p>
           </FadeUp>
           <FadeUp delay={0.2}>
+            <div className="flex justify-center">
+              <span style={{ width: 40, height: 2, background: "#8B7355", display: "block", marginBottom: "2rem" }} />
+            </div>
             <p
               className="font-[family-name:var(--font-cormorant)] font-light text-center"
-              style={{ fontSize: "clamp(20px, 3vw, 28px)", color: "#1A1A1A", lineHeight: 1.45, maxWidth: 680, margin: "0 auto" }}
+              style={{ fontSize: "clamp(20px, 3vw, 30px)", color: "#F7F4EF", lineHeight: 1.45, maxWidth: 680, margin: "0 auto" }}
             >
               The decision you are not making today is already costing you the optionality you will need in 24 months.
             </p>
@@ -328,8 +334,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 06 — ABOUT */}
-      <section id="about" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      {/* ── ABOUT ── */}
+      <section id="about" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>About</p>
@@ -355,8 +361,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 07 — SPEAKING */}
-      <section id="speaking" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      {/* ── SPEAKING ── */}
+      <section id="speaking" className="py-20 md:py-32 px-5 md:px-8">
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Speaking</p>
@@ -392,7 +398,7 @@ export default function Home() {
                 <div
                   key={item.format}
                   className="pt-6 pb-8 md:pr-8"
-                  style={{ borderTop: "1px solid #1A1A1A" }}
+                  style={{ borderTop: "2px solid #2B3A52" }}
                 >
                   <h3
                     className="font-[family-name:var(--font-cormorant)] font-light mb-1"
@@ -414,8 +420,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 08 — WRITING */}
-      <section id="writing" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      {/* ── WRITING ── */}
+      <section id="writing" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Writing</p>
@@ -427,9 +433,13 @@ export default function Home() {
             </h2>
           </FadeUp>
           <FadeUp delay={0.1}>
-            <div className="flex flex-col divide-y" style={{ borderColor: "#D8D3CB" }}>
-              {blogPosts.map((post) => (
-                <article key={post.slug} className="py-8">
+            <div className="flex flex-col">
+              {blogPosts.map((post, i) => (
+                <article
+                  key={post.slug}
+                  className="py-8"
+                  style={i > 0 ? { borderTop: "1px solid #D8D3CB" } : {}}
+                >
                   <div className="flex items-center gap-3 mb-2">
                     <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
                       {formatDate(post.date)}
@@ -463,10 +473,10 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-12 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      <footer className="py-12 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB" }}>
         <div className="max-w-[900px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <p className="text-sm" style={{ color: "#6B6B6B" }}>
-            agentictom.com &copy; 2026 Marc Hauser
+            agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
           </p>
           <div className="flex gap-6 text-sm" style={{ color: "#6B6B6B" }}>
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
