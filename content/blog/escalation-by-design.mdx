@@ -6,44 +6,38 @@ excerpt: "The failure mode of most automation projects is not that machines make
 
 # Escalation by Design: Why Human Oversight Is an Architecture Decision
 
-The failure mode of most automation projects is not that machines make wrong decisions. It is that nobody designed when and how the decision returns to a human.
-
-This is not a technology failure. It is a design failure.
+The failure mode of most automation projects is that nobody designed when and how the decision returns to a human. Machines making wrong decisions is rarely the root cause. Missing design is.
 
 ## The wrong model: escalation as exception handling
 
-Most organisations treat escalation as a residual — the thing that happens when the system cannot proceed. A queue fills up. Someone notices. A human intervenes.
+Most organisations treat escalation as a residual. The thing that happens when the system cannot proceed. A queue fills up. Someone notices. A human intervenes.
 
 In this model, escalation is a failure state. The goal is to minimise it. Systems are judged on the percentage of cases they can handle end-to-end.
 
-This model is wrong for agentic systems.
+For agentic systems, this model fails.
 
-## The right model: escalation as a design requirement
+## Escalation as a design requirement
 
 When you deploy an intelligent agent into a consequential process, you are making a delegation decision. You are saying: this system is authorised to make decisions of this type, with these characteristics, up to this threshold of consequence.
 
 Everything beyond that threshold must come back to a human. Not because the system failed, but because the system correctly identified that the cost of being wrong exceeds its authorisation level.
 
-This reframes escalation entirely. It is not a failure state. It is the mechanism by which the system honours its own boundaries.
-
-The trigger is not "I do not know." The trigger is "the cost of being wrong here exceeds my authorisation level."
+This reframes escalation entirely. The trigger is not "I do not know." The trigger is "the cost of being wrong here exceeds my authorisation level."
 
 ## What this means for design
 
-If escalation is a design requirement, then it must be designed — not left to emerge.
+If escalation is a design requirement, it must be designed, not left to emerge.
 
-This means:
+**Define authorisation levels explicitly.** What types of decisions can the agent make autonomously? What requires human review? What requires human approval? These are policy questions, not technical ones.
 
-**Defining authorisation levels explicitly.** What types of decisions can the agent make autonomously? What requires human review? What requires human approval? These are policy questions, not technical ones.
+**Design the escalation interface.** When an agent escalates, what does it hand off? The context, the reasoning, the options it considered, its recommendation? A human receiving an escalation from a well-designed agent should be able to act in seconds.
 
-**Designing the escalation interface.** When an agent escalates, what does it hand off? The context, the reasoning, the options it considered, its recommendation? A human receiving an escalation from a well-designed agent should be able to act in seconds, not minutes.
+**Measure escalation rates.** An agent that escalates too rarely may be taking on decisions it should not. An agent that escalates too often signals a policy envelope that is too narrow. Escalation rate is a performance metric.
 
-**Measuring escalation rates.** If an agent escalates too rarely, it may be taking on decisions it should not. If it escalates too often, the policy envelope may be too narrow. Escalation rate is a performance metric.
-
-**Closing the loop.** When a human resolves an escalation, that resolution should flow back to the agent as signal. This is how agents improve.
+**Close the loop.** When a human resolves an escalation, that resolution should flow back to the agent as signal. This is how agents improve.
 
 ## The governance implication
 
-Organisations that design escalation well end up with something valuable: a real-time map of where human judgment is actually required. Not where it used to be required, or where the org chart says it is required — where it is actually required, revealed by the behaviour of systems operating at scale.
+Organisations that design escalation well end up with something valuable: a real-time map of where human judgment is actually required. Not where it used to be required, or where the org chart says it is required. Where it is actually required, revealed by the behaviour of systems operating at scale.
 
 This is one of the underappreciated outputs of an agentic TOM: clarity about what humans are actually for.
