@@ -33,22 +33,22 @@ export default function Home() {
       className="font-[family-name:var(--font-dm-sans)]"
     >
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-8 py-5" style={{ background: "#F7F4EF", borderBottom: "1px solid #D8D3CB" }}>
+      <nav className="fixed top-0 left-0 right-0 z-50 px-5 md:px-8 py-4" style={{ background: "#F7F4EF", borderBottom: "1px solid #D8D3CB" }}>
         <div className="max-w-[900px] mx-auto flex justify-between items-center">
-          <span className="font-[family-name:var(--font-cormorant)] text-xl font-light tracking-wide text-[#1A1A1A]">
+          <span className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide text-[#1A1A1A]">
             agentictom.com
           </span>
-          <div className="hidden md:flex gap-8 text-sm tracking-widest uppercase text-[#6B6B6B]">
+          <div className="flex gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
             <a href="#speaking" className="hover:text-[#2B3A52] transition-colors">Speaking</a>
             <a href="#writing" className="hover:text-[#2B3A52] transition-colors">Writing</a>
-            <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hover:text-[#2B3A52] transition-colors">LinkedIn</a>
+            <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">LinkedIn</a>
           </div>
         </div>
       </nav>
 
       {/* HERO */}
-      <section className="min-h-screen flex flex-col justify-center pt-20 pb-24 px-8 overflow-hidden">
+      <section className="min-h-screen flex flex-col justify-center pt-20 pb-16 md:pb-24 px-5 md:px-8 overflow-hidden">
         <div className="max-w-[900px] mx-auto w-full">
           <FadeUp delay={0}>
             <div
@@ -97,7 +97,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 01 — THE SHIFT */}
-      <section id="section01" className="py-24 px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      <section id="section01" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <div className="flex items-start gap-8 mb-12">
@@ -142,7 +142,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 02 — THREE LAYERS */}
-      <section id="section02" className="py-24 px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      <section id="section02" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Three Layers</p>
@@ -171,7 +171,7 @@ export default function Home() {
               ].map((col) => (
                 <div
                   key={col.label}
-                  className="pt-6 pr-8 pb-8"
+                  className="pt-6 pb-8 md:pr-8"
                   style={{ borderTop: "1px solid #1A1A1A" }}
                 >
                   <h3
@@ -202,7 +202,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 03 — HR FOR AGENTS */}
-      <section id="section03" className="py-24 px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      <section id="section03" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>HR for Agents</p>
@@ -229,8 +229,8 @@ export default function Home() {
                   body: "An agent trained on a regulatory environment that has since changed is a liability, not an asset. Decommissioning requires evidence that the decision history has been reviewed, open cases transferred, and the model archived in retrievable format for audit. This is an offboarding, not a deletion. Closer to retiring a trader than switching off software.",
                 },
               ].map((item) => (
-                <div key={item.phase} className="py-8 flex gap-8">
-                  <div className="w-40 shrink-0">
+                <div key={item.phase} className="py-8 flex flex-col md:flex-row gap-4 md:gap-8">
+                  <div className="md:w-40 md:shrink-0">
                     <h3
                       className="font-[family-name:var(--font-cormorant)] font-light"
                       style={{ fontSize: "1.4rem", color: "#2B3A52" }}
@@ -247,7 +247,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 04 — THE SWISS ANGLE */}
-      <section id="section04" className="py-24 px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      <section id="section04" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The Swiss Angle</p>
@@ -274,8 +274,8 @@ export default function Home() {
                   body: "Swiss private banking is built on long-term relationships with high-value clients. Agentic systems excel at synthesising deep longitudinal context into coherent advisory actions. The relationship model is strengthened by agents, when the human at the centre uses the enhanced context well. The best private banks will feel more attentive to clients, not more automated.",
                 },
               ].map((item) => (
-                <div key={item.label} className="py-8 flex gap-8">
-                  <div className="w-40 shrink-0">
+                <div key={item.label} className="py-8 flex flex-col md:flex-row gap-4 md:gap-8">
+                  <div className="md:w-40 md:shrink-0">
                     <h3
                       className="font-[family-name:var(--font-cormorant)] font-light"
                       style={{ fontSize: "1.4rem", color: "#2B3A52" }}
@@ -292,7 +292,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 05 — THE PROVOCATION */}
-      <section id="section05" className="py-24 px-8 border-t overflow-hidden" style={{ borderColor: "#D8D3CB" }}>
+      <section id="section05" className="py-16 md:py-24 px-5 md:px-8 border-t overflow-hidden" style={{ borderColor: "#D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The Provocation</p>
@@ -336,7 +336,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 06 — ABOUT */}
-      <section id="about" className="py-24 px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      <section id="about" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>About</p>
@@ -363,7 +363,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 07 — SPEAKING */}
-      <section id="speaking" className="py-24 px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      <section id="speaking" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Speaking</p>
@@ -398,7 +398,7 @@ export default function Home() {
               ].map((item) => (
                 <div
                   key={item.format}
-                  className="pt-6 pr-8 pb-8"
+                  className="pt-6 pb-8 md:pr-8"
                   style={{ borderTop: "1px solid #1A1A1A" }}
                 >
                   <h3
@@ -422,7 +422,7 @@ export default function Home() {
       </section>
 
       {/* SECTION 08 — WRITING */}
-      <section id="writing" className="py-24 px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      <section id="writing" className="py-16 md:py-24 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Writing</p>
@@ -464,7 +464,7 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="py-12 px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
+      <footer className="py-12 px-5 md:px-8 border-t" style={{ borderColor: "#D8D3CB" }}>
         <div className="max-w-[900px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <p className="text-sm" style={{ color: "#6B6B6B" }}>
             agentictom.com &copy; 2026 Marc Hauser
