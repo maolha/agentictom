@@ -77,7 +77,7 @@ export default async function BlogPost({
             className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide"
             style={{ color: "#1A1A1A" }}
           >
-            agentictom.com
+            agenticTOM
           </Link>
           <Link
             href="/#writing"

@@ -36,7 +36,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 px-5 md:px-8 py-4" style={{ background: "#F7F4EF", borderBottom: "1px solid #D8D3CB" }}>
         <div className="max-w-[900px] mx-auto flex justify-between items-center">
           <span className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide text-[#1A1A1A]">
-            agentictom.com
+            agenticTOM
           </span>
           <div className="flex gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
