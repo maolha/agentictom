@@ -5,17 +5,24 @@ import { useState } from "react";
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setLoading(true);
     const form = e.currentTarget;
-    const data = new FormData(form);
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      organisation: (form.elements.namedItem("organisation") as HTMLInputElement).value,
+      format: (form.elements.namedItem("format") as HTMLSelectElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
 
     try {
-      const res = await fetch("/", {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
       if (res.ok) {
         setSubmitted(true);
@@ -24,6 +31,8 @@ export default function ContactForm() {
       }
     } catch {
       setError(true);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -44,17 +53,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      name="speaking"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      className="flex flex-col gap-4 max-w-xl"
-    >
-      <input type="hidden" name="form-name" value="speaking" />
-      <p className="hidden">
-        <label>Do not fill this out: <input name="bot-field" /></label>
-      </p>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-xl">
       <div className="flex flex-col gap-1">
         <label className="text-xs text-[#6B6B6B] uppercase tracking-widest">Name</label>
         <input
@@ -95,9 +94,10 @@ export default function ContactForm() {
       </div>
       <button
         type="submit"
-        className="mt-2 self-start px-8 py-3 border border-[#2B3A52] text-[#2B3A52] text-sm uppercase tracking-widest hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300"
+        disabled={loading}
+        className="mt-2 self-start px-8 py-3 border border-[#2B3A52] text-[#2B3A52] text-sm uppercase tracking-widest hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 disabled:opacity-50"
       >
-        Submit
+        {loading ? "Sending..." : "Submit"}
       </button>
     </form>
   );
