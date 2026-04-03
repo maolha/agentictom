@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@netlify/plugin-nextjs": "^5.15.9",
     "@types/nodemailer": "^7.0.11",
     "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.38.0",
