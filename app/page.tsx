@@ -47,7 +47,7 @@ export default function Home() {
             <div
               className="font-[family-name:var(--font-cormorant)] font-light select-none pointer-events-none"
               style={{
-                fontSize: "clamp(120px, 22vw, 220px)",
+                fontSize: "clamp(60px, 13vw, 140px)",
                 lineHeight: 0.85,
                 color: "#2B3A52",
                 opacity: 0.12,
@@ -56,7 +56,7 @@ export default function Home() {
               }}
               aria-hidden="true"
             >
-              01
+              RETHINK
             </div>
           </FadeUp>
           <FadeUp delay={0.1}>
