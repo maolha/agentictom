@@ -17,6 +17,7 @@ export default function Home() {
   const blogPosts = getAllPosts();
   return (
     <main
+      id="top"
       style={{ background: "#F7F4EF", color: "#1A1A1A" }}
       className="font-[family-name:var(--font-dm-sans)]"
     >
@@ -27,9 +28,9 @@ export default function Home() {
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-5 md:px-8 py-4" style={{ background: "#F7F4EF", borderBottom: "1px solid #D8D3CB" }}>
         <div className="max-w-[900px] mx-auto flex justify-between items-center">
-          <span className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide text-[#1A1A1A]">
+          <a href="#top" className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide text-[#1A1A1A]">
             agenticTOM
-          </span>
+          </a>
           <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
             <a href="#thoughts" className="hover:text-[#2B3A52] transition-colors">Thoughts</a>
             <a href="#speaking" className="hover:text-[#2B3A52] transition-colors">Speaking</a>
