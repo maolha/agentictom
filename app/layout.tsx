@@ -19,10 +19,10 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: "Agentic TOM — Marc Hauser",
-  description: "A framework for the Agentic Target Operating Model in Swiss banking and financial services.",
+  description: "The operating model for banks where AI is a first-class participant. Framework, thinking, and speaking by Marc Hauser.",
   openGraph: {
     title: "Agentic TOM — Marc Hauser",
-    description: "A framework for the Agentic Target Operating Model in Swiss banking and financial services.",
+    description: "The operating model for banks where AI is a first-class participant. Framework, thinking, and speaking by Marc Hauser.",
     url: "https://agentictom.com",
     siteName: "Agentic TOM",
   },

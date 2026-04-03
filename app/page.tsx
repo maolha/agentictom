@@ -69,21 +69,15 @@ export default function Home() {
           </FadeUp>
           <FadeUp delay={0.2}>
             <p
-              className="font-[family-name:var(--font-dm-sans)] mb-4 max-w-[620px]"
-              style={{ fontSize: "1.15rem", color: "#1A1A1A", lineHeight: 1.7 }}
+              className="font-[family-name:var(--font-dm-sans)] mb-10 max-w-[620px]"
+              style={{ fontSize: "1.05rem", color: "#1A1A1A", lineHeight: 1.8 }}
             >
-              Defaults do not survive structural shifts.
-            </p>
-            <p
-              className="font-[family-name:var(--font-dm-sans)] mb-10 max-w-[580px]"
-              style={{ fontSize: "1rem", color: "#6B6B6B", lineHeight: 1.7 }}
-            >
-              This is one possible future. Not a prediction. If you believe it is likely and you want to act, the time to move is now. Change takes longer than you think.
+              Defaults do not survive structural shifts. The banks that redesign their operating model around AI — not as a tool, but as a workforce — will set the terms. The rest will adapt to theirs.
             </p>
           </FadeUp>
           <FadeUp delay={0.3}>
             <a href="#the-shift" className="btn-outline-slate">
-              Read the framework
+              See the argument
             </a>
           </FadeUp>
         </div>

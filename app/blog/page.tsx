@@ -1,0 +1,100 @@
+import Link from "next/link";
+import { Metadata } from "next";
+import { getAllPosts, formatDate } from "@/lib/blog";
+
+export const metadata: Metadata = {
+  title: "Thoughts — Agentic TOM",
+  description: "Writing on agentic AI, target operating models, and the future of financial services by Marc Hauser.",
+  openGraph: {
+    title: "Thoughts — Agentic TOM",
+    description: "Writing on agentic AI, target operating models, and the future of financial services by Marc Hauser.",
+    url: "https://agentictom.com/blog",
+    siteName: "Agentic TOM",
+  },
+};
+
+export default function BlogIndex() {
+  const posts = getAllPosts();
+
+  return (
+    <main style={{ background: "#F7F4EF", color: "#1A1A1A", minHeight: "100vh" }}>
+      <nav
+        className="px-5 md:px-8 py-4 md:py-5"
+        style={{ borderBottom: "1px solid #D8D3CB" }}
+      >
+        <div className="max-w-[900px] mx-auto flex justify-between items-center">
+          <Link
+            href="/"
+            className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide"
+            style={{ color: "#1A1A1A" }}
+          >
+            agenticTOM
+          </Link>
+          <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
+            <Link href="/#thoughts" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
+            <Link href="/#speaking" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">Speaking</Link>
+            <Link href="/#about" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">About</Link>
+          </div>
+        </div>
+      </nav>
+
+      <div className="px-5 md:px-8 py-16 md:py-24">
+        <div className="max-w-[680px] mx-auto">
+          <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Thoughts</p>
+          <h1
+            className="font-[family-name:var(--font-cormorant)] font-light mb-16"
+            style={{ fontSize: "clamp(28px, 5vw, 48px)", lineHeight: 1.2, color: "#1A1A1A" }}
+          >
+            All writing
+          </h1>
+          <div className="flex flex-col">
+            {posts.map((post, i) => (
+              <article
+                key={post.slug}
+                className="py-8"
+                style={i > 0 ? { borderTop: "1px solid #D8D3CB" } : {}}
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                    {formatDate(post.date)}
+                  </p>
+                  <span style={{ color: "#D8D3CB" }}>&middot;</span>
+                  <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                    {post.readingTime} min read
+                  </p>
+                </div>
+                <h2
+                  className="font-[family-name:var(--font-cormorant)] font-light mb-3"
+                  style={{ fontSize: "clamp(22px, 3.5vw, 30px)", color: "#1A1A1A" }}
+                >
+                  {post.title}
+                </h2>
+                <p className="mb-4" style={{ fontSize: "0.9rem", color: "#6B6B6B", lineHeight: 1.7 }}>
+                  {post.excerpt}
+                </p>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="text-sm uppercase tracking-widest hover:underline"
+                  style={{ color: "#2B3A52" }}
+                >
+                  Read
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <footer
+        className="px-5 md:px-8 py-10 border-t"
+        style={{ borderColor: "#D8D3CB" }}
+      >
+        <div className="max-w-[900px] mx-auto">
+          <p className="text-sm" style={{ color: "#6B6B6B" }}>
+            agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
+          </p>
+        </div>
+      </footer>
+    </main>
+  );
+}
