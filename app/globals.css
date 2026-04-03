@@ -22,6 +22,10 @@
 }
 
 html {
+  scroll-behavior: auto;
+}
+
+html:has(:target) {
   scroll-behavior: smooth;
 }
 
