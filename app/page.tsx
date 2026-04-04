@@ -344,39 +344,39 @@ export default function Home() {
           <FadeUp delay={0.1}>
             <div className="flex flex-col">
               {blogPosts.slice(0, 3).map((post, i) => (
-                <article
+                <Link
                   key={post.slug}
-                  className="py-8"
+                  href={`/blog/${post.slug}`}
+                  className="block py-8 group"
                   style={i > 0 ? { borderTop: "1px solid #D8D3CB" } : {}}
                 >
-                  <div className="flex items-center gap-3 mb-2">
-                    <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
-                      {formatDate(post.date)}
-                    </p>
-                    <span style={{ color: "#D8D3CB" }}>&middot;</span>
-                    <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
-                      {post.readingTime} min read
-                    </p>
-                  </div>
-                  <Link href={`/blog/${post.slug}`}>
+                  <article>
+                    <div className="flex items-center gap-3 mb-2">
+                      <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                        {formatDate(post.date)}
+                      </p>
+                      <span style={{ color: "#D8D3CB" }}>&middot;</span>
+                      <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                        {post.readingTime} min read
+                      </p>
+                    </div>
                     <h3
-                      className="font-[family-name:var(--font-cormorant)] font-light mb-3 hover:text-[#2B3A52] transition-colors"
+                      className="font-[family-name:var(--font-cormorant)] font-light mb-3 group-hover:text-[#2B3A52] transition-colors"
                       style={{ fontSize: "clamp(20px, 3vw, 26px)", color: "#1A1A1A" }}
                     >
                       {post.title}
                     </h3>
-                  </Link>
-                  <p className="mb-4" style={{ fontSize: "0.9rem", color: "#6B6B6B", maxWidth: 600, lineHeight: 1.7 }}>
-                    {post.excerpt}
-                  </p>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="text-sm uppercase tracking-widest hover:underline"
-                    style={{ color: "#2B3A52" }}
-                  >
-                    Read
-                  </Link>
-                </article>
+                    <p className="mb-4" style={{ fontSize: "0.9rem", color: "#6B6B6B", maxWidth: 600, lineHeight: 1.7 }}>
+                      {post.excerpt}
+                    </p>
+                    <span
+                      className="text-sm uppercase tracking-widest group-hover:underline"
+                      style={{ color: "#2B3A52" }}
+                    >
+                      Read
+                    </span>
+                  </article>
+                </Link>
               ))}
             </div>
             {blogPosts.length > 3 && (
