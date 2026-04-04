@@ -89,7 +89,7 @@ function renderInline(text: string): React.ReactNode[] {
       parts.push(text.slice(lastIndex, match.index));
     }
     parts.push(
-      <strong key={key++} style={{ fontWeight: 500 }}>
+      <strong key={key++} style={{ fontWeight: 700 }}>
         {match[1]}
       </strong>
     );
