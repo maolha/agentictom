@@ -1,0 +1,97 @@
+---
+title: "Case Sketch: Mortgage Lending in an Agentic TOM"
+date: "2026-04-10"
+excerpt: "What does mortgage origination look like when bots, agents, and humans each play their designed role? A worked example of the three-layer model applied to one end-to-end process."
+---
+
+# Case Sketch: Mortgage Lending in an Agentic TOM
+
+The previous pieces on this site describe what an agentic target operating model is and why it matters. This one shows what it looks like — applied to a single end-to-end process that every Swiss bank runs: mortgage origination.
+
+This is not a blueprint. **It is a sketch** — concrete enough to anchor a board conversation, abstract enough to adapt to your institution.
+
+## The process today
+
+A mortgage application arrives. A human reviews the documentation. Another human runs the credit assessment. A committee approves or declines. Someone prepares the offer. Someone sends it. Elapsed time: days to weeks.
+
+**The cost: roughly CHF 1'500 per application.** Most of that cost is human time spent on tasks that are, in principle, structured and repeatable.
+
+The process works. It has worked for decades. It will not survive a tenfold increase in inbound volume.
+
+## The same process, three layers
+
+In an agentic TOM, mortgage origination is not a department. **It is an outcome owned end-to-end by a system** — with three layers, each doing what it does best.
+
+### The bot layer
+
+Bots handle the deterministic work. No judgment required. No exceptions.
+
+**Ingestion.** The application arrives — whether from a customer, a broker, or the customer's AI agent. A bot extracts the structured data: income, assets, property value, existing liabilities, employment status. If a document is missing, the bot requests it automatically.
+
+**Eligibility screening.** Hard rules first. Does the loan-to-value ratio exceed the regulatory maximum? Is the income sufficient under the standard affordability calculation? Is the property in an eligible category? These are binary checks. A bot runs them in seconds.
+
+**Data enrichment.** The bot pulls the property valuation from the bank's model, cross-references the land registry, checks the applicant against sanctions lists and internal records. All deterministic. All auditable.
+
+**Time: seconds.** Cost: near zero. Every application passes through this layer before anything else happens.
+
+### The agent layer
+
+Agents handle the work that requires judgment within boundaries. **They decide, but within a policy envelope humans defined.**
+
+**Risk assessment.** The agent evaluates the application holistically — not just the hard numbers, but the patterns. Employment stability. Income trajectory. Debt-to-income trends. It generates a risk score and a confidence interval.
+
+**Pricing.** Based on the risk assessment, the agent proposes a rate — calibrated against the bank's current book, competitive positioning, and the customer's profile. It optimises for the bank's margin targets while remaining competitive.
+
+**Offer generation.** The agent assembles the offer document: terms, conditions, rate, repayment schedule, required insurance. **It can generate and send a binding offer autonomously** — if the application falls within its authorisation parameters.
+
+**Escalation decisions.** This is where the design matters. The agent knows its boundaries:
+- Loan amount above CHF 3 million → escalate
+- Risk score below threshold → escalate
+- Non-standard collateral → escalate
+- Applicant is an existing client with a complex relationship → escalate
+- Confidence interval too wide → escalate
+
+**The trigger is never "I do not know." The trigger is "the cost of being wrong here exceeds my authorisation level."**
+
+**Time: minutes.** For a standard application within parameters, the customer receives a binding offer within hours of submission. No human has touched it.
+
+### The human layer
+
+Humans handle what only humans should handle. **They never touch routine.**
+
+**Exception review.** The agent escalated because the property is unusual, the income structure is complex, or the risk profile is borderline. A human reviews — but not from scratch. The agent has prepared the full context: the data, its assessment, the options it considered, its recommendation.
+
+**A well-designed escalation means the human can decide in minutes, not hours.**
+
+**Relationship decisions.** The applicant is a private banking client with CHF 5 million in assets and a 20-year relationship. The mortgage is straightforward, but the relationship is not — the client expects a conversation, a personal touch, a sense that the bank knows them. A human handles this. Not because the process requires it, but because the relationship does.
+
+**Policy governance.** Humans set and review the agent's policy envelope. What is the maximum autonomous approval? What risk scores require review? How often should the pricing model be recalibrated? This is quarterly governance work — the equivalent of managing the agent's performance, not doing its job.
+
+## What changes
+
+| | Today | Agentic TOM |
+|---|---|---|
+| **Handling time** | Days to weeks | Minutes to hours |
+| **Cost per application** | ~CHF 1'500 | ~CHF 50–200 |
+| **Human involvement** | Every application | ~15% of applications |
+| **Scalability** | Linear with headcount | Near-infinite for standard cases |
+| **Response speed** | Depends on queue | Consistent, automated |
+| **Quality of escalations** | Variable | Structured, contextual, actionable |
+
+## The design decisions that matter
+
+This sketch is deliberately incomplete. The real work is in the design decisions each bank must make for its own context:
+
+**Where do you draw the authorisation boundary?** Too narrow and the agent escalates too often — you have automated the easy work but still need humans for everything interesting. Too wide and you accept risk you have not governed.
+
+**How do you handle the transition?** You cannot switch overnight. The agent needs to learn. Humans need to trust it. The policy envelope starts narrow and widens as confidence builds. This is a managed transition, not a deployment.
+
+**What happens to the people?** Mortgage processing teams shrink. But the humans who remain do fundamentally more interesting and consequential work. The relationship manager who used to spend 60 percent of their time on process now spends 90 percent on judgment, advice, and client relationships. **The job is better. There are fewer of them.**
+
+## The question
+
+Every Swiss bank processes mortgages. The process is broadly similar across institutions. The economics are broadly similar.
+
+**The banks that redesign this process around the three-layer model will respond faster, at lower cost, with better risk management, and with higher client satisfaction.** The ones that do not will spend CHF 1'500 per application in a market where the winners spend CHF 100.
+
+The sketch is here. **The question is whether you start drawing your version.**
