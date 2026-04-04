@@ -212,8 +212,12 @@ function parseMarkdown(md: string): React.ReactNode[] {
 
     if (paraLines.length > 0) {
       const text = paraLines.join(" ");
+      // Reduce bottom margin if a list follows immediately
+      const nextLine = i < lines.length ? lines[i] : "";
+      const nextNonEmpty = lines.slice(i).find((l) => l.trim() !== "");
+      const listFollows = nextNonEmpty && (nextNonEmpty.startsWith("- ") || /^\d+\.\s/.test(nextNonEmpty));
       nodes.push(
-        <p key={key++} className="mb-6">
+        <p key={key++} className={listFollows ? "mb-2" : "mb-6"}>
           {renderInline(text)}
         </p>
       );
