@@ -219,6 +219,52 @@ export const categories = [
   "Demand Exposure",
 ];
 
+export type CategoryInsight = {
+  category: string;
+  low: string;
+  mid: string;
+  high: string;
+  question: string;
+};
+
+export const categoryInsights: CategoryInsight[] = [
+  {
+    category: "Workforce Design",
+    low: "Your organisation treats AI as a tool, not a workforce participant. There is no clear taxonomy distinguishing bots from agents, and accountability for automated decisions is undefined.",
+    mid: "You have started thinking about different types of AI actors, but the taxonomy is not yet operationalised in governance or accountability structures.",
+    high: "Your workforce design recognises bots, agents, and humans as distinct layers with different governance. Accountability is clear per actor type.",
+    question: "If you hired 500 new AI agents tomorrow, who would onboard them?",
+  },
+  {
+    category: "Escalation Architecture",
+    low: "Escalation in your organisation is accidental — it happens when something breaks, not by design. There is no architecture for how decisions return to humans.",
+    mid: "Some escalation paths exist, but they are inconsistent. The trigger for human involvement is often 'the system failed' rather than 'the cost of being wrong exceeds the authorisation level.'",
+    high: "Escalation is designed into your processes with explicit authorisation levels, structured handoffs, and feedback loops from human resolutions.",
+    question: "Could you draw the escalation architecture for your three most critical processes right now?",
+  },
+  {
+    category: "Speed & Automation",
+    low: "Your processing model is human-speed. A 10× increase in inbound volume would require proportional headcount growth — the unit economics would collapse.",
+    mid: "Some processes are automated, but end-to-end response times are still measured in days and marginal costs remain significant.",
+    high: "Your core processes can scale non-linearly. Marginal cost per application is low and response times are measured in hours or less.",
+    question: "What is your cost per processed application — and what would it need to be if volume increased 10×?",
+  },
+  {
+    category: "Agent Governance",
+    low: "AI agents are deployed and managed as software — not as decision-making actors with lifecycle governance. There is no onboarding, performance monitoring, or decommissioning process.",
+    mid: "Some governance exists, but it is inconsistent. Agent performance is monitored technically (uptime, errors) rather than operationally (decision quality, escalation patterns).",
+    high: "Agents are governed like staff: onboarded with defined scope, monitored against performance envelopes, and decommissioned with full audit trails.",
+    question: "When was the last time you reviewed an AI agent's decision quality — not its uptime?",
+  },
+  {
+    category: "Demand Exposure",
+    low: "Your bank has not modelled what happens when customers use AI agents to interact with you. The volume, pricing, and complaint implications are unexamined.",
+    mid: "You are aware that customer-side AI agents will change demand patterns, but have not yet redesigned processes or economics around it.",
+    high: "You have modelled demand-side exposure and are actively preparing: fee defensibility, volume economics, and structured complaint readiness.",
+    question: "If a client's AI agent benchmarked your fees against ten competitors today, what would it find?",
+  },
+];
+
 export function calculateResults(answers: (number | null)[]) {
   const categoryScores: CategoryScore[] = categories.map((cat) => ({
     category: cat,
