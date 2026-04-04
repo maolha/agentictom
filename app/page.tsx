@@ -70,10 +70,16 @@ export default function Home() {
           </FadeUp>
           <FadeUp delay={0.2}>
             <p
-              className="font-[family-name:var(--font-dm-sans)] mb-10 max-w-[620px]"
+              className="font-[family-name:var(--font-dm-sans)] mb-4 max-w-[620px]"
               style={{ fontSize: "1.05rem", color: "#1A1A1A", lineHeight: 1.8 }}
             >
               Defaults do not survive structural shifts. The banks that redesign their operating model around AI — not as a tool, but as a workforce — will set the terms. The rest will adapt to theirs.
+            </p>
+            <p
+              className="font-[family-name:var(--font-dm-sans)] mb-10 max-w-[580px]"
+              style={{ fontSize: "0.85rem", color: "#8B7355", lineHeight: 1.7, letterSpacing: "0.03em" }}
+            >
+              A framework for Swiss banking and financial services leadership.
             </p>
           </FadeUp>
           <FadeUp delay={0.3}>
@@ -313,11 +319,11 @@ export default function Home() {
                 }}
                 aria-hidden="true"
               >
-                97%
+                56%
               </span>
             </div>
             <p className="mb-24 text-sm" style={{ color: "rgba(247,244,239,0.5)", maxWidth: 480 }}>
-              The approximate cost reduction required to absorb a 30x volume increase without proportional headcount growth.
+              The cost reduction per application required to break even when customer AI agents increase your inbound volume tenfold — without increasing your revenue.
             </p>
           </FadeUp>
           <FadeUp delay={0.2}>
@@ -447,29 +453,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CONTACT ── */}
-      <section id="contact" className="py-20 md:py-32 px-5 md:px-8">
-        <div className="max-w-[900px] mx-auto">
-          <FadeUp>
-            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Let&apos;s talk</p>
-            <h2
-              className="font-[family-name:var(--font-cormorant)] font-light mb-6"
-              style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
-            >
-              If this resonated, start a conversation.
-            </h2>
-            <p className="mb-12" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              I speak to boards, brief leadership teams, and have conversations with people working through what the agentic shift means for their institution. Sometimes that leads to a keynote. Sometimes to a working session. Sometimes to a useful exchange over coffee. All of it starts the same way.
-            </p>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <ContactForm />
-          </FadeUp>
-        </div>
-      </section>
-
       {/* ── ABOUT ── */}
-      <section id="about" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
+      <section id="about" className="py-20 md:py-32 px-5 md:px-8">
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>About</p>
@@ -479,8 +464,11 @@ export default function Home() {
             >
               Marc Hauser
             </h2>
-            <p className="mb-6" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              Twenty years at the intersection of financial services, technology, and institutional change. UBS, Trust Square, Tenity, and now UiPath, where I lead banking and financial services in Switzerland. I write this site because I believe the agentic shift is real, consequential, and moving faster than most Swiss banking executives currently assume. This is a framework I use in my own work, offered here as a basis for serious conversation.
+            <p className="mb-4" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
+              Twenty years building at the intersection of financial services, technology, and institutional change. Ran innovation and fintech partnerships at UBS. Co-built Trust Square, Switzerland&apos;s largest blockchain hub. Led Tenity&apos;s early-stage investment programme. Now heading banking and financial services for UiPath in Switzerland, where the agentic shift is not theoretical — it is the work.
+            </p>
+            <p className="mb-8" style={{ maxWidth: 620, color: "#6B6B6B", lineHeight: 1.8, fontSize: "0.9rem" }}>
+              This site is a framework I use in my own thinking, offered here as a basis for serious conversation with people who are working on the same questions.
             </p>
             <a
               href="https://linkedin.com/in/marcoliverhauser"
@@ -495,6 +483,27 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── CONTACT ── */}
+      <section id="contact" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
+        <div className="max-w-[900px] mx-auto">
+          <FadeUp>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Let&apos;s talk</p>
+            <h2
+              className="font-[family-name:var(--font-cormorant)] font-light mb-6"
+              style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
+            >
+              If this resonated, start a conversation.
+            </h2>
+            <p className="mb-12" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
+              I speak to boards, brief leadership teams, and work with executives who are thinking through what the agentic shift means for their institution. Sometimes that becomes a keynote. Sometimes a board briefing. Sometimes a strategic conversation that changes how you see the problem.
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <ContactForm />
+          </FadeUp>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer className="py-12 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB" }}>
         <div className="max-w-[900px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -503,8 +512,8 @@ export default function Home() {
           </p>
           <div className="flex gap-6 text-sm" style={{ color: "#6B6B6B" }}>
             <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
-            <a href="#contact" className="hover:text-[#2B3A52] transition-colors">Contact</a>
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
+            <a href="#contact" className="hover:text-[#2B3A52] transition-colors">Contact</a>
             <a
               href="https://linkedin.com/in/marcoliverhauser"
               target="_blank"
