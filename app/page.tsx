@@ -540,7 +540,7 @@ export default function Home() {
             agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
           </p>
           <div className="flex gap-6 text-sm" style={{ color: "#6B6B6B" }}>
-            <a href="#thoughts" className="hover:text-[#2B3A52] transition-colors">Thoughts</a>
+            <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
             <a href="#speaking" className="hover:text-[#2B3A52] transition-colors">Speaking</a>
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
             <a
