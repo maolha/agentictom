@@ -227,10 +227,9 @@ function parseMarkdown(md: string): React.ReactNode[] {
   return nodes;
 }
 
-function renderInline(text: string): React.ReactNode[] {
+function renderLinks(text: string): React.ReactNode[] {
   const parts: React.ReactNode[] = [];
-  // Match bold (**text**) and links ([text](url))
-  const regex = /\*\*(.+?)\*\*|\[([^\]]+)\]\(([^)]+)\)/g;
+  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
   let lastIndex = 0;
   let match;
   let key = 0;
@@ -239,30 +238,48 @@ function renderInline(text: string): React.ReactNode[] {
     if (match.index > lastIndex) {
       parts.push(text.slice(lastIndex, match.index));
     }
-    if (match[1]) {
-      // Bold
-      parts.push(
-        <strong key={key++} style={{ fontWeight: 700 }}>
-          {match[1]}
-        </strong>
-      );
-    } else if (match[2] && match[3]) {
-      // Link
-      parts.push(
-        <a
-          key={key++}
-          href={match[3]}
-          style={{ color: "#2B3A52", textDecoration: "underline", textUnderlineOffset: "3px" }}
-        >
-          {match[2]}
-        </a>
-      );
-    }
+    parts.push(
+      <a
+        key={key++}
+        href={match[2]}
+        style={{ color: "#2B3A52", textDecoration: "underline", textUnderlineOffset: "3px" }}
+      >
+        {match[1]}
+      </a>
+    );
     lastIndex = regex.lastIndex;
   }
 
   if (lastIndex < text.length) {
     parts.push(text.slice(lastIndex));
+  }
+
+  return parts;
+}
+
+function renderInline(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = [];
+  // Match bold (**text**)
+  const regex = /\*\*(.+?)\*\*/g;
+  let lastIndex = 0;
+  let match;
+  let key = 0;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(...renderLinks(text.slice(lastIndex, match.index)));
+    }
+    // Parse links inside bold text too
+    parts.push(
+      <strong key={key++} style={{ fontWeight: 700 }}>
+        {renderLinks(match[1])}
+      </strong>
+    );
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(...renderLinks(text.slice(lastIndex)));
   }
 
   return parts;
