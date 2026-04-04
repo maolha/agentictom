@@ -77,9 +77,14 @@ export default function Home() {
             </p>
           </FadeUp>
           <FadeUp delay={0.3}>
-            <a href="#the-shift" className="btn-outline-slate">
-              See the argument
-            </a>
+            <div className="flex flex-wrap gap-4">
+              <a href="#the-shift" className="btn-outline-slate">
+                See the argument
+              </a>
+              <Link href="/assessment" className="btn-outline-slate" style={{ background: "#2B3A52", color: "#F7F4EF", borderColor: "#2B3A52" }}>
+                Take the assessment
+              </Link>
+            </div>
           </FadeUp>
         </div>
       </section>
@@ -325,6 +330,54 @@ export default function Home() {
             >
               The decision you are not making today is already costing you the optionality you will need in 24 months.
             </p>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ── ASSESSMENT + FRAMEWORK CTA ── */}
+      <section className="py-16 md:py-24 px-5 md:px-8" style={{ background: "#F7F4EF" }}>
+        <div className="max-w-[900px] mx-auto">
+          <FadeUp>
+            <div className="grid md:grid-cols-2 gap-6">
+              <Link
+                href="/assessment"
+                className="group p-8 transition-colors duration-300 hover:bg-[rgba(43,58,82,0.06)]"
+                style={{ border: "1px solid #D8D3CB" }}
+              >
+                <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Assessment</p>
+                <h3
+                  className="font-[family-name:var(--font-cormorant)] font-light mb-3 group-hover:text-[#2B3A52] transition-colors"
+                  style={{ fontSize: "1.3rem", color: "#1A1A1A" }}
+                >
+                  How ready is your bank?
+                </h3>
+                <p className="text-sm mb-4" style={{ color: "#6B6B6B", lineHeight: 1.7 }}>
+                  Fifteen questions. Five minutes. Exportable as PDF. The results may be uncomfortable.
+                </p>
+                <span className="text-xs uppercase tracking-widest group-hover:underline" style={{ color: "#2B3A52" }}>
+                  Begin assessment
+                </span>
+              </Link>
+              <Link
+                href="/framework"
+                className="group p-8 transition-colors duration-300 hover:bg-[rgba(43,58,82,0.06)]"
+                style={{ border: "1px solid #D8D3CB" }}
+              >
+                <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Framework</p>
+                <h3
+                  className="font-[family-name:var(--font-cormorant)] font-light mb-3 group-hover:text-[#2B3A52] transition-colors"
+                  style={{ fontSize: "1.3rem", color: "#1A1A1A" }}
+                >
+                  The three-layer model
+                </h3>
+                <p className="text-sm mb-4" style={{ color: "#6B6B6B", lineHeight: 1.7 }}>
+                  Bots, Agents, Humans — each with different governance, accountability, and escalation design.
+                </p>
+                <span className="text-xs uppercase tracking-widest group-hover:underline" style={{ color: "#2B3A52" }}>
+                  View the framework
+                </span>
+              </Link>
+            </div>
           </FadeUp>
         </div>
       </section>
