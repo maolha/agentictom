@@ -79,7 +79,8 @@ function parseMarkdown(md: string): React.ReactNode[] {
 
 function renderInline(text: string): React.ReactNode[] {
   const parts: React.ReactNode[] = [];
-  const regex = /\*\*(.+?)\*\*/g;
+  // Match bold (**text**) and links ([text](url))
+  const regex = /\*\*(.+?)\*\*|\[([^\]]+)\]\(([^)]+)\)/g;
   let lastIndex = 0;
   let match;
   let key = 0;
@@ -88,11 +89,25 @@ function renderInline(text: string): React.ReactNode[] {
     if (match.index > lastIndex) {
       parts.push(text.slice(lastIndex, match.index));
     }
-    parts.push(
-      <strong key={key++} style={{ fontWeight: 700 }}>
-        {match[1]}
-      </strong>
-    );
+    if (match[1]) {
+      // Bold
+      parts.push(
+        <strong key={key++} style={{ fontWeight: 700 }}>
+          {match[1]}
+        </strong>
+      );
+    } else if (match[2] && match[3]) {
+      // Link
+      parts.push(
+        <a
+          key={key++}
+          href={match[3]}
+          style={{ color: "#2B3A52", textDecoration: "underline", textUnderlineOffset: "3px" }}
+        >
+          {match[2]}
+        </a>
+      );
+    }
     lastIndex = regex.lastIndex;
   }
 
