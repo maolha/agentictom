@@ -86,7 +86,7 @@ export default async function BlogPost({
             agenticTOM
           </Link>
           <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
-            <Link href="/#thoughts" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
+            <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
             <Link href="/#speaking" className="hover:text-[#2B3A52] transition-colors">Speaking</Link>
             <Link href="/#about" className="hover:text-[#2B3A52] transition-colors">About</Link>
             <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">LinkedIn</a>
