@@ -40,15 +40,18 @@ export default function BlogIndex() {
         </div>
       </nav>
 
-      <div className="px-5 md:px-8 py-16 md:py-24">
+      <div className="px-5 md:px-8 pt-20 md:pt-32 pb-16 md:pb-24">
         <div className="max-w-[680px] mx-auto">
           <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Thoughts</p>
           <h1
-            className="font-[family-name:var(--font-cormorant)] font-light mb-16"
+            className="font-[family-name:var(--font-cormorant)] font-light mb-6"
             style={{ fontSize: "clamp(28px, 5vw, 48px)", lineHeight: 1.2, color: "#1A1A1A" }}
           >
-            All writing
+            The questions banks are not yet asking
           </h1>
+          <p className="mb-16" style={{ fontSize: "1rem", color: "#6B6B6B", lineHeight: 1.7, maxWidth: 540 }}>
+            Writing on agentic AI, operating model transformation, and the structural shifts arriving faster than most institutions assume.
+          </p>
           <div className="flex flex-col">
             {posts.map((post, i) => (
               <article
