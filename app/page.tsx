@@ -33,10 +33,10 @@ export default function Home() {
           </a>
           <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
             <a href="#thoughts" className="hover:text-[#2B3A52] transition-colors">Thoughts</a>
-            <a href="#speaking" className="hover:text-[#2B3A52] transition-colors">Speaking</a>
+            <a href="#contact" className="hover:text-[#2B3A52] transition-colors">Contact</a>
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
             <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">LinkedIn</a>
-            <a href="#speaking" className="hidden sm:inline-block px-4 py-2 border border-[#2B3A52] text-[#2B3A52] hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 text-xs tracking-widest">Enquire</a>
+            <a href="#contact" className="hidden sm:inline-block px-4 py-2 border border-[#2B3A52] text-[#2B3A52] hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 text-xs tracking-widest">Let&apos;s talk</a>
           </div>
         </div>
       </nav>
@@ -447,60 +447,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── SPEAKING ── */}
-      <section id="speaking" className="py-20 md:py-32 px-5 md:px-8">
+      {/* ── CONTACT ── */}
+      <section id="contact" className="py-20 md:py-32 px-5 md:px-8">
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
-            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Speaking</p>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Let&apos;s talk</p>
             <h2
               className="font-[family-name:var(--font-cormorant)] font-light mb-6"
               style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
             >
-              Speaking and workshops
+              If this resonated, start a conversation.
             </h2>
-            <p className="mb-12" style={{ maxWidth: 560, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              I speak on agentic AI, operating model transformation, and the future of financial services, for executive audiences who want provocation, not reassurance.
+            <p className="mb-12" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
+              I speak to boards, brief leadership teams, and have conversations with people working through what the agentic shift means for their institution. Sometimes that leads to a keynote. Sometimes to a working session. Sometimes to a useful exchange over coffee. All of it starts the same way.
             </p>
           </FadeUp>
           <FadeUp delay={0.1}>
-            <div className="grid md:grid-cols-3 gap-0 mb-16">
-              {[
-                {
-                  format: "Keynote",
-                  duration: "45 to 60 min",
-                  desc: "A focused provocation for leadership audiences. Structured argument, no slides-as-documents, room for one question that changes the room.",
-                },
-                {
-                  format: "Board briefing",
-                  duration: "90 min, interactive",
-                  desc: "Structured to move from orientation to decision-readiness. Designed around the questions boards are already asking but not finding answers to.",
-                },
-                {
-                  format: "Executive workshop",
-                  duration: "Half day, working session",
-                  desc: "Hands-on. We map your current model against an agentic target state. You leave with a gap analysis and a short list of decisions to make.",
-                },
-              ].map((item) => (
-                <div
-                  key={item.format}
-                  className="pt-6 pb-8 md:pr-8"
-                  style={{ borderTop: "2px solid #2B3A52" }}
-                >
-                  <h3
-                    className="font-[family-name:var(--font-cormorant)] font-light mb-1"
-                    style={{ fontSize: "1.4rem", color: "#2B3A52" }}
-                  >
-                    {item.format}
-                  </h3>
-                  <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "#8B7355" }}>
-                    {item.duration}
-                  </p>
-                  <p style={{ fontSize: "0.9rem", color: "#1A1A1A", lineHeight: 1.75 }}>{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </FadeUp>
-          <FadeUp delay={0.15}>
             <ContactForm />
           </FadeUp>
         </div>
@@ -541,7 +503,7 @@ export default function Home() {
           </p>
           <div className="flex gap-6 text-sm" style={{ color: "#6B6B6B" }}>
             <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
-            <a href="#speaking" className="hover:text-[#2B3A52] transition-colors">Speaking</a>
+            <a href="#contact" className="hover:text-[#2B3A52] transition-colors">Contact</a>
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
             <a
               href="https://linkedin.com/in/marcoliverhauser"

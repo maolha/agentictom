@@ -15,8 +15,7 @@ export default function ContactForm() {
       name: (form.elements.namedItem("name") as HTMLInputElement).value,
       organisation: (form.elements.namedItem("organisation") as HTMLInputElement).value,
       email: (form.elements.namedItem("email") as HTMLInputElement).value,
-      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
-      format: (form.elements.namedItem("format") as HTMLSelectElement).value,
+      interest: (form.elements.namedItem("interest") as HTMLSelectElement).value,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
     };
 
@@ -82,24 +81,18 @@ export default function ContactForm() {
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label className="text-xs text-[#6B6B6B] uppercase tracking-widest">Phone <span style={{ color: "#8B7355" }}>(optional)</span></label>
-        <input
-          name="phone"
-          type="tel"
-          className="bg-transparent border-b border-[#D8D3CB] py-2 text-[#1A1A1A] focus:outline-none focus:border-[#2B3A52] transition-colors"
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <label className="text-xs text-[#6B6B6B] uppercase tracking-widest">Format</label>
+        <label className="text-xs text-[#6B6B6B] uppercase tracking-widest">I am interested in</label>
         <select
-          name="format"
+          name="interest"
           required
           className="bg-transparent border-b border-[#D8D3CB] py-2 text-[#1A1A1A] focus:outline-none focus:border-[#2B3A52] transition-colors cursor-pointer"
         >
-          <option value="">Select a format</option>
-          <option value="keynote">Keynote (45 to 60 min)</option>
-          <option value="board-briefing">Board briefing (90 min, interactive)</option>
-          <option value="executive-workshop">Executive workshop (half day)</option>
+          <option value="">Select</option>
+          <option value="conversation">A conversation about the agentic shift</option>
+          <option value="keynote">A keynote or speaking engagement</option>
+          <option value="board-briefing">A board briefing</option>
+          <option value="assessment">Discussing our assessment results</option>
+          <option value="other">Something else</option>
         </select>
       </div>
       <div className="flex flex-col gap-1">
@@ -116,7 +109,7 @@ export default function ContactForm() {
         disabled={loading}
         className="mt-2 self-start px-8 py-3 border border-[#2B3A52] text-[#2B3A52] text-sm uppercase tracking-widest hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 disabled:opacity-50"
       >
-        {loading ? "Sending..." : "Submit"}
+        {loading ? "Sending..." : "Send"}
       </button>
     </form>
   );

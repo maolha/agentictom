@@ -69,10 +69,10 @@ export default function AssessmentClient() {
             <p className="mb-10" style={{ fontSize: "0.9rem", color: "#6B6B6B", lineHeight: 1.7, maxWidth: 520 }}>
               This is not a maturity assessment. It is a mirror — designed to reveal the gaps between where your operating model is and where it needs to be.
             </p>
-            <div className="flex flex-wrap gap-6 mb-12">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-6 mb-12">
               {categories.map((cat) => (
                 <div key={cat} className="flex items-center gap-2">
-                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#2B3A52", display: "block" }} />
+                  <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#2B3A52", display: "block", flexShrink: 0 }} />
                   <span className="text-xs uppercase tracking-widest" style={{ color: "#6B6B6B" }}>{cat}</span>
                 </div>
               ))}
@@ -88,20 +88,8 @@ export default function AssessmentClient() {
 
   return (
     <main style={{ background: "#F7F4EF", color: "#1A1A1A", minHeight: "100vh" }}>
-      {/* Progress bar */}
-      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: 3, background: "#D8D3CB", zIndex: 100 }}>
-        <div
-          style={{
-            height: "100%",
-            width: `${progress}%`,
-            background: "#2B3A52",
-            transition: "width 0.5s ease-in-out",
-          }}
-        />
-      </div>
-
-      <nav className="px-5 md:px-8 py-4 md:py-5" style={{ borderBottom: "1px solid #D8D3CB" }}>
-        <div className="max-w-[900px] mx-auto flex justify-between items-center">
+      <nav className="px-5 md:px-8 pt-4 md:pt-5 pb-0">
+        <div className="max-w-[900px] mx-auto flex justify-between items-center mb-4">
           <Link
             href="/"
             className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide"
@@ -112,6 +100,18 @@ export default function AssessmentClient() {
           <span className="text-xs uppercase tracking-widest" style={{ color: "#6B6B6B" }}>
             {currentQuestion + 1} / {questions.length}
           </span>
+        </div>
+        <div className="max-w-[900px] mx-auto">
+          <div style={{ height: 2, background: "#D8D3CB" }}>
+            <div
+              style={{
+                height: "100%",
+                width: `${progress}%`,
+                background: "#2B3A52",
+                transition: "width 0.5s ease-in-out",
+              }}
+            />
+          </div>
         </div>
       </nav>
 
