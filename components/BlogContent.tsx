@@ -47,18 +47,164 @@ function parseMarkdown(md: string): React.ReactNode[] {
       continue;
     }
 
+    // Horizontal rule
+    if (line.trim() === "---" || line.trim() === "***") {
+      nodes.push(
+        <hr key={key++} style={{ border: "none", borderTop: "1px solid #D8D3CB", margin: "2rem 0" }} />
+      );
+      i++;
+      continue;
+    }
+
     // Empty line
     if (line.trim() === "") {
       i++;
       continue;
     }
 
-    // Paragraph (collect consecutive non-empty, non-heading lines)
+    // Table
+    if (line.includes("|") && line.trim().startsWith("|")) {
+      const tableRows: string[][] = [];
+      let hasHeader = false;
+
+      while (i < lines.length && lines[i].includes("|") && lines[i].trim().startsWith("|")) {
+        const row = lines[i]
+          .trim()
+          .replace(/^\|/, "")
+          .replace(/\|$/, "")
+          .split("|")
+          .map((cell) => cell.trim());
+
+        // Skip separator row (|---|---|)
+        if (row.every((cell) => /^[-:\s]+$/.test(cell))) {
+          hasHeader = true;
+          i++;
+          continue;
+        }
+
+        tableRows.push(row);
+        i++;
+      }
+
+      if (tableRows.length > 0) {
+        const headerRow = hasHeader ? tableRows[0] : null;
+        const bodyRows = hasHeader ? tableRows.slice(1) : tableRows;
+
+        nodes.push(
+          <div key={key++} className="overflow-x-auto mb-6 -mx-5 px-5 md:mx-0 md:px-0">
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.85rem" }}>
+              {headerRow && (
+                <thead>
+                  <tr>
+                    {headerRow.map((cell, ci) => (
+                      <th
+                        key={ci}
+                        className="text-left text-xs uppercase tracking-widest py-3 pr-4"
+                        style={{
+                          borderBottom: "2px solid #2B3A52",
+                          color: "#2B3A52",
+                          fontWeight: 700,
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {renderInline(cell)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+              )}
+              <tbody>
+                {bodyRows.map((row, ri) => (
+                  <tr key={ri}>
+                    {row.map((cell, ci) => (
+                      <td
+                        key={ci}
+                        className="py-3 pr-4"
+                        style={{
+                          borderBottom: "1px solid #D8D3CB",
+                          color: "#1A1A1A",
+                          lineHeight: 1.6,
+                          verticalAlign: "top",
+                        }}
+                      >
+                        {renderInline(cell)}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      }
+      continue;
+    }
+
+    // Bullet list
+    if (line.startsWith("- ")) {
+      const items: string[] = [];
+      while (i < lines.length && lines[i].startsWith("- ")) {
+        items.push(lines[i].slice(2));
+        i++;
+      }
+      nodes.push(
+        <ul key={key++} className="mb-6 flex flex-col gap-2" style={{ paddingLeft: "1.25rem" }}>
+          {items.map((item, ii) => (
+            <li
+              key={ii}
+              style={{
+                listStyleType: "disc",
+                fontSize: "0.95rem",
+                lineHeight: 1.7,
+                color: "#1A1A1A",
+              }}
+            >
+              {renderInline(item)}
+            </li>
+          ))}
+        </ul>
+      );
+      continue;
+    }
+
+    // Numbered list
+    if (/^\d+\.\s/.test(line)) {
+      const items: string[] = [];
+      while (i < lines.length && /^\d+\.\s/.test(lines[i])) {
+        items.push(lines[i].replace(/^\d+\.\s/, ""));
+        i++;
+      }
+      nodes.push(
+        <ol key={key++} className="mb-6 flex flex-col gap-2" style={{ paddingLeft: "1.25rem" }}>
+          {items.map((item, ii) => (
+            <li
+              key={ii}
+              style={{
+                listStyleType: "decimal",
+                fontSize: "0.95rem",
+                lineHeight: 1.7,
+                color: "#1A1A1A",
+              }}
+            >
+              {renderInline(item)}
+            </li>
+          ))}
+        </ol>
+      );
+      continue;
+    }
+
+    // Paragraph (collect consecutive non-empty, non-special lines)
     const paraLines: string[] = [];
     while (
       i < lines.length &&
       lines[i].trim() !== "" &&
-      !lines[i].startsWith("#")
+      !lines[i].startsWith("#") &&
+      !lines[i].startsWith("- ") &&
+      !/^\d+\.\s/.test(lines[i]) &&
+      !(lines[i].includes("|") && lines[i].trim().startsWith("|")) &&
+      lines[i].trim() !== "---" &&
+      lines[i].trim() !== "***"
     ) {
       paraLines.push(lines[i]);
       i++;
