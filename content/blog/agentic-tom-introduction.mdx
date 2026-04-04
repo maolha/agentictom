@@ -1,48 +1,108 @@
 ---
 title: "What Is an Agentic Target Operating Model?"
-date: "2026-02-05"
+date: "2026-01-08"
 excerpt: "Most discussions about AI in banking focus on tools. The more consequential question is how the organisation itself must change to absorb what these tools make possible."
 ---
 
 # What Is an Agentic Target Operating Model?
 
-Every bank has an AI strategy. Most of them answer the wrong question.
+Every bank has an AI strategy. **Most of them answer the wrong question.**
 
-They ask: **where can we use AI?** The better question: what does the organisation look like when AI is not a tool but a participant?
+They ask: where can we use AI? The better question: what does the organisation look like when AI is not a tool but a participant?
 
-That is what an Agentic Target Operating Model describes. Not a technology roadmap. **An organisational architecture** — who or what is accountable for which decisions, and how authority flows through a system that includes non-human actors.
+McKinsey calls this the "agentic organization." IBM describes an "always-on operating model." BCG talks about "machines that manage themselves." The consulting industry has recognised the shift. But their frameworks are generic — designed for every industry, not for the specific governance, regulatory, and structural realities of banking.
+
+**What is missing is a target operating model.** Not a vision. Not a strategy deck. A TOM — the kind of document a Swiss bank's COO would use to redesign how work actually gets done, who is accountable for which decisions, and how authority flows through a system that now includes non-human actors.
+
+That is what this site describes.
+
+## Why "target operating model" and not "AI strategy"
+
+The distinction matters. An AI strategy says "we will deploy AI in these areas." A target operating model says "this is how the organisation works when AI is a first-class participant."
+
+The difference is structural. An AI strategy can coexist with the current org chart. **A target operating model replaces it.**
+
+IBM surveyed 800 executives and found that 78 percent believe capturing full value from agentic AI requires a new operating model where humans and systems learn together. McKinsey estimates that current AI technologies could automate roughly 57 percent of work hours in banking. BCG projects that AI could increase bank profitability by 30 percent and reduce costs by 30-40 percent by 2030.
+
+These numbers are meaningless without a design. The design is the TOM.
 
 ## The distinction that changes everything
 
-The word "agentic" is doing real work here. We are not talking about automation. Automation executes predefined rules on predefined inputs. It does what it is told.
+The word "agentic" is doing real work. We are not talking about automation. Automation executes predefined rules on predefined inputs. It does what it is told. A bot that reconciles 50'000 transactions per day is not making decisions. It is executing instructions.
 
-An agent is different. It pursues goals. It operates in dynamic environments. **It makes decisions under uncertainty and learns from outcomes.**
+An agent is different. It pursues goals. It operates in dynamic environments. **It makes decisions under uncertainty and learns from outcomes.** Give it an objective — process this mortgage application and return a risk-adjusted offer — and it determines how to achieve it, what to escalate, and when to stop.
 
-That distinction changes how you govern it. A rule-based RPA bot can be governed like a piece of software. **An agent must be governed like a member of staff** — with onboarding, performance expectations, accountability structures, and an offboarding process.
+That distinction changes governance fundamentally. A rule-based RPA bot can be governed like software: deploy, monitor uptime, fix bugs. **An agent must be governed like a member of staff** — with onboarding, performance expectations, accountability structures, and an offboarding process.
 
 If you are managing your agents like software, you are under-governing them. If you are trying to specify their behaviour in advance like automation, you are misunderstanding what they are.
 
 ## Three workforces, not one
 
-The agentic TOM rests on a taxonomy. Not all non-human actors are the same.
+The agentic TOM rests on a taxonomy. Not all non-human actors are the same, and conflating them is one of the most common mistakes banks make. McKinsey's Global Institute describes this as three distinct categories — people, agents, and robots. For banking, the taxonomy is:
 
-**Bots** are the industrial backbone. Rule-based, auditable, deterministic. Reconciliations, extractions, routing. No judgment. By design.
+**Bots** are the industrial backbone. Rule-based, auditable, deterministic. Reconciliations, data extraction, sanctions screening, payment routing. **No judgment. By design.** They belong in the same governance category as infrastructure.
 
-**Agents** operate as junior-to-mid knowledge workers at scale. They pursue goals, use context, and make probabilistic decisions within a policy envelope defined by humans. When the stakes exceed their authorisation level, they [escalate by design](/blog/escalation-by-design).
+**Agents** operate as junior-to-mid knowledge workers at scale. They pursue goals, use context, and make probabilistic decisions within a policy envelope defined by humans. A mortgage pricing agent evaluates risk, calibrates against the bank's book, and generates an offer. A compliance monitoring agent reviews transactions for patterns suggesting financial crime. When the stakes exceed their authorisation level, they [escalate — by design, not by failure](/blog/escalation-by-design).
 
-**Humans** hold board-level decision proxies within operations. They own irreversible decisions, regulatory accountability, and relationship trust. They never touch routine.
+**Humans** hold board-level decision proxies within operations. They own irreversible decisions, regulatory accountability, and relationship trust. They handle the estate planning conversation, the complex credit exception, the client who needs someone in the room they can trust. **They never touch routine.**
 
-The shift most organisations have not absorbed: **human roles concentrate at the edges** — exceptions, governance, relationships. Fewer humans, but each one more consequential.
+The shift most organisations have not absorbed: **human roles concentrate at the edges** — exceptions, governance, relationships. PwC describes this as the shift from a pyramid to a diamond: fewer junior roles, a strong middle layer of agent orchestrators, and a small senior leadership tier. The humans who remain do fundamentally different and more consequential work.
 
-## The end of the department
+## From functions to outcomes
 
-A conventional bank organises around functions: operations, compliance, risk, client service. Each function optimises its own process.
+A conventional bank organises around functions: operations, compliance, risk, client service. Each function optimises its own process. Each has its own team, its own metrics, its own incentives.
 
-**Handoffs between functions are where most operational risk lives.** They are also where most of the cost is.
+**Handoffs between functions are where most operational risk lives.** They are also where most of the cost is. A mortgage application passes from sales to credit to legal to operations to client service — each handoff adding time, each boundary creating potential for error.
 
-In an agentic TOM, the organising principle is not the function. **It is the outcome.** An agent system owns an end-to-end workflow — a loan decisioning process, a KYC remediation cycle, a client onboarding journey — and coordinates across what used to be functional boundaries.
+In an agentic TOM, the organising principle is not the function. **It is the outcome.** An agent system owns an end-to-end workflow — [mortgage origination from application to offer](/blog/mortgage-lending-in-an-agentic-tom), KYC remediation from trigger to resolution, client onboarding from first contact to active account — and coordinates across what used to be functional boundaries.
 
-The department does not disappear. But it stops being the unit of execution. It becomes the unit of governance.
+The department does not disappear. But it stops being the unit of execution. **It becomes the unit of governance.** The head of operations does not manage the process. They govern the agents that manage the process. The head of compliance does not review transactions. They set the policy envelope within which the compliance agent operates — and review its performance.
+
+## What changes for leadership
+
+**For a CEO**, the agentic TOM is a strategic question: what is our target state, and how fast are we moving toward it? DBS Bank completed nine operating model transformation initiatives in a single year and identified 11'000 employees for reskilling. That is the pace of a bank that has decided to move. Most Swiss banks have not.
+
+**For a COO**, it is an operational redesign: which processes become outcome-owned agent systems? What is the transition path? McKinsey envisions one human managing 20 to 30 AI agents. Accenture describes a "10x bank" where a single individual leads a team of AI co-workers delivering exponentially greater output. These ratios require fundamentally different management skills.
+
+**For a CRO**, it is a governance challenge: how do you ensure accountability when decisions are made by systems that adapt? FINMA Guidance 08/2024 provides the regulatory frame — accountability cannot be delegated to AI, autonomous operation requires demonstrated reliability, and the institution must retain the expertise to override. The CRO's job is to [design the governance](/blog/who-manages-the-agents) that satisfies these requirements at scale.
+
+**For a CHRO**, it is a workforce transformation. KPMG found that 87 percent of leaders say agents require redefining performance metrics. 29 percent of heavy adopters already report fewer traditional entry-level roles. The skills profile changes fundamentally — and the people who thrive in the new model may not be the same people who thrive in the current one.
+
+## The cautionary tale
+
+Klarna offers the most instructive lesson. In 2024, the company deployed an AI assistant that it said replaced the work of 700 human agents. Resolution time dropped from 11 minutes to under 2. The company claimed CHF 40 million in annual savings.
+
+**Within a year, they reversed course.** Quality slipped on complex cases. The CEO acknowledged the strategy "went too far." Klarna is now rehiring humans.
+
+The lesson is not that AI agents fail. **The lesson is that full automation without designed escalation, without human governance of the edges, without a framework for what stays human — fails.** The agentic TOM is that framework. It does not replace humans. It redesigns the relationship between humans and machines so that both operate where they are strongest.
+
+## Why now — and why Switzerland
+
+Three forces are converging.
+
+**The technology is ready.** The number of agentic AI deployments at the top 50 global banks grew 13 times in a single year. 70 percent of financial services organisations are deploying or exploring agentic AI. But only 14 percent have reached full-scale implementation. The gap between experimentation and operating model redesign is where most banks are stuck.
+
+**The demand side is shifting.** Customers will increasingly interact with banks through their own AI agents — [querying multiple providers simultaneously](/blog/the-tsunami-is-not-coming-from-inside-the-bank), benchmarking fees in real time, filing structured complaints. The volume and speed implications are severe for banks that still operate at human pace.
+
+**The regulatory framework permits it.** [Switzerland's principles-based regulatory philosophy](/blog/swiss-banking-agentic-advantage) — reinforced by FINMA Guidance 08/2024 — creates space for agentic systems that the EU's rules-based AI Act constrains. The AI Act classifies credit assessment as high-risk and imposes detailed prescriptive requirements. FINMA governs outcomes and accountability. Swiss banks have a structural advantage that most have not yet recognised.
+
+## What this site explores
+
+This post defines the concept. The rest of the site explores its implications:
+
+**[Escalation by Design](/blog/escalation-by-design)** — why human oversight is an architecture decision, not a failure mode.
+
+**[The Swiss Agentic Advantage](/blog/swiss-banking-agentic-advantage)** — three structural advantages Swiss banks have not yet recognised.
+
+**[The Tsunami](/blog/the-tsunami-is-not-coming-from-inside-the-bank)** — what happens when customers use AI agents to interact with your bank.
+
+**[Mortgage Lending in an Agentic TOM](/blog/mortgage-lending-in-an-agentic-tom)** — a concrete case sketch showing the three-layer model applied to one process, grounded in FINMA 08/2024.
+
+**[From ABS to Autopilot](/blog/from-abs-to-autopilot)** — the five levels of banking autonomy, and why you cannot skip them.
+
+**[Who Manages the Agents?](/blog/who-manages-the-agents)** — the organisational design question behind agent governance.
+
+The [framework page](/framework) visualises the three-layer model. The [assessment](/assessment) reveals where your institution stands today.
 
 ## The first step is conceptual
 
@@ -50,4 +110,4 @@ The implications for leadership, governance, and technology are substantial. But
 
 It is recognising that your bank already has a target operating model. It was designed for a workforce that was entirely human. **That assumption no longer holds.**
 
-The question is not whether to redesign. It is whether you redesign deliberately — or discover, too late, that the model redesigned itself around you. For Swiss banks, the [structural advantages](/blog/swiss-banking-agentic-advantage) to move first already exist. And the [external pressure](/blog/the-tsunami-is-not-coming-from-inside-the-bank) is arriving faster than most assume.
+The question is not whether to redesign. It is whether you redesign deliberately — or discover, too late, that the model redesigned itself around you.
