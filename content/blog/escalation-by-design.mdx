@@ -6,38 +6,42 @@ excerpt: "The failure mode of most automation projects is not that machines make
 
 # Escalation by Design: Why Human Oversight Is an Architecture Decision
 
-The failure mode of most automation projects is that **nobody designed when and how the decision returns to a human**. Machines making wrong decisions is rarely the root cause. Missing design is.
+An agent approves a CHF 2 million credit line for a client whose risk profile changed six weeks ago. The change was subtle. The agent's policy envelope did not account for it. Nobody finds out until the quarterly review.
 
-## The wrong model: escalation as exception handling
+**The problem was not the agent's decision. The problem was that nobody designed the moment where the decision should have returned to a human.**
 
-Most organisations treat escalation as a residual. The thing that happens when the system cannot proceed. A queue fills up. Someone notices. A human intervenes.
+## Escalation is not failure
 
-In this model, **escalation is a failure state**. The goal is to minimise it. Systems are judged on the percentage of cases they can handle end-to-end.
+Most organisations treat escalation as a residual — the thing that happens when the system cannot proceed. A queue fills up. Someone notices. A human intervenes.
 
-For agentic systems, this model fails.
+In this model, escalation is a failure state. The goal is to minimise it.
 
-## Escalation as a design requirement
+**For agentic systems, this model is dangerous.**
 
-When you deploy an intelligent agent into a consequential process, you are making a **delegation decision**. You are saying: this system is authorised to make decisions of this type, with these characteristics, up to this threshold of consequence.
+When you deploy an agent into a consequential process, you are making a delegation decision. This system is authorised to make decisions of this type, up to this threshold of consequence. Everything beyond that threshold must come back to a human.
 
-Everything beyond that threshold must come back to a human. Not because the system failed, but because **the system correctly identified that the cost of being wrong exceeds its authorisation level**.
+Not because the system failed. Because **the system correctly identified that the cost of being wrong exceeds its authorisation level**.
 
-This reframes escalation entirely. The trigger is not "I do not know." The trigger is **"the cost of being wrong here exceeds my authorisation level."**
+The trigger is not "I do not know." The trigger is "the cost of being wrong here exceeds my authorisation level." That is a fundamentally different design.
 
-## What this means for design
+## Four things to get right
 
-If escalation is a design requirement, it must be designed, not left to emerge.
+If escalation is a design requirement, it must be designed. Not left to emerge.
 
 **Define authorisation levels explicitly.** What types of decisions can the agent make autonomously? What requires human review? What requires human approval? These are policy questions, not technical ones.
 
-**Design the escalation interface.** When an agent escalates, what does it hand off? The context, the reasoning, the options it considered, its recommendation? A human receiving an escalation from a well-designed agent should be able to act in seconds.
+**Design the escalation interface.** When an agent escalates, what does it hand off? The context, the reasoning, the options it considered, its recommendation. A human receiving an escalation from a well-designed agent should be able to act in seconds.
 
-**Measure escalation rates.** An agent that escalates too rarely may be taking on decisions it should not. An agent that escalates too often signals a policy envelope that is too narrow. Escalation rate is a performance metric.
+**Measure escalation rates.** An agent that escalates too rarely may be taking on decisions it should not. An agent that escalates too often signals a policy envelope that is too narrow. **Escalation rate is a performance metric**, not a failure metric.
 
-**Close the loop.** When a human resolves an escalation, that resolution should flow back to the agent as signal. This is how agents improve.
+**Close the loop.** When a human resolves an escalation, that resolution flows back to the agent as signal. This is how agents improve. Without the loop, you have delegation without learning.
 
-## The governance implication
+## What you discover when you get it right
 
-Organisations that design escalation well end up with something valuable: **a real-time map of where human judgment is actually required**. Not where it used to be required, or where the org chart says it is required. Where it is actually required, revealed by the behaviour of systems operating at scale.
+Organisations that design escalation well end up with something they did not expect: **a real-time map of where human judgment is actually required**.
+
+Not where it used to be required. Not where the org chart says it is required. Where it is actually required — revealed by the behaviour of systems operating at scale.
+
+Some of those places will surprise you. Many decisions that feel like they need human judgment turn out to be pattern-matchable. Some decisions that seem routine turn out to carry consequences that only a human should own.
 
 This is one of the underappreciated outputs of an agentic TOM: **clarity about what humans are actually for**.
