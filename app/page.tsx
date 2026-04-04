@@ -465,7 +465,7 @@ export default function Home() {
               Marc Hauser
             </h2>
             <p className="mb-4" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              Twenty years building at the intersection of financial services, technology, and institutional change. Ran innovation and fintech partnerships at UBS. Co-built Trust Square, Switzerland&apos;s largest blockchain hub. Led Tenity&apos;s early-stage investment programme. Now heading banking and financial services for UiPath in Switzerland, where the agentic shift is not theoretical — it is the work.
+              Eighteen years across digital banking, fintech, and emerging technologies. Multiple director-level roles at UBS — digital channels, wealth management, investment products across international markets. CEO of Trust Square, Zurich&apos;s blockchain ecosystem. Managing Partner at Tenity, leading early-stage fintech investment and open innovation partnerships with Julius B&auml;r, UBS, and others. Co-founded an ETH AI spin-off. Now heading banking and financial services for UiPath in Switzerland, where the agentic shift is not theoretical — it is the work.
             </p>
             <p className="mb-8" style={{ maxWidth: 620, color: "#6B6B6B", lineHeight: 1.8, fontSize: "0.9rem" }}>
               This site is a framework I use in my own thinking, offered here as a basis for serious conversation with people who are working on the same questions.
