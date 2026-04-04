@@ -107,7 +107,7 @@ export default function Home() {
               Work is no longer organised around functions.
             </h2>
             <p style={{ color: "#1A1A1A", lineHeight: 1.8, maxWidth: 620, fontSize: "0.95rem" }}>
-              A bank with an Agentic Target Operating Model looks nothing like today. Decision-making authority moves from human-controlled workflows to dynamically orchestrated, machine-led execution systems, with humans governing exceptions, risk, and intent. The organising principle is no longer the department or the process. It is the outcome. Outcomes are owned end-to-end by systems that learn.
+              A bank with an Agentic Target Operating Model looks nothing like today. Decision-making authority moves from human-controlled workflows to dynamically orchestrated, machine-led execution systems, with humans governing exceptions, risk, and intent. <strong style={{ fontWeight: 700 }}>The organising principle is no longer the department or the process. It is the outcome.</strong> Outcomes are owned end-to-end by systems that learn.
             </p>
           </FadeUp>
         </div>
@@ -149,15 +149,15 @@ export default function Home() {
               {[
                 {
                   label: "Bots",
-                  body: "The industrial backbone. Rule-based, repeatable, auditable. Reconciliations, KYC extraction, settlements. No judgment. By design.",
+                  body: "The industrial backbone. Rule-based, repeatable, auditable. Reconciliations, KYC extraction, settlements. <strong>No judgment. By design.</strong>",
                 },
                 {
                   label: "Agents",
-                  body: "Junior-to-mid knowledge workers at scale. Goal-driven, context-aware, probabilistic. They decide within a policy envelope humans defined. They escalate when the cost of being wrong exceeds their authorisation level.",
+                  body: "Junior-to-mid knowledge workers at scale. Goal-driven, context-aware, probabilistic. They decide within a policy envelope humans defined. <strong>They escalate when the cost of being wrong exceeds their authorisation level.</strong>",
                 },
                 {
                   label: "Humans",
-                  body: "Board-level decision proxies embedded in operations. They own irreversible decisions, regulatory accountability, and relationship trust. They never touch routine.",
+                  body: "Board-level decision proxies embedded in operations. They own <strong>irreversible decisions, regulatory accountability, and relationship trust</strong>. They never touch routine.",
                 },
               ].map((col) => (
                 <div
@@ -171,7 +171,7 @@ export default function Home() {
                   >
                     {col.label}
                   </h3>
-                  <p style={{ fontSize: "0.95rem", color: "#1A1A1A", lineHeight: 1.75 }}>{col.body}</p>
+                  <p style={{ fontSize: "0.95rem", color: "#1A1A1A", lineHeight: 1.75 }} dangerouslySetInnerHTML={{ __html: col.body }} />
                 </div>
               ))}
             </div>
@@ -185,7 +185,7 @@ export default function Home() {
                 className="font-[family-name:var(--font-dm-sans)]"
                 style={{ color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}
               >
-                Escalation is not a failure state. It is a design requirement. The trigger is not &lsquo;I do not know.&rsquo; The trigger is &lsquo;the cost of being wrong here exceeds my authorisation level.&rsquo;
+                <strong style={{ fontWeight: 700 }}>Escalation is not a failure state. It is a design requirement.</strong> The trigger is not &lsquo;I do not know.&rsquo; The trigger is &lsquo;the cost of being wrong here exceeds my authorisation level.&rsquo;
               </p>
             </div>
           </FadeUp>
@@ -210,17 +210,17 @@ export default function Home() {
                 {
                   num: "01",
                   phase: "Onboarding",
-                  body: "An agent needs context, scope, and constraints before it acts. This is orientation, not configuration. What decisions is it authorised to make? What must it escalate? What values does it carry into ambiguous situations? These are onboarding questions. The hiring manager is the process owner, not IT.",
+                  body: "An agent needs context, scope, and constraints before it acts. <strong>This is orientation, not configuration.</strong> What decisions is it authorised to make? What must it escalate? What values does it carry into ambiguous situations? These are onboarding questions. The hiring manager is the process owner, not IT.",
                 },
                 {
                   num: "02",
                   phase: "Performance",
-                  body: "An agent making ten thousand micro-decisions per day cannot be evaluated by auditing each one. Define performance envelopes: expected error rates, escalation frequency, outcome distributions. Measure against them continuously. A quarterly human review of agent performance is a governance requirement under any serious reading of DORA or FINMA operational risk principles.",
+                  body: "An agent making ten thousand micro-decisions per day cannot be evaluated by auditing each one. <strong>Define performance envelopes</strong>: expected error rates, escalation frequency, outcome distributions. Measure against them continuously. A quarterly human review of agent performance is a governance requirement under any serious reading of DORA or FINMA operational risk principles.",
                 },
                 {
                   num: "03",
                   phase: "Decommissioning",
-                  body: "An agent trained on a regulatory environment that has since changed is a liability, not an asset. Decommissioning requires evidence that the decision history has been reviewed, open cases transferred, and the model archived in retrievable format for audit. This is an offboarding, not a deletion. Closer to retiring a trader than switching off software.",
+                  body: "An agent trained on a regulatory environment that has since changed is a liability, not an asset. Decommissioning requires evidence that the decision history has been reviewed, open cases transferred, and the model archived in retrievable format for audit. <strong>This is an offboarding, not a deletion.</strong> Closer to retiring a trader than switching off software.",
                 },
               ].map((item) => (
                 <div key={item.phase} className="py-8 md:py-10 flex flex-col md:flex-row gap-4 md:gap-8" style={{ borderTop: "1px solid #D8D3CB" }}>
@@ -239,7 +239,7 @@ export default function Home() {
                       {item.phase}
                     </h3>
                   </div>
-                  <p style={{ fontSize: "0.95rem", color: "#1A1A1A", lineHeight: 1.8 }}>{item.body}</p>
+                  <p style={{ fontSize: "0.95rem", color: "#1A1A1A", lineHeight: 1.8 }} dangerouslySetInnerHTML={{ __html: item.body }} />
                 </div>
               ))}
             </div>
@@ -266,15 +266,15 @@ export default function Home() {
               {[
                 {
                   label: "FINMA",
-                  body: "FINMA's principles-based regulatory philosophy is more compatible with agentic systems than the rules-based frameworks of the EU. When the regulator governs outcomes and accountability rather than specifying processes, there is meaningful room to deploy systems that cannot be fully specified in advance. Banks that treat compliance as a design input will move faster.",
+                  body: "FINMA's principles-based regulatory philosophy is <strong>more compatible with agentic systems than the rules-based frameworks of the EU</strong>. When the regulator governs outcomes and accountability rather than specifying processes, there is meaningful room to deploy systems that cannot be fully specified in advance. Banks that treat compliance as a design input will move faster.",
                 },
                 {
                   label: "Data residency",
-                  body: "Swiss data sovereignty requirements have historically been seen as constraints. They are becoming advantages. Organisations forced to build local infrastructure, local data management, and local governance are better positioned to operate agentic systems within defensible jurisdictional boundaries. That requirement is only growing globally.",
+                  body: "Swiss data sovereignty requirements have historically been seen as constraints. <strong>They are becoming advantages.</strong> Organisations forced to build local infrastructure, local data management, and local governance are better positioned to operate agentic systems within defensible jurisdictional boundaries. That requirement is only growing globally.",
                 },
                 {
                   label: "Relationship banking",
-                  body: "Swiss private banking is built on long-term relationships with high-value clients. Agentic systems excel at synthesising deep longitudinal context into coherent advisory actions. The relationship model is strengthened by agents, when the human at the centre uses the enhanced context well. The best private banks will feel more attentive to clients, not more automated.",
+                  body: "Swiss private banking is built on long-term relationships with high-value clients. Agentic systems excel at synthesising deep longitudinal context into coherent advisory actions. The relationship model is strengthened by agents, when the human at the centre uses the enhanced context well. <strong>The best private banks will feel more attentive to clients, not more automated.</strong>",
                 },
               ].map((item) => (
                 <div key={item.label}>
@@ -285,7 +285,7 @@ export default function Home() {
                   >
                     {item.label}
                   </h3>
-                  <p style={{ fontSize: "0.9rem", color: "#1A1A1A", lineHeight: 1.8 }}>{item.body}</p>
+                  <p style={{ fontSize: "0.9rem", color: "#1A1A1A", lineHeight: 1.8 }} dangerouslySetInnerHTML={{ __html: item.body }} />
                 </div>
               ))}
             </div>
