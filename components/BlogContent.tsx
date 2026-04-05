@@ -1,6 +1,9 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
+
+const MortgageFunnel = dynamic(() => import("@/components/MortgageFunnel"));
 
 function parseMarkdown(md: string): React.ReactNode[] {
   const lines = md.split("\n");
@@ -10,6 +13,13 @@ function parseMarkdown(md: string): React.ReactNode[] {
 
   while (i < lines.length) {
     const line = lines[i];
+
+    // Custom component embeds
+    if (line.trim() === "<!-- funnel:mortgage -->") {
+      nodes.push(<MortgageFunnel key={key++} />);
+      i++;
+      continue;
+    }
 
     // Skip the h1 title (already rendered by the page)
     if (line.startsWith("# ") && !line.startsWith("## ")) {
