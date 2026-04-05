@@ -278,7 +278,7 @@ export default function Home() {
               Twenty years across digital banking, fintech, and emerging technologies. Multiple director-level roles at UBS covering digital channels, wealth management, and investment products across international markets. CEO of Trust Square, Z&uuml;rich&apos;s blockchain ecosystem. Managing Partner at Tenity, leading early-stage fintech investment and open innovation partnerships with Julius B&auml;r, UBS, and others. Co-founded an ETH AI spin-off. Now heading banking and financial services for UiPath in Switzerland.
             </p>
             <p className="mb-8" style={{ maxWidth: 620, color: "#6B6B6B", lineHeight: 1.8, fontSize: "0.9rem" }}>
-              Based in Z&uuml;rich. One daughter who is not prompting yet. This site is a framework I use in my own thinking, offered here as a basis for serious conversation with people working on the same questions.
+              Based in Z&uuml;rich. One daughter who will be agent-native before she is old enough to open a bank account. This site is a framework I use in my own thinking, offered here as a basis for serious conversation with people working on the same questions.
             </p>
             <a
               href="https://linkedin.com/in/marcoliverhauser"
