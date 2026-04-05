@@ -54,37 +54,39 @@ export default function BlogIndex() {
           </p>
           <div className="flex flex-col">
             {posts.map((post, i) => (
-              <article
+              <Link
                 key={post.slug}
-                className="py-8"
+                href={`/blog/${post.slug}`}
+                className="block py-8 group"
                 style={i > 0 ? { borderTop: "1px solid #D8D3CB" } : {}}
               >
-                <div className="flex items-center gap-3 mb-2">
-                  <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
-                    {formatDate(post.date)}
+                <article>
+                  <div className="flex items-center gap-3 mb-2">
+                    <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                      {formatDate(post.date)}
+                    </p>
+                    <span style={{ color: "#D8D3CB" }}>&middot;</span>
+                    <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                      {post.readingTime} min read
+                    </p>
+                  </div>
+                  <h2
+                    className="font-[family-name:var(--font-cormorant)] font-light mb-3 group-hover:text-[#2B3A52] transition-colors"
+                    style={{ fontSize: "clamp(22px, 3.5vw, 30px)", color: "#1A1A1A" }}
+                  >
+                    {post.title}
+                  </h2>
+                  <p className="mb-4" style={{ fontSize: "0.9rem", color: "#6B6B6B", lineHeight: 1.7 }}>
+                    {post.excerpt}
                   </p>
-                  <span style={{ color: "#D8D3CB" }}>&middot;</span>
-                  <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
-                    {post.readingTime} min read
-                  </p>
-                </div>
-                <h2
-                  className="font-[family-name:var(--font-cormorant)] font-light mb-3"
-                  style={{ fontSize: "clamp(22px, 3.5vw, 30px)", color: "#1A1A1A" }}
-                >
-                  {post.title}
-                </h2>
-                <p className="mb-4" style={{ fontSize: "0.9rem", color: "#6B6B6B", lineHeight: 1.7 }}>
-                  {post.excerpt}
-                </p>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="text-sm uppercase tracking-widest hover:underline"
-                  style={{ color: "#2B3A52" }}
-                >
-                  Read
-                </Link>
-              </article>
+                  <span
+                    className="text-sm uppercase tracking-widest group-hover:underline"
+                    style={{ color: "#2B3A52" }}
+                  >
+                    Read
+                  </span>
+                </article>
+              </Link>
             ))}
           </div>
         </div>
