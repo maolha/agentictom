@@ -188,8 +188,8 @@ export const levels: AssessmentLevel[] = [
   {
     name: "Unaware",
     threshold: 0,
-    description: "Your organisation has not yet framed the agentic shift as an operating model question. AI is seen as a tool, not a participant.",
-    implication: "The risk is not that you are behind — it is that the gap between your current model and the required model is growing without visibility.",
+    description: "Your organisation has not yet framed the agentic shift as an operating model question. AI is still treated as a tool rather than a workforce participant.",
+    implication: "The gap between your current model and the required model is growing without visibility. That is the risk.",
   },
   {
     name: "Aware",
@@ -207,7 +207,7 @@ export const levels: AssessmentLevel[] = [
     name: "Operating",
     threshold: 38,
     description: "Your bank operates with a clear agentic TOM. Agents are governed like staff. Escalation is designed. Demand-side exposure is modelled and managed.",
-    implication: "You are building the moat. The question now is how to extend the advantage before others catch up.",
+    implication: "You have a structural lead. The challenge now is extending it before others close the gap.",
   },
 ];
 
@@ -244,7 +244,7 @@ export const categoryInsights: CategoryInsight[] = [
   },
   {
     category: "Speed & Automation",
-    low: "Your processing model is human-speed. A 10× increase in inbound volume would require proportional headcount growth — the unit economics would collapse.",
+    low: "Your processing model is human-speed. A 10× increase in inbound volume would require proportional headcount growth, and the unit economics would come under severe pressure.",
     mid: "Some processes are automated, but end-to-end response times are still measured in days and marginal costs remain significant.",
     high: "Your core processes can scale non-linearly. Marginal cost per application is low and response times are measured in hours or less.",
     question: "What is your cost per processed application — and what would it need to be if volume increased 10×?",

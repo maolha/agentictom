@@ -266,7 +266,7 @@ export default function AssessmentResults({
             What Next
           </div>
           <div style={{ fontSize: 36, fontWeight: 300, color: "#F7F4EF", lineHeight: 1.3, marginBottom: 40, maxWidth: 700 }}>
-            Now you know where you stand. The question is what you do with it.
+            Now you know where you stand. The next step is yours.
           </div>
           <div style={{ fontSize: 16, color: "rgba(247,244,239,0.6)", lineHeight: 1.7, maxWidth: 560, marginBottom: 48 }}>
             Share this report with your leadership team. Use the scores to structure the conversation about what your operating model needs to become. The gaps this assessment reveals are the decisions your organisation has not yet made.

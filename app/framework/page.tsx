@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "The Three-Layer Model — Agentic TOM",
-  description: "The agentic workforce is not one layer. It is three: Bots, Agents, and Humans — each with different governance, accountability, and escalation design.",
+  description: "The agentic workforce has three layers: Bots, Agents, and Humans, each with different governance, accountability, and escalation design.",
   openGraph: {
     title: "The Three-Layer Model — Agentic TOM",
     description: "Bots, Agents, and Humans — the three-layer workforce model for agentic banking.",
@@ -44,7 +44,7 @@ export default function FrameworkPage() {
             The three-layer model
           </h1>
           <p style={{ fontSize: "1rem", color: "#6B6B6B", lineHeight: 1.7, maxWidth: 580 }}>
-            An agentic workforce is not one thing. It is three distinct layers — each with different capabilities, governance requirements, and accountability structures.
+            An agentic workforce has three distinct layers, each with different capabilities, governance requirements, and accountability structures.
           </p>
         </div>
       </div>
@@ -187,15 +187,15 @@ export default function FrameworkPage() {
             {[
               {
                 label: "Governed like staff",
-                body: "Agents are onboarded, monitored, and decommissioned. Not deployed, maintained, and switched off.",
+                body: "Agents are onboarded, monitored, and decommissioned — like staff, not like software.",
               },
               {
                 label: "Escalation is designed",
-                body: "The trigger is not failure. The trigger is: the cost of being wrong here exceeds my authorisation level.",
+                body: "The trigger: the cost of being wrong here exceeds my authorisation level.",
               },
               {
-                label: "Outcomes, not functions",
-                body: "The organising principle is the end-to-end outcome. Not the department. Not the process step.",
+                label: "Outcome-driven",
+                body: "The organising principle is the end-to-end outcome, not the department or the process step.",
               },
             ].map((item) => (
               <div key={item.label}>

@@ -141,7 +141,7 @@ export default function Home() {
               className="font-[family-name:var(--font-cormorant)] font-light mb-16"
               style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
             >
-              Not one workforce. Three.
+              Three workforces.
             </h2>
           </FadeUp>
           <FadeUp delay={0.1}>
@@ -185,7 +185,7 @@ export default function Home() {
                 className="font-[family-name:var(--font-dm-sans)]"
                 style={{ color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}
               >
-                <strong style={{ fontWeight: 700 }}>Escalation is not a failure state. It is a design requirement.</strong> The trigger is not &lsquo;I do not know.&rsquo; The trigger is &lsquo;the cost of being wrong here exceeds my authorisation level.&rsquo;
+                <strong style={{ fontWeight: 700 }}>Escalation is a design requirement.</strong> The trigger: &lsquo;the cost of being wrong here exceeds my authorisation level.&rsquo;
               </p>
             </div>
           </FadeUp>
@@ -210,7 +210,7 @@ export default function Home() {
                 {
                   num: "01",
                   phase: "Onboarding",
-                  body: "An agent needs context, scope, and constraints before it acts. <strong>This is orientation, not configuration.</strong> What decisions is it authorised to make? What must it escalate? What values does it carry into ambiguous situations? These are onboarding questions. The hiring manager is the process owner, not IT.",
+                  body: "An agent needs context, scope, and constraints before it acts. <strong>Think orientation, not configuration.</strong> What decisions is it authorised to make? What must it escalate? What values does it carry into ambiguous situations? These are onboarding questions. The hiring manager is the process owner, not IT.",
                 },
                 {
                   num: "02",
@@ -220,7 +220,7 @@ export default function Home() {
                 {
                   num: "03",
                   phase: "Decommissioning",
-                  body: "An agent trained on a regulatory environment that has since changed is a liability, not an asset. Decommissioning requires evidence that the decision history has been reviewed, open cases transferred, and the model archived in retrievable format for audit. <strong>This is an offboarding, not a deletion.</strong> Closer to retiring a trader than switching off software.",
+                  body: "An agent trained on a regulatory environment that has since changed is a liability. Decommissioning requires evidence that the decision history has been reviewed, open cases transferred, and the model archived in retrievable format for audit. <strong>Closer to retiring a trader than switching off software.</strong>",
                 },
               ].map((item) => (
                 <div key={item.phase} className="py-8 md:py-10 flex flex-col md:flex-row gap-4 md:gap-8" style={{ borderTop: "1px solid #D8D3CB" }}>
@@ -323,7 +323,7 @@ export default function Home() {
               </span>
             </div>
             <p className="mb-24 text-sm" style={{ color: "rgba(247,244,239,0.5)", maxWidth: 480 }}>
-              The cost reduction per application required to break even when customer AI agents increase your inbound volume tenfold — without increasing your revenue.
+              Illustrative cost reduction per application required to break even when inbound volume increases tenfold without a corresponding increase in revenue. Based on Swiss mortgage market estimates.
             </p>
           </FadeUp>
           <FadeUp delay={0.2}>
@@ -358,7 +358,7 @@ export default function Home() {
                   How ready is your bank?
                 </h3>
                 <p className="text-sm mb-4" style={{ color: "#6B6B6B", lineHeight: 1.7 }}>
-                  Fifteen questions. Five minutes. Exportable as PDF. The results may be uncomfortable.
+                  Fifteen questions. Five minutes. Exportable as PDF.
                 </p>
                 <span className="text-xs uppercase tracking-widest group-hover:underline" style={{ color: "#2B3A52" }}>
                   Begin assessment
@@ -377,7 +377,7 @@ export default function Home() {
                   The three-layer model
                 </h3>
                 <p className="text-sm mb-4" style={{ color: "#6B6B6B", lineHeight: 1.7 }}>
-                  Bots, Agents, Humans — each with different governance, accountability, and escalation design.
+                  Bots, Agents, Humans: each with different governance, accountability, and escalation design.
                 </p>
                 <span className="text-xs uppercase tracking-widest group-hover:underline" style={{ color: "#2B3A52" }}>
                   View the framework
@@ -465,7 +465,7 @@ export default function Home() {
               Marc Hauser
             </h2>
             <p className="mb-4" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              Twenty years across digital banking, fintech, and emerging technologies. Multiple director-level roles at UBS — digital channels, wealth management, investment products across international markets. CEO of Trust Square, Zurich&apos;s blockchain ecosystem. Managing Partner at Tenity, leading early-stage fintech investment and open innovation partnerships with Julius B&auml;r, UBS, and others. Co-founded an ETH AI spin-off. Now heading banking and financial services for UiPath in Switzerland, where the agentic shift is not theoretical — it is the work.
+              Twenty years across digital banking, fintech, and emerging technologies. Multiple director-level roles at UBS — digital channels, wealth management, investment products across international markets. CEO of Trust Square, Zurich&apos;s blockchain ecosystem. Managing Partner at Tenity, leading early-stage fintech investment and open innovation partnerships with Julius B&auml;r, UBS, and others. Co-founded an ETH AI spin-off. Now heading banking and financial services for UiPath in Switzerland, where the agentic shift is the work, not theory.
             </p>
             <p className="mb-8" style={{ maxWidth: 620, color: "#6B6B6B", lineHeight: 1.8, fontSize: "0.9rem" }}>
               This site is a framework I use in my own thinking, offered here as a basis for serious conversation with people who are working on the same questions.
@@ -492,10 +492,10 @@ export default function Home() {
               className="font-[family-name:var(--font-cormorant)] font-light mb-6"
               style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
             >
-              If this resonated, start a conversation.
+              Start a conversation.
             </h2>
             <p className="mb-12" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              I speak to boards, brief leadership teams, and work with executives who are thinking through what the agentic shift means for their institution. Sometimes that becomes a keynote. Sometimes a board briefing. Sometimes a strategic conversation that changes how you see the problem.
+              I speak to boards, brief leadership teams, and advise executives on what the agentic shift means for their institution. Whether that leads to a keynote, a board briefing, or a working conversation depends on what you need.
             </p>
           </FadeUp>
           <FadeUp delay={0.1}>

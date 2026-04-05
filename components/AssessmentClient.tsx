@@ -64,10 +64,10 @@ export default function AssessmentClient() {
               How ready is your bank for the agentic shift?
             </h1>
             <p className="mb-4" style={{ fontSize: "1.05rem", color: "#1A1A1A", lineHeight: 1.8, maxWidth: 560 }}>
-              Fifteen questions across five dimensions. No registration. Takes about five minutes. The results may be uncomfortable.
+              Fifteen questions across five dimensions. No registration. Takes about five minutes.
             </p>
             <p className="mb-10" style={{ fontSize: "0.9rem", color: "#6B6B6B", lineHeight: 1.7, maxWidth: 520 }}>
-              This is not a maturity assessment. It is a mirror — designed to reveal the gaps between where your operating model is and where it needs to be.
+              Designed to identify the gaps between your current operating model and the requirements of an agentic workforce. Exportable as PDF.
             </p>
             <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-6 mb-12">
               {categories.map((cat) => (
