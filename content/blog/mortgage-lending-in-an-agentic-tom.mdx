@@ -6,41 +6,41 @@ excerpt: "What does mortgage origination look like when bots, agents, and humans
 
 # Case Sketch: Mortgage Lending in an Agentic TOM
 
-The previous pieces on this site describe what an [agentic target operating model](/blog/agentic-tom-introduction) is and why it matters. This one shows what it looks like — applied to a single end-to-end process that every Swiss bank runs: mortgage origination.
+The previous pieces on this site describe what an [agentic target operating model](/blog/agentic-tom-introduction) is and why it matters. This one shows what it looks like, applied to a single end-to-end process that every Swiss bank runs: mortgage origination.
 
-This is not a blueprint. **It is a sketch** — concrete enough to anchor a board conversation, abstract enough to adapt to your institution. It is also grounded in what FINMA actually requires, not what people assume it requires.
+**This is a sketch**: concrete enough to anchor a board conversation, abstract enough to adapt to your institution. It is grounded in what FINMA actually requires, not in common assumptions.
 
 ## The regulatory frame
 
-Before describing the model, it is worth stating what FINMA Guidance 08/2024 actually says about autonomous AI decisions — because the regulatory constraint is less restrictive than most Swiss bankers assume, and more specific than they expect.
+FINMA Guidance 08/2024 says something specific about autonomous AI decisions. The regulatory constraint is less restrictive than most Swiss bankers assume, and more specific than they expect.
 
 Three requirements matter here:
 
 **Accountability cannot be delegated to AI.** A named human must be accountable for every decision an agent makes. This does not mean a human must approve every decision. It means someone — with authority and expertise — owns the outcomes. The accountability is organisational, not transactional.
 
-**Autonomous operation requires demonstrated reliability.** FINMA states that AI systems may be used autonomously once they are "sufficiently reliable and this can ultimately be proven." This is a design requirement, not a prohibition. The bank must demonstrate that the agent operates reliably within its defined envelope — through testing, monitoring, and evidence.
+**Autonomous operation requires demonstrated reliability.** FINMA states that AI systems may be used autonomously once they are "sufficiently reliable and this can ultimately be proven." This is a design requirement, not a prohibition. The bank must demonstrate that the agent operates reliably within its defined envelope: testing, monitoring, and evidence.
 
 **The institution must retain the expertise to override.** The bank cannot become so dependent on AI that no human understands or can challenge its decisions. Skilled personnel must be able to review, explain, and if necessary reverse any AI-driven outcome.
 
-**In practice, this means:** an agent can autonomously approve a standard mortgage within a defined policy envelope — provided the bank can prove the agent's reliability, name the accountable human, explain any individual decision, and override it if needed. This is principles-based regulation applied to agentic systems. It sets the bar, but it does not prohibit the model.
+**In practice, this means:** an agent can autonomously approve a standard mortgage within a defined policy envelope, provided the bank can prove the agent's reliability, name the accountable human, explain any individual decision, and override it if needed. This is principles-based regulation applied to agentic systems. It sets the bar, but it does not prohibit the model.
 
 ## The process today
 
 A mortgage application arrives. A human reviews the documentation. Another human runs the credit assessment. A committee approves or declines. Someone prepares the offer. Someone sends it. Elapsed time: days to weeks.
 
-**The cost: roughly CHF 1'500 per application.** Most of that cost is human time spent on tasks that are, in principle, structured and repeatable.
+**The cost: roughly CHF 1'500 per application** (based on industry estimates). Most of that cost is human time spent on tasks that are, in principle, structured and repeatable.
 
 The process works. It has worked for decades. It will not survive a [tenfold increase in inbound volume](/blog/the-tsunami-is-not-coming-from-inside-the-bank).
 
 ## The same process, three layers
 
-In an agentic TOM, mortgage origination is not a department. **It is an outcome owned end-to-end by a system** — with three layers, each doing what it does best.
+In an agentic TOM, mortgage origination is not a department. **It is an outcome owned end-to-end by a system** with three layers, each doing what it does best.
 
 ### The bot layer
 
-Bots handle the deterministic work. No judgment required. No exceptions. No regulatory ambiguity — every action is rule-based and auditable.
+Bots handle the deterministic work. No judgment required. No exceptions. No regulatory ambiguity. Every action is rule-based and auditable.
 
-**Ingestion.** The application arrives — whether from a customer, a broker, or the customer's AI agent. A bot extracts the structured data: income, assets, property value, existing liabilities, employment status. If a document is missing, the bot requests it automatically.
+**Ingestion.** The application arrives from a customer, a broker, or the customer's AI agent. A bot extracts the structured data: income, assets, property value, existing liabilities, employment status. If a document is missing, the bot requests it automatically.
 
 **Eligibility screening.** Hard rules first. Does the loan-to-value ratio exceed the regulatory maximum? Is the income sufficient under the standard affordability calculation (as defined by the Swiss Bankers Association self-regulation, recognised by FINMA in March 2024)? Is the property in an eligible category? These are binary checks. A bot runs them in seconds.
 
@@ -50,13 +50,13 @@ Bots handle the deterministic work. No judgment required. No exceptions. No regu
 
 ### The agent layer
 
-Agents handle the work that requires judgment within boundaries. **They decide, but within a policy envelope humans defined** — and for which a named human is accountable per FINMA 08/2024.
+Agents handle the work that requires judgment within boundaries. **They decide, but within a policy envelope humans defined**, and for which a named human is accountable per FINMA 08/2024.
 
-**Risk assessment.** The agent evaluates the application holistically — not just the hard numbers, but the patterns. Employment stability. Income trajectory. Debt-to-income trends. It generates a risk score and a confidence interval. The methodology is documented, testable, and explainable — a FINMA requirement for any AI application in a critical process.
+**Risk assessment.** The agent evaluates the application holistically: not just the hard numbers, but the patterns. Employment stability. Income trajectory. Debt-to-income trends. It generates a risk score and a confidence interval. The methodology is documented, testable, and explainable, a FINMA requirement for any AI application in a critical process.
 
-**Pricing.** Based on the risk assessment, the agent proposes a rate — calibrated against the bank's current book, competitive positioning, and the customer's profile. It optimises for the bank's margin targets while remaining competitive.
+**Pricing.** Based on the risk assessment, the agent proposes a rate, calibrated against the bank's current book, competitive positioning, and the customer's profile. It optimises for the bank's margin targets while remaining competitive.
 
-**Offer generation.** The agent assembles the offer document: terms, conditions, rate, repayment schedule, required insurance. **For applications that fall within the agent's proven reliability envelope, it can generate and issue an offer without human intervention** — provided the accountability, explainability, and override requirements of FINMA 08/2024 are met.
+**Offer generation.** The agent assembles the offer document: terms, conditions, rate, repayment schedule, required insurance. **For applications that fall within the agent's proven reliability envelope, it can generate and issue an offer without human intervention**, provided the accountability, explainability, and override requirements of FINMA 08/2024 are met.
 
 This is the critical design question: what constitutes the reliability envelope? It must be defined, tested, documented, and regularly reviewed. FINMA does not prescribe the envelope. **It requires the bank to prove it works.**
 
@@ -69,7 +69,7 @@ This is the critical design question: what constitutes the reliability envelope?
 - Confidence interval too wide → escalate
 - Any case outside the documented reliability envelope → escalate
 
-**The trigger is never "I do not know." The trigger is "the cost of being wrong here exceeds my authorisation level."** Under FINMA 08/2024, the escalation architecture is not optional. It is the mechanism by which the bank fulfils its accountability obligations.
+**The trigger is never "I do not know." The trigger is "the cost of being wrong here exceeds my authorisation level."** Under FINMA 08/2024, the escalation architecture is not optional; it is the mechanism by which the bank fulfils its accountability obligations.
 
 **Time: minutes to hours.** For a standard application within the proven envelope, the customer receives an offer without human involvement. The bank can explain every decision, override any outcome, and demonstrate the reliability of the process.
 
@@ -77,21 +77,21 @@ This is the critical design question: what constitutes the reliability envelope?
 
 Humans handle what only humans should handle. **They never touch routine.** Under FINMA 08/2024, their role is threefold: exception review, relationship management, and governance.
 
-**Exception review.** The agent escalated because the property is unusual, the income structure is complex, or the risk profile is borderline. A human reviews — but not from scratch. The agent has prepared the full context: the data, its assessment, the options it considered, its recommendation.
+**Exception review.** The agent escalated because the property is unusual, the income structure is complex, or the risk profile is borderline. A human reviews, but not from scratch. The agent has prepared the full context: the data, its assessment, the options it considered, its recommendation.
 
-**A well-designed escalation means the human can decide in minutes, not hours.** This is also where FINMA's requirement to "retain expertise" is fulfilled — humans stay sharp because they handle the hard cases, not the routine ones.
+**A well-designed escalation means the human can decide in minutes, not hours.** This is also where FINMA's requirement to "retain expertise" is fulfilled. Humans stay sharp because they handle the hard cases, not the routine ones.
 
-**Relationship decisions.** The applicant is a private banking client with CHF 5 million in assets and a 20-year relationship. The mortgage is straightforward, but the relationship is not — the client expects a conversation, a personal touch, a sense that the bank knows them. A human handles this. Not because the process requires it, but because the relationship does.
+**Relationship decisions.** The applicant is a private banking client with CHF 5 million in assets and a 20-year relationship. The mortgage is straightforward, but the relationship is not. The client expects a conversation, a personal touch, a sense that the bank knows them. A human handles this. Not because the process requires it, but because the relationship does.
 
-**Policy governance.** Humans set and review the agent's policy envelope. What is the maximum autonomous approval? What risk scores require review? How often should the pricing model be recalibrated? What evidence demonstrates that the agent is operating reliably? This is quarterly governance work — the equivalent of managing the agent's performance, not doing its job. Under FINMA 08/2024, this governance is not best practice. **It is a supervisory expectation.**
+**Policy governance.** Humans set and review the agent's policy envelope. What is the maximum autonomous approval? What risk scores require review? How often should the pricing model be recalibrated? What evidence demonstrates that the agent is operating reliably? This is quarterly governance work: managing the agent's performance, not doing its job. Under FINMA 08/2024, **this governance is a supervisory expectation.**
 
 ## What changes
 
 | | Today | Agentic TOM |
 |---|---|---|
 | **Handling time** | Days to weeks | Minutes to hours |
-| **Cost per application** | ~CHF 1'500 | ~CHF 50–200 |
-| **Human involvement** | Every application | ~15% of applications |
+| **Cost per application** | ~CHF 1'500 (est.) | ~CHF 50–200 (est.) |
+| **Human involvement** | Every application | ~15% of applications (est.) |
 | **Scalability** | Linear with headcount | Near-infinite for standard cases |
 | **Response speed** | Depends on queue | Consistent, automated |
 | **Quality of escalations** | Variable | Structured, contextual, actionable |
@@ -101,13 +101,13 @@ Humans handle what only humans should handle. **They never touch routine.** Unde
 
 This sketch is deliberately incomplete. The real work is in the design decisions each bank must make for its own context:
 
-**Where do you draw the reliability envelope?** Too narrow and the agent escalates too often — you have automated the easy work but still need humans for everything interesting. Too wide and you are operating beyond what you can demonstrate to FINMA. The envelope starts narrow and widens as evidence accumulates.
+**The reliability envelope must be drawn deliberately.** Too narrow and the agent escalates too often, automating only the easy work while still requiring humans for everything interesting. Too wide and the bank operates beyond what it can demonstrate to FINMA. The envelope starts narrow and widens as evidence accumulates.
 
-**How do you prove reliability?** FINMA requires it but does not prescribe how. Back-testing against historical decisions, parallel running with human review, statistical monitoring of outcomes, escalation rate analysis — the bank must define its own evidence standard and be prepared to defend it.
+**Each bank must define its own evidence standard for reliability.** FINMA requires reliability but does not prescribe how to prove it. Back-testing against historical decisions, parallel running with human review, statistical monitoring of outcomes, escalation rate analysis: the bank must choose its methods and be prepared to defend them.
 
-**How do you handle the transition?** You cannot switch overnight. The agent needs to learn. Humans need to trust it. The policy envelope starts narrow and widens as confidence builds. This is a managed transition, not a deployment.
+**The transition must be managed, not switched on.** The agent needs to learn. Humans need to trust it. The policy envelope starts narrow and widens as confidence builds. There is no big bang deployment.
 
-**What happens to the people?** Mortgage processing teams shrink. But the humans who remain do fundamentally more interesting and consequential work. The relationship manager who used to spend 60 percent of their time on process now spends 90 percent on judgment, advice, and client relationships. **The job is better. There are fewer of them.**
+**Mortgage processing teams shrink.** The humans who remain do more interesting and consequential work. The relationship manager who used to spend most of their time on process now spends most of it on judgment, advice, and client relationships. **The job is better. There are fewer of them.**
 
 ## The question
 

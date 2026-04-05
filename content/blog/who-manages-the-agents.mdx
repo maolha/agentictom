@@ -1,7 +1,7 @@
 ---
 title: "Who Manages the Agents?"
 date: "2026-04-02"
-excerpt: "Every bank deploying AI agents will face the same organisational question: who is responsible for a workforce that is not human? The answer is not IT. It is not HR. It is a design decision most institutions have not yet made."
+excerpt: "Every bank deploying AI agents will face the same organisational question: who is responsible for a workforce that is not human? Neither IT nor HR can own this alone. It is a design decision most institutions have not yet made."
 ---
 
 # Who Manages the Agents?
@@ -10,7 +10,7 @@ McKinsey calls it the "agentic organisation." HBR says companies need "agent man
 
 **They are all circling the same question. None of them have answered it for regulated financial services.**
 
-The question is not whether AI agents need lifecycle management — onboarding, performance monitoring, decommissioning. That much is obvious and increasingly well-documented. The question is: **within a Swiss bank's governance structure, who owns it?**
+Every bank now accepts that AI agents need lifecycle management: onboarding, performance monitoring, decommissioning. The open question is more specific: **within a Swiss bank's governance structure, who owns it?**
 
 ## Why the question matters now
 
@@ -18,17 +18,17 @@ FINMA Guidance 08/2024 creates a hard constraint: **responsibility for decisions
 
 For a bank running ten agents, this is manageable. Name ten owners. Done.
 
-For a bank running hundreds of agents — making thousands of autonomous decisions daily across lending, compliance, advisory, and operations — "name an owner" is not an answer. **It is the beginning of an organisational design problem.**
+A bank running hundreds of agents — making thousands of autonomous decisions daily across lending, compliance, advisory, and operations — needs more than a list of names. **It needs an organisational design.**
 
-Who defines the agent's scope? Who reviews its performance? Who decides to expand its autonomy or restrict it? Who decommissions it when the regulatory environment changes? And who is accountable when something goes wrong — not in theory, but in the conversation with FINMA?
+Someone must define the agent's scope, review its performance, decide when to expand or restrict its autonomy, and decommission it when the regulatory environment changes. Someone must be accountable when something goes wrong — not in theory, but in the conversation with FINMA.
 
 ## The models that don't work
 
-**"IT manages it."** This is the default at most banks today. IT deployed the system, so IT manages the system. The problem: IT manages infrastructure, not decision-making authority. An agent that autonomously prices mortgages is not a server. It is a decision-maker operating within a policy defined by the business. IT can manage the platform. **It cannot own the policy envelope.**
+**"IT manages it."** This is the default at most banks today. IT deployed the system, so IT manages the system. The problem is straightforward: IT manages infrastructure, not decision-making authority. An agent that autonomously prices mortgages is not a server. It is a decision-maker operating within a policy defined by the business. IT can manage the platform. **It cannot own the policy envelope.**
 
-**"HR manages it."** BCG and others argue that agent management is a workforce design question — job descriptions, performance reviews, team composition. They are right about the analogy. But HR in most banks lacks the technical depth to evaluate whether an agent's risk model is drifting, whether its escalation thresholds are calibrated correctly, or whether its training data is still representative. **The metaphor is useful. The reporting line is not.**
+**"HR manages it."** BCG and others argue that agent management is a workforce design question: job descriptions, performance reviews, team composition. They are right about the analogy. But HR in most banks lacks the technical depth to evaluate whether an agent's risk model is drifting, whether its escalation thresholds are calibrated correctly, or whether its training data is still representative. **The metaphor is useful. The reporting line is not.**
 
-**"Risk manages it."** In banking, model risk management (under the CRO) already governs statistical models. Extending this to agents is natural — and FINMA's guidance on AI governance aligns with existing model risk frameworks. But traditional model risk was designed for static models that are validated once and monitored for drift. **Agentic systems are not static.** They adapt, orchestrate, and make novel decisions. Model risk can govern the validation. It cannot manage the workforce.
+**"Risk manages it."** In banking, model risk management (under the CRO) already governs statistical models. Extending this to agents is natural, and FINMA's guidance on AI governance aligns with existing model risk frameworks. But traditional model risk was designed for static models that are validated once and monitored for drift. **Agentic systems are not static.** They adapt, orchestrate, and make novel decisions. Model risk can govern the validation. It cannot manage the workforce.
 
 **"We create a Chief Agent Officer."** Some consultancies propose a new C-suite role. The ambition is right. The timing is wrong. Most banks are not yet at the scale where a dedicated C-level function is justified. And adding another acronym to the org chart does not solve the underlying question of where accountability sits within the three lines of defence.
 
@@ -38,46 +38,46 @@ Swiss banking governance is built on three lines of defence. The first line (bus
 
 Agent management does not fit cleanly into any of them.
 
-**First line:** The business unit that deploys an agent should own the outcomes — just as it owns the outcomes of its human staff. The head of mortgage lending is accountable for the mortgage agent's decisions, just as they are accountable for their team's decisions. This is the FINMA-aligned answer. But most business unit leaders do not currently have the capability to evaluate an agent's performance, calibrate its policy envelope, or assess its reliability. **The accountability is clear. The capability gap is real.**
+**First line:** The business unit that deploys an agent should own the outcomes, just as it owns the outcomes of its human staff. The head of mortgage lending is accountable for the mortgage agent's decisions, just as they are accountable for their team's decisions. This is the FINMA-aligned answer. But most business unit leaders do not currently have the capability to evaluate an agent's performance, calibrate its policy envelope, or assess its reliability. **The accountability is clear. The capability gap is real.**
 
-**Second line:** Risk and compliance must provide independent oversight of agents — validating their models, reviewing their escalation rates, assessing their decision quality. This is an extension of model risk management, but it requires new skills: understanding probabilistic systems, evaluating agent behaviour over time, and assessing emergent risks in multi-agent environments.
+**Second line:** Risk and compliance must provide independent oversight of agents: validating their models, reviewing their escalation rates, assessing their decision quality. This is an extension of model risk management, but it requires new skills: understanding probabilistic systems, evaluating agent behaviour over time, and assessing emergent risks in multi-agent environments.
 
-**Third line:** Internal audit must be able to audit agent decisions with the same rigour as human decisions. This means agents must produce auditable reasoning — not just outputs, but the context, options considered, and logic behind each decision. **If the agent cannot explain its decision, it cannot be audited. If it cannot be audited, it cannot operate autonomously in a regulated environment.**
+**Third line:** Internal audit must be able to audit agent decisions with the same rigour as human decisions. This means agents must produce auditable reasoning: not just outputs, but the context, options considered, and logic behind each decision. **An agent that cannot explain its decision cannot be audited. An agent that cannot be audited cannot operate autonomously in a regulated environment.**
 
 ## What actually needs to happen
 
-The answer is not one function. **It is a governance model.**
+The answer requires a full **governance model**, not a single function.
 
-**The business owns the agent.** The process owner — the head of lending, the head of operations, the head of advisory — is the agent's "line manager." They define the scope, approve the policy envelope, and are accountable for outcomes. This mirrors FINMA's principle: accountability stays with the business, not with technology.
+**The business owns the agent.** The process owner (the head of lending, the head of operations, the head of advisory) is the agent's "line manager." They define the scope, approve the policy envelope, and are accountable for outcomes. This mirrors FINMA's principle: accountability stays with the business, not with technology.
 
-**A central function coordinates.** Call it Agent Governance, AI Operations, or whatever fits your org chart. It does not own individual agents. It sets standards: onboarding requirements, performance monitoring frameworks, decommissioning procedures, documentation standards. It maintains the **centralised agent inventory** that FINMA expects. It ensures consistency across business lines. In most banks, this function will initially sit within the CTO or COO organisation — close enough to technology to understand the systems, close enough to operations to understand the business context.
+**A central function coordinates.** Call it Agent Governance, AI Operations, or whatever fits your org chart. It does not own individual agents. It sets standards: onboarding requirements, performance monitoring frameworks, decommissioning procedures, documentation standards. It maintains the **centralised agent inventory** that FINMA expects. It ensures consistency across business lines. In most banks, this function will initially sit within the CTO or COO organisation, close enough to technology to understand the systems and close enough to operations to understand the business context.
 
-**Risk provides independent challenge.** Model risk management expands its mandate to cover agentic systems. This means new validation approaches: not just pre-deployment testing, but continuous monitoring of decision quality, escalation patterns, and drift. The second line does not manage agents. **It assesses whether the first line is managing them adequately.**
+**Risk provides independent challenge.** Model risk management expands its mandate to cover agentic systems. This requires new validation approaches: not just pre-deployment testing, but continuous monitoring of decision quality, escalation patterns, and drift. The second line does not manage agents. **It assesses whether the first line is managing them adequately.**
 
-**Audit tests the framework.** The third line audits not just individual agent decisions, but the governance framework itself. Are policy envelopes documented? Are performance reviews happening? Are decommissioning procedures followed? This is the same approach audit takes with human governance — **test the controls, not every transaction.**
+**Audit tests the framework.** The third line audits not just individual agent decisions, but the governance framework itself: whether policy envelopes are documented, whether performance reviews are happening, and whether decommissioning procedures are followed. This is the same approach audit takes with human governance: **test the controls, not every transaction.**
 
 ## The scale problem
 
 Here is the part nobody has solved yet.
 
-Research suggests financial services firms average 96 machine identities per human employee. Even if only a fraction of those are autonomous agents today, the trajectory is clear. **The ratio of agents to humans will grow faster than any organisation can scale its oversight.**
+CyberArk estimates that financial services firms average 96 machine identities per human employee. Even if only a fraction of those are autonomous agents today, the trajectory is clear. **The ratio of agents to humans will grow faster than any organisation can scale its oversight.**
 
 Human management assumes ratios of perhaps one manager to ten reports. If a bank has 200 agents operating across its business lines, it cannot assign 20 full-time agent managers. The economics do not work.
 
-The answer is the same concept already on [this site](/blog/escalation-by-design): **performance envelopes.** You do not review every decision. You define the expected operating parameters — error rates, escalation frequency, outcome distributions, decision confidence — and you monitor against them. The agent operates within the envelope. When it drifts outside, it triggers review.
+The answer is the same concept already on [this site](/blog/escalation-by-design): **performance envelopes.** You do not review every decision. You define the expected operating parameters — error rates, escalation frequency, outcome distributions, decision confidence — and monitor against them. The agent operates within the envelope. When it drifts outside, it triggers review.
 
 This is not unlike how a bank manages a trading desk. You do not approve every trade. You set limits, monitor positions, and intervene on exceptions. **The governance model for agents is closer to market risk management than to traditional HR.** The HR metaphor opens the conversation. The risk management framework closes it.
 
 ## The question for your bank
 
-Every Swiss bank deploying agentic AI will need to answer three questions:
+Every Swiss bank deploying agentic AI must resolve three things:
 
-**Who is the named accountable human for each agent?** FINMA requires it. Most banks cannot answer this today, even for the agents they have already deployed.
+**Every agent needs a named accountable human.** FINMA requires it. Most banks cannot answer this today, even for the agents they have already deployed.
 
-**Where does agent governance sit?** Not as a theoretical question, but as a reporting line. Who chairs the meeting? Who sets the standards? Who has the authority to shut an agent down?
+**Agent governance needs a reporting line.** Not a theoretical home, but a concrete one. Someone must chair the meeting, set the standards, and hold the authority to shut an agent down.
 
-**How do you govern at scale?** When you have 50 agents, oversight is manual. When you have 500, it requires a framework. **The banks that design the framework now will scale. The banks that try to solve it later will discover that governance debt compounds faster than technical debt.**
+**Governance must scale beyond manual oversight.** When you have 50 agents, manual review works. When you have 500, it requires a framework. **The banks that design the framework now will scale. The banks that try to solve it later will discover that governance debt compounds faster than technical debt.**
 
-The metaphor of "HR for agents" is useful for starting the conversation. **It is not sufficient for finishing it.** What is needed is not a metaphor but an operating model — one that fits within the three lines of defence, satisfies FINMA's accountability requirements, and scales beyond the first ten agents.
+The metaphor of "HR for agents" is useful for starting the conversation. **It is not sufficient for finishing it.** What is needed is an operating model: one that fits within the three lines of defence, satisfies FINMA's accountability requirements, and scales beyond the first ten agents.
 
 That operating model does not yet exist at most Swiss banks. Building it is not optional. And the ones that build it first will have designed the standard everyone else adopts.
