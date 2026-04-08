@@ -3,6 +3,7 @@ import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
 import { getAllPosts, formatDate } from "@/lib/blog";
 import { LinkedInIcon, XIcon } from "@/components/SocialIcons";
+import StickyNav from "@/components/StickyNav";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -27,7 +28,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
       {/* NAV */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-5 md:px-8 py-4" style={{ background: "#F7F4EF", borderBottom: "1px solid #D8D3CB" }}>
+      <StickyNav>
         <div className="max-w-[900px] mx-auto flex justify-between items-center">
           <a href="#top" className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide text-[#1A1A1A]">
             agenticTOM
@@ -40,7 +41,7 @@ export default function Home() {
             <a href="#contact" className="hidden sm:inline-block px-4 py-2 border border-[#2B3A52] text-[#2B3A52] hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 text-xs tracking-widest">Let&apos;s talk</a>
           </div>
         </div>
-      </nav>
+      </StickyNav>
 
       {/* HERO */}
       <section className="min-h-screen flex flex-col justify-center pt-20 pb-16 md:pb-24 px-5 md:px-8 overflow-hidden">

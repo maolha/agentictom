@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { getAllPosts, getPost, getAdjacentPosts, formatDate } from "@/lib/blog";
 import BlogContent from "@/components/BlogContent";
 import { LinkedInIcon, XIcon } from "@/components/SocialIcons";
+import StickyNav from "@/components/StickyNav";
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -96,10 +97,7 @@ export default async function BlogPost({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
-      <nav
-        className="px-5 md:px-8 py-4 md:py-5"
-        style={{ borderBottom: "1px solid #D8D3CB" }}
-      >
+      <StickyNav>
         <div className="max-w-[900px] mx-auto flex justify-between items-center">
           <Link
             href="/"
@@ -116,9 +114,9 @@ export default async function BlogPost({
             <Link href="/#contact" className="hidden sm:inline-block px-4 py-2 border border-[#2B3A52] text-[#2B3A52] hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 text-xs tracking-widest">Let&apos;s talk</Link>
           </div>
         </div>
-      </nav>
+      </StickyNav>
 
-      <article className="px-5 md:px-8 py-16 md:py-20">
+      <article className="px-5 md:px-8 pt-28 md:pt-32 pb-16 md:pb-20">
         <div className="max-w-[680px] mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>

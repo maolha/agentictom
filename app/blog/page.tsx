@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { getAllPosts, formatDate } from "@/lib/blog";
 import { LinkedInIcon, XIcon } from "@/components/SocialIcons";
+import StickyNav from "@/components/StickyNav";
 
 export const metadata: Metadata = {
   title: "Thoughts — Agentic TOM",
@@ -19,10 +20,7 @@ export default function BlogIndex() {
 
   return (
     <main style={{ background: "#F7F4EF", color: "#1A1A1A", minHeight: "100vh" }}>
-      <nav
-        className="px-5 md:px-8 py-4 md:py-5"
-        style={{ borderBottom: "1px solid #D8D3CB" }}
-      >
+      <StickyNav>
         <div className="max-w-[900px] mx-auto flex justify-between items-center">
           <Link
             href="/"
@@ -39,7 +37,7 @@ export default function BlogIndex() {
             <Link href="/#contact" className="hidden sm:inline-block px-4 py-2 border border-[#2B3A52] text-[#2B3A52] hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 text-xs tracking-widest">Let&apos;s talk</Link>
           </div>
         </div>
-      </nav>
+      </StickyNav>
 
       {/* HERO */}
       <section
