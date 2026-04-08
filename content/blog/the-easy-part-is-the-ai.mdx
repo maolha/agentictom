@@ -1,0 +1,77 @@
+---
+title: "The Easy Part Is the AI"
+date: "2026-04-09"
+excerpt: "Every bank executive looking at agentic AI eventually arrives at the same question. How do I let it touch the systems of record without losing trust, audit, or control? The answer lies in a layer most vendors do not put on stage."
+---
+
+# The Easy Part Is the AI
+
+Every bank executive looking at agentic AI eventually arrives at the same question.
+
+**How do I let an AI touch my systems of record without losing trust, audit, or control?**
+
+It is the right question. The answer lies in a layer most vendors do not put on stage.
+
+## The commodity layer
+
+The LLM call is becoming commodity. Pricing is collapsing. Reasoning quality across the major frontier models is converging. The gap between the best model and the second-best one narrows every quarter. Whatever you build on top of an LLM today, somebody else can build with a different LLM next month.
+
+This is the natural trajectory of any infrastructure layer once it commoditises. Cost falls. Capability spreads. **The differentiation moves elsewhere.**
+
+In banking, it has moved to the layer underneath.
+
+## Where banks live or die
+
+**A core banking system is not a database. It is the institution's authoritative record** of who owns what, owes what, transacted when. Every regulatory obligation, every audit, every dispute, every reconciliation eventually traces back to it. Getting it wrong is existential.
+
+When an agent recommends a credit decision, that recommendation has to land in the core banking system as a posted transaction. When an agent updates a client's risk profile, that update has to write back to the system that compliance reviews. When an agent triggers a payment, that payment has to clear through the same deterministic rails that clear every other payment, with the same audit trail, the same reconciliation, the same regulatory completeness.
+
+**The agent does not get to be approximate.**
+
+Approximate is fine for drafting an email. It is fine for summarising a meeting. It is fine for ranking a list of options. It is not fine for writing to the system of record. In that context, "mostly right" is wrong.
+
+## The layer most discussions skip
+
+This is the layer the [agentic TOM framework](/blog/agentic-tom-introduction) calls **bots**. Rule-based. Deterministic. Auditable. The boring layer.
+
+For years, the conversation about RPA, integration platforms, and workflow automation was treated as backoffice plumbing. The interesting work was elsewhere. The conversation about agentic AI is now treating the deterministic layer the same way: as something that comes after the clever bit, an implementation detail.
+
+That is the wrong order. **The deterministic layer is what makes the agentic layer possible at all.** Without it, an agent's output is a recommendation that a human still has to type into the core banking system. With it, the agent can act, predictably, with a full audit trail, every time.
+
+If your AI strategy has no clear answer for how the agent's decisions become posted transactions in your core systems, you do not have an AI strategy. You have a chatbot.
+
+## The platform consolidation question
+
+Banks are in the middle of a platform consolidation conversation. The pitch is familiar: one platform that does everything, from intelligent document processing to autonomous decisioning to write-back into core systems. The hyperscalers claim it. The AI-native vendors claim it. The traditional automation vendors claim it.
+
+The honest evaluation question is which platform can take the LLM's output and reliably, deterministically, with a full audit trail, write it back into your core banking system, your KYC database, your trade booking system, your client master.
+
+**Calling a model is commodity. Closing the loop into the core is not.**
+
+## An old venture pattern
+
+I spent years on the venture side of fintech. The pattern I kept seeing: the durable businesses were the ones that owned the parts of the stack everybody else wanted to outsource.
+
+Connectors. Reconciliation. KYC document parsing. Settlement plumbing. The work nobody wrote a TechCrunch article about.
+
+Those startups won because they took on the part the customer would have outsourced if they could. The ones that failed often had brilliant front ends and no answer for what happened when their output had to land in someone else's system of record.
+
+**That pattern is repeating.** The brilliant agent demos are the front end. The integration into the core is where most things will break, and where the durable position will be built.
+
+## What changes in your world
+
+For a CIO evaluating platforms, this changes the demo. The interesting moment is no longer the agent reasoning over a complex scenario. The interesting moment is what happens after the agent decides. Show me the write-back. Show me the rollback when it fails. Show me the audit log entry. Show me the FINMA-compliant evidence trail.
+
+For a CRO under [FINMA Guidance 08/2024](/blog/swiss-banking-agentic-advantage), this is where accountability lives. The named human accountable for an agent's decisions has to be able to point to exactly what was written, when, by whom, and on what basis. That requires deterministic execution all the way down to the system of record. Probabilistic write-backs are not auditable.
+
+For a COO redesigning the operating model, this is the boundary between "we can scale this" and "we cannot." A process is only as scalable as its weakest deterministic step. A brilliant agent feeding into a manual core banking entry desk scales linearly with headcount.
+
+For a CISO, this is where the security model collapses or holds. An agent that writes to the core through the same governed, logged, identity-bound channels as every other authorised actor is auditable. An agent that writes to the core through a brittle scripted shortcut is a liability waiting to be found.
+
+## The headline and the moat
+
+The layer everyone is talking about is the layer that is becoming commodity. The layer almost nobody is talking about is the one that decides whether you can let an agent touch anything that matters.
+
+In banking, that is most things.
+
+**The clever layer is the headline. The boring layer is the moat.**
