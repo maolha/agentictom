@@ -277,7 +277,7 @@ export default function Home() {
             <p className="mb-4" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
               Twenty years across digital banking, fintech, and emerging technologies. Multiple director-level roles at UBS covering digital channels, wealth management, and investment products across international markets. CEO of Trust Square, Z&uuml;rich&apos;s blockchain ecosystem. Managing Partner at Tenity, leading early-stage fintech investment and open innovation partnerships with Julius B&auml;r, UBS, and others. Co-founded an ETH AI spin-off. Now heading banking and financial services for UiPath in Switzerland.
             </p>
-            <p className="mb-8" style={{ maxWidth: 620, color: "#6B6B6B", lineHeight: 1.8, fontSize: "0.9rem" }}>
+            <p className="mb-8" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
               Based in Z&uuml;rich. One daughter who will be agent-native before she is old enough to open a bank account. This site is a framework I use in my own thinking, offered here as a basis for serious conversation with people working on the same questions.
             </p>
             <a
@@ -305,7 +305,7 @@ export default function Home() {
               Start a conversation.
             </h2>
             <p className="mb-12" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              I speak to boards, brief leadership teams, and advise executives on what the agentic shift means for their institution. Whether that leads to a keynote, a board briefing, or a working conversation depends on what you need.
+              I work with leaders in the field on what the agentic shift means for their institution. Most conversations start as a keynote, a closed leadership briefing, or a working session &mdash; tell me the setting and I&apos;ll shape the rest to fit.
             </p>
           </FadeUp>
           <FadeUp delay={0.1}>

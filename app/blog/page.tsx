@@ -40,18 +40,44 @@ export default function BlogIndex() {
         </div>
       </nav>
 
-      <div className="px-5 md:px-8 pt-20 md:pt-32 pb-16 md:pb-24">
-        <div className="max-w-[680px] mx-auto">
-          <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Thoughts</p>
-          <h1
-            className="font-[family-name:var(--font-cormorant)] font-light mb-6"
-            style={{ fontSize: "clamp(28px, 5vw, 48px)", lineHeight: 1.2, color: "#1A1A1A" }}
+      {/* HERO */}
+      <section
+        className="px-5 md:px-8 pt-24 md:pt-36 pb-20 md:pb-28 overflow-hidden"
+        style={{ borderBottom: "1px solid #D8D3CB" }}
+      >
+        <div className="max-w-[900px] mx-auto">
+          <div
+            className="font-[family-name:var(--font-cormorant)] font-light select-none pointer-events-none"
+            style={{
+              fontSize: "clamp(60px, 13vw, 140px)",
+              lineHeight: 0.85,
+              color: "#2B3A52",
+              opacity: 0.12,
+              marginLeft: "-0.05em",
+              marginBottom: "2rem",
+            }}
+            aria-hidden="true"
           >
-            The questions banks are not yet asking
+            THOUGHTS
+          </div>
+          <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "#8B7355" }}>
+            Writing &middot; Agentic TOM
+          </p>
+          <h1
+            className="font-[family-name:var(--font-cormorant)] font-light mb-8"
+            style={{ fontSize: "clamp(36px, 6vw, 64px)", lineHeight: 1.15, color: "#1A1A1A", maxWidth: 760 }}
+          >
+            The questions banks are not yet asking.
           </h1>
-          <p className="mb-16" style={{ fontSize: "1rem", color: "#6B6B6B", lineHeight: 1.7, maxWidth: 540 }}>
+          <p style={{ fontSize: "1.05rem", color: "#1A1A1A", lineHeight: 1.8, maxWidth: 620 }}>
             Writing on agentic AI, operating model transformation, and the structural shifts arriving faster than most institutions assume.
           </p>
+        </div>
+      </section>
+
+      {/* POSTS */}
+      <div className="px-5 md:px-8 py-16 md:py-24">
+        <div className="max-w-[680px] mx-auto">
           <div className="flex flex-col">
             {posts.map((post, i) => (
               <Link
