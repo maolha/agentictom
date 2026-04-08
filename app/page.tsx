@@ -32,7 +32,7 @@ export default function Home() {
             agenticTOM
           </a>
           <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
-            <a href="#thoughts" className="hover:text-[#2B3A52] transition-colors">Thoughts</a>
+            <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
             <a href="#contact" className="hover:text-[#2B3A52] transition-colors">Contact</a>
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
             <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">LinkedIn</a>
