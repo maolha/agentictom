@@ -2,6 +2,7 @@ import FadeUp from "@/components/FadeUp";
 import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
 import { getAllPosts, formatDate } from "@/lib/blog";
+import { LinkedInIcon, XIcon } from "@/components/SocialIcons";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -32,10 +33,10 @@ export default function Home() {
             agenticTOM
           </a>
           <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
+            <Link href="/framework" className="hover:text-[#2B3A52] transition-colors">Framework</Link>
             <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
-            <a href="#contact" className="hover:text-[#2B3A52] transition-colors">Contact</a>
+            <Link href="/assessment" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">Assessment</Link>
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
-            <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">LinkedIn</a>
             <a href="#contact" className="hidden sm:inline-block px-4 py-2 border border-[#2B3A52] text-[#2B3A52] hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 text-xs tracking-widest">Let&apos;s talk</a>
           </div>
         </div>
@@ -84,9 +85,9 @@ export default function Home() {
           </FadeUp>
           <FadeUp delay={0.3}>
             <div className="flex flex-wrap gap-4">
-              <a href="#the-argument" className="btn-outline-slate">
-                See the argument
-              </a>
+              <Link href="/framework" className="btn-outline-slate">
+                See the framework
+              </Link>
               <Link href="/assessment" className="btn-outline-slate" style={{ background: "#2B3A52", color: "#F7F4EF", borderColor: "#2B3A52" }}>
                 Take the assessment
               </Link>
@@ -316,29 +317,34 @@ export default function Home() {
 
       {/* FOOTER */}
       <footer className="py-12 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB" }}>
-        <div className="max-w-[900px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div className="max-w-[900px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <p className="text-sm" style={{ color: "#6B6B6B" }}>
             agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
           </p>
-          <div className="flex gap-6 text-sm" style={{ color: "#6B6B6B" }}>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm" style={{ color: "#6B6B6B" }}>
+            <Link href="/framework" className="hover:text-[#2B3A52] transition-colors">Framework</Link>
             <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
+            <Link href="/assessment" className="hover:text-[#2B3A52] transition-colors">Assessment</Link>
             <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
             <a href="#contact" className="hover:text-[#2B3A52] transition-colors">Contact</a>
+            <span aria-hidden="true" style={{ color: "#D8D3CB" }}>·</span>
             <a
               href="https://linkedin.com/in/marcoliverhauser"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#2B3A52] transition-colors"
+              aria-label="LinkedIn"
+              className="hover:text-[#2B3A52] transition-colors inline-flex"
             >
-              LinkedIn
+              <LinkedInIcon />
             </a>
             <a
               href="https://x.com/marc_hauser"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#2B3A52] transition-colors"
+              aria-label="X"
+              className="hover:text-[#2B3A52] transition-colors inline-flex"
             >
-              X
+              <XIcon />
             </a>
           </div>
         </div>

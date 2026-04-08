@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { getAllPosts, formatDate } from "@/lib/blog";
+import { LinkedInIcon, XIcon } from "@/components/SocialIcons";
 
 export const metadata: Metadata = {
   title: "Thoughts — Agentic TOM",
@@ -31,10 +32,10 @@ export default function BlogIndex() {
             agenticTOM
           </Link>
           <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
+            <Link href="/framework" className="hover:text-[#2B3A52] transition-colors">Framework</Link>
             <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
-            <Link href="/#contact" className="hover:text-[#2B3A52] transition-colors">Contact</Link>
+            <Link href="/assessment" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">Assessment</Link>
             <Link href="/#about" className="hover:text-[#2B3A52] transition-colors">About</Link>
-            <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">LinkedIn</a>
             <Link href="/#contact" className="hidden sm:inline-block px-4 py-2 border border-[#2B3A52] text-[#2B3A52] hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 text-xs tracking-widest">Let&apos;s talk</Link>
           </div>
         </div>
@@ -122,13 +123,35 @@ export default function BlogIndex() {
         className="px-5 md:px-8 py-10 border-t"
         style={{ borderColor: "#D8D3CB" }}
       >
-        <div className="max-w-[900px] mx-auto flex flex-col sm:flex-row justify-between gap-3">
+        <div className="max-w-[900px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <p className="text-sm" style={{ color: "#6B6B6B" }}>
             agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
           </p>
-          <div className="flex gap-6 text-sm" style={{ color: "#6B6B6B" }}>
-            <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hover:text-[#2B3A52] transition-colors">LinkedIn</a>
-            <a href="https://x.com/marc_hauser" target="_blank" rel="noopener noreferrer" className="hover:text-[#2B3A52] transition-colors">X</a>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm" style={{ color: "#6B6B6B" }}>
+            <Link href="/framework" className="hover:text-[#2B3A52] transition-colors">Framework</Link>
+            <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
+            <Link href="/assessment" className="hover:text-[#2B3A52] transition-colors">Assessment</Link>
+            <Link href="/#about" className="hover:text-[#2B3A52] transition-colors">About</Link>
+            <Link href="/#contact" className="hover:text-[#2B3A52] transition-colors">Contact</Link>
+            <span aria-hidden="true" style={{ color: "#D8D3CB" }}>·</span>
+            <a
+              href="https://linkedin.com/in/marcoliverhauser"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="hover:text-[#2B3A52] transition-colors inline-flex"
+            >
+              <LinkedInIcon />
+            </a>
+            <a
+              href="https://x.com/marc_hauser"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X"
+              className="hover:text-[#2B3A52] transition-colors inline-flex"
+            >
+              <XIcon />
+            </a>
           </div>
         </div>
       </footer>
