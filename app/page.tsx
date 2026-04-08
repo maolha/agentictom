@@ -305,7 +305,7 @@ export default function Home() {
               Start a conversation.
             </h2>
             <p className="mb-12" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              I work with leaders in the field on what the agentic shift means for their institution. Most conversations start as a keynote, a closed leadership briefing, or a working session &mdash; tell me the setting and I&apos;ll shape the rest to fit.
+              I work with leaders in the field on what the agentic shift means for their institution. If any of this resonates, start a conversation &mdash; no agenda needed.
             </p>
           </FadeUp>
           <FadeUp delay={0.1}>
