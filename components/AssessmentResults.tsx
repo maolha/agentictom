@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { track } from "@vercel/analytics";
 import { questions, categories, levels, categoryInsights, type CategoryScore, type AssessmentLevel } from "@/lib/assessment";
 
 type Results = {
@@ -67,9 +68,10 @@ export default function AssessmentResults({
       const name = exportName || "assessment";
       const company = exportCompany ? `-${exportCompany.toLowerCase().replace(/\s+/g, "-")}` : "";
       pdf.save(`agentic-readiness-${name.toLowerCase().replace(/\s+/g, "-")}${company}.pdf`);
+      track("assessment_pdf_export", { level: results.level.name });
       setShowExportDialog(false);
-    } catch (e) {
-      console.error("PDF export failed:", e);
+    } catch {
+      // Silently fail — user can retry from dialog
     } finally {
       setExporting(false);
     }
@@ -85,13 +87,17 @@ export default function AssessmentResults({
           className="fixed inset-0 z-50 flex items-center justify-center px-5"
           style={{ background: "rgba(26,26,26,0.6)" }}
           onClick={() => setShowExportDialog(false)}
+          onKeyDown={(e) => { if (e.key === "Escape") setShowExportDialog(false); }}
         >
           <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="export-dialog-title"
             className="w-full max-w-md p-8"
             style={{ background: "#F7F4EF" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="font-[family-name:var(--font-cormorant)] font-light mb-6" style={{ fontSize: "1.5rem", color: "#1A1A1A" }}>
+            <h3 id="export-dialog-title" className="font-[family-name:var(--font-cormorant)] font-light mb-6" style={{ fontSize: "1.5rem", color: "#1A1A1A" }}>
               Export your report
             </h3>
             <p className="text-sm mb-6" style={{ color: "#6B6B6B" }}>
@@ -101,17 +107,19 @@ export default function AssessmentResults({
               <input
                 type="text"
                 placeholder="Name"
+                aria-label="Name"
                 value={exportName}
                 onChange={(e) => setExportName(e.target.value)}
-                className="bg-transparent py-2 text-sm focus:outline-none"
+                className="bg-transparent py-2 text-sm focus:outline-none focus-visible:border-[#2B3A52]"
                 style={{ borderBottom: "1px solid #D8D3CB", color: "#1A1A1A" }}
               />
               <input
                 type="text"
                 placeholder="Company"
+                aria-label="Company"
                 value={exportCompany}
                 onChange={(e) => setExportCompany(e.target.value)}
-                className="bg-transparent py-2 text-sm focus:outline-none"
+                className="bg-transparent py-2 text-sm focus:outline-none focus-visible:border-[#2B3A52]"
                 style={{ borderBottom: "1px solid #D8D3CB", color: "#1A1A1A" }}
               />
             </div>

@@ -18,6 +18,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://agentictom.com"),
   title: "Agentic TOM — Marc Hauser",
   description: "The operating model for banks where AI is a first-class participant. Framework, thinking, and speaking by Marc Hauser.",
   openGraph: {
@@ -25,8 +26,18 @@ export const metadata: Metadata = {
     description: "The operating model for banks where AI is a first-class participant. Framework, thinking, and speaking by Marc Hauser.",
     url: "https://agentictom.com",
     siteName: "Agentic TOM",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Agentic TOM — Marc Hauser",
+    description: "The operating model for banks where AI is a first-class participant.",
+    creator: "@marc_hauser",
+    site: "@marc_hauser",
   },
   alternates: {
+    canonical: "/",
     types: {
       "application/rss+xml": "/feed.xml",
     },

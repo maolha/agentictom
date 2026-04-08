@@ -227,10 +227,14 @@ export default function FrameworkPage() {
       </div>
 
       <footer className="px-5 md:px-8 py-10 border-t" style={{ borderColor: "#D8D3CB" }}>
-        <div className="max-w-[900px] mx-auto">
+        <div className="max-w-[900px] mx-auto flex flex-col sm:flex-row justify-between gap-3">
           <p className="text-sm" style={{ color: "#6B6B6B" }}>
             agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
           </p>
+          <div className="flex gap-6 text-sm" style={{ color: "#6B6B6B" }}>
+            <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hover:text-[#2B3A52] transition-colors">LinkedIn</a>
+            <a href="https://x.com/marc_hauser" target="_blank" rel="noopener noreferrer" className="hover:text-[#2B3A52] transition-colors">X</a>
+          </div>
         </div>
       </footer>
     </main>

@@ -8,7 +8,7 @@ const personJsonLd = {
   "@type": "Person",
   name: "Marc Hauser",
   url: "https://agentictom.com",
-  sameAs: ["https://linkedin.com/in/marcoliverhauser"],
+  sameAs: ["https://linkedin.com/in/marcoliverhauser", "https://x.com/marc_hauser"],
   jobTitle: "Head of Banking & Financial Services, UiPath Switzerland",
   knowsAbout: ["Agentic AI", "Target Operating Models", "Swiss Banking", "Financial Services"],
 };
@@ -331,6 +331,14 @@ export default function Home() {
               className="hover:text-[#2B3A52] transition-colors"
             >
               LinkedIn
+            </a>
+            <a
+              href="https://x.com/marc_hauser"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#2B3A52] transition-colors"
+            >
+              X
             </a>
           </div>
         </div>

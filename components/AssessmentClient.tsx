@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { track } from "@vercel/analytics";
 import { questions, calculateResults, categories, levels } from "@/lib/assessment";
 import AssessmentResults from "@/components/AssessmentResults";
 
@@ -30,6 +31,11 @@ export default function AssessmentClient() {
   }
 
   function finish() {
+    const results = calculateResults(answers);
+    track("assessment_complete", {
+      level: results.level.name,
+      score: results.totalScore,
+    });
     setFinished(true);
   }
 
@@ -77,7 +83,7 @@ export default function AssessmentClient() {
                 </div>
               ))}
             </div>
-            <button onClick={() => setStarted(true)} className="btn-outline-slate">
+            <button onClick={() => { track("assessment_start"); setStarted(true); }} className="btn-outline-slate">
               Begin assessment
             </button>
           </div>
@@ -102,7 +108,14 @@ export default function AssessmentClient() {
           </span>
         </div>
         <div className="max-w-[900px] mx-auto">
-          <div style={{ height: 2, background: "#D8D3CB" }}>
+          <div
+            role="progressbar"
+            aria-label="Assessment progress"
+            aria-valuenow={Math.round(progress)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            style={{ height: 2, background: "#D8D3CB" }}
+          >
             <div
               style={{
                 height: "100%",
@@ -127,24 +140,34 @@ export default function AssessmentClient() {
             {q.question}
           </h2>
 
-          <div className="flex flex-col gap-3">
-            {q.options.map((opt, i) => (
-              <button
-                key={i}
-                onClick={() => selectOption(i)}
-                className="text-left px-5 py-4 transition-all duration-200"
-                style={{
-                  background: answers[currentQuestion] === i ? "rgba(43,58,82,0.08)" : "transparent",
-                  border: `1px solid ${answers[currentQuestion] === i ? "#2B3A52" : "#D8D3CB"}`,
-                  color: answers[currentQuestion] === i ? "#2B3A52" : "#1A1A1A",
-                  fontSize: "0.9rem",
-                  lineHeight: 1.6,
-                  cursor: "pointer",
-                }}
-              >
-                {opt.text}
-              </button>
-            ))}
+          <div
+            role="radiogroup"
+            aria-label={q.question}
+            className="flex flex-col gap-3"
+          >
+            {q.options.map((opt, i) => {
+              const selected = answers[currentQuestion] === i;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  role="radio"
+                  aria-checked={selected}
+                  onClick={() => selectOption(i)}
+                  className="text-left px-5 py-4 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B3A52]"
+                  style={{
+                    background: selected ? "rgba(43,58,82,0.08)" : "transparent",
+                    border: `1px solid ${selected ? "#2B3A52" : "#D8D3CB"}`,
+                    color: selected ? "#2B3A52" : "#1A1A1A",
+                    fontSize: "0.9rem",
+                    lineHeight: 1.6,
+                    cursor: "pointer",
+                  }}
+                >
+                  {opt.text}
+                </button>
+              );
+            })}
           </div>
 
           <div className="flex justify-between items-center mt-12">

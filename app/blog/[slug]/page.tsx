@@ -28,7 +28,15 @@ export async function generateMetadata({
       publishedTime: post.date,
       authors: ["Marc Hauser"],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      creator: "@marc_hauser",
+      site: "@marc_hauser",
+    },
     alternates: {
+      canonical: `/blog/${slug}`,
       types: {
         "application/rss+xml": "/feed.xml",
       },
@@ -67,11 +75,25 @@ export default async function BlogPost({
     url: `https://agentictom.com/blog/${slug}`,
   };
 
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://agentictom.com" },
+      { "@type": "ListItem", position: 2, name: "Thoughts", item: "https://agentictom.com/blog" },
+      { "@type": "ListItem", position: 3, name: post.title, item: `https://agentictom.com/blog/${slug}` },
+    ],
+  };
+
   return (
     <main style={{ background: "#F7F4EF", color: "#1A1A1A", minHeight: "100vh" }}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       <nav
         className="px-5 md:px-8 py-4 md:py-5"
@@ -154,10 +176,14 @@ export default async function BlogPost({
         className="px-5 md:px-8 py-10 border-t"
         style={{ borderColor: "#D8D3CB" }}
       >
-        <div className="max-w-[900px] mx-auto">
+        <div className="max-w-[900px] mx-auto flex flex-col sm:flex-row justify-between gap-3">
           <p className="text-sm" style={{ color: "#6B6B6B" }}>
             agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
           </p>
+          <div className="flex gap-6 text-sm" style={{ color: "#6B6B6B" }}>
+            <a href="https://linkedin.com/in/marcoliverhauser" target="_blank" rel="noopener noreferrer" className="hover:text-[#2B3A52] transition-colors">LinkedIn</a>
+            <a href="https://x.com/marc_hauser" target="_blank" rel="noopener noreferrer" className="hover:text-[#2B3A52] transition-colors">X</a>
+          </div>
         </div>
       </footer>
     </main>

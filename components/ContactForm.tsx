@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -17,6 +18,7 @@ export default function ContactForm() {
       email: (form.elements.namedItem("email") as HTMLInputElement).value,
       interest: (form.elements.namedItem("interest") as HTMLSelectElement).value,
       message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+      website: (form.elements.namedItem("website") as HTMLInputElement).value, // honeypot
     };
 
     try {
@@ -26,6 +28,7 @@ export default function ContactForm() {
         body: JSON.stringify(data),
       });
       if (res.ok) {
+        track("contact_submit", { interest: data.interest });
         setSubmitted(true);
       } else {
         setError(true);
@@ -45,16 +48,31 @@ export default function ContactForm() {
     );
   }
 
+  const fallbackEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
   if (error) {
     return (
       <p className="text-sm" style={{ color: "#8B7355" }}>
-        Something went wrong. Send a note directly to marc.oliver.hauser@gmail.com.
+        Something went wrong.{" "}
+        {fallbackEmail ? (
+          <>Send a note directly to <a href={`mailto:${fallbackEmail}`} className="underline">{fallbackEmail}</a>.</>
+        ) : (
+          <>Please try again in a moment.</>
+        )}
       </p>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-xl">
+      {/* Honeypot: hidden from users, visible to bots */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+      />
       <div className="flex flex-col gap-1">
         <label className="text-xs text-[#6B6B6B] uppercase tracking-widest">Name</label>
         <input
