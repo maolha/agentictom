@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getAllPosts, formatDate } from "@/lib/blog";
 import { LinkedInIcon, XIcon } from "@/components/SocialIcons";
 import StickyNav from "@/components/StickyNav";
+import TextReveal from "@/components/TextReveal";
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -62,14 +63,12 @@ export default function Home() {
               RETHINK
             </div>
           </FadeUp>
-          <FadeUp delay={0.1}>
-            <h1
-              className="font-[family-name:var(--font-cormorant)] font-light mb-6"
-              style={{ fontSize: "clamp(36px, 6vw, 64px)", lineHeight: 1.15, color: "#1A1A1A" }}
-            >
-              Waiting is not a strategy. It is a default.
-            </h1>
-          </FadeUp>
+          <h1
+            className="font-[family-name:var(--font-cormorant)] font-light mb-6"
+            style={{ fontSize: "clamp(36px, 6vw, 64px)", lineHeight: 1.15, color: "#1A1A1A" }}
+          >
+            <TextReveal text="Waiting is not a strategy. It is a default." delay={0.4} />
+          </h1>
           <FadeUp delay={0.2}>
             <p
               className="font-[family-name:var(--font-dm-sans)] mb-4 max-w-[620px]"

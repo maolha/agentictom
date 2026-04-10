@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { track } from "@vercel/analytics";
 import { questions, categories, levels, categoryInsights, type CategoryScore, type AssessmentLevel } from "@/lib/assessment";
+import AnimatedNumber from "@/components/AnimatedNumber";
 
 type Results = {
   categoryScores: CategoryScore[];
@@ -323,12 +324,12 @@ export default function AssessmentResults({
 
           {/* Score */}
           <div className="flex items-baseline gap-3 mb-16">
-            <span
+            <AnimatedNumber
+              value={results.totalScore}
+              duration={1.5}
               className="font-[family-name:var(--font-cormorant)] font-light"
               style={{ fontSize: "clamp(60px, 12vw, 100px)", color: "#2B3A52", lineHeight: 1 }}
-            >
-              {results.totalScore}
-            </span>
+            />
             <span className="font-[family-name:var(--font-cormorant)] font-light" style={{ fontSize: "2rem", color: "#D8D3CB" }}>
               / {results.maxScore}
             </span>

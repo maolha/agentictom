@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { getAllPosts, getPost, getAdjacentPosts, formatDate } from "@/lib/blog";
 import BlogContent from "@/components/BlogContent";
+import TracingBeam from "@/components/TracingBeam";
 import { LinkedInIcon, XIcon } from "@/components/SocialIcons";
 import StickyNav from "@/components/StickyNav";
 
@@ -117,7 +118,8 @@ export default async function BlogPost({
       </StickyNav>
 
       <article className="px-5 md:px-8 pt-28 md:pt-32 pb-16 md:pb-20">
-        <div className="max-w-[680px] mx-auto">
+        <div className="max-w-[680px] mx-auto lg:pl-8">
+          <TracingBeam>
           <div className="flex items-center gap-3 mb-4">
             <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
               {formatDate(post.date)}
@@ -168,6 +170,7 @@ export default async function BlogPost({
               )}
             </div>
           </div>
+          </TracingBeam>
         </div>
       </article>
 
