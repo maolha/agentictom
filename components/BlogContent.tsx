@@ -4,6 +4,18 @@ import React from "react";
 import dynamic from "next/dynamic";
 
 const MortgageFunnel = dynamic(() => import("@/components/MortgageFunnel"));
+const ExponentialSteps = dynamic(() => import("@/components/viz/ExponentialSteps"));
+const JCurve = dynamic(() => import("@/components/viz/JCurve"));
+const ExploitWindow = dynamic(() => import("@/components/viz/ExploitWindow"));
+const MrosChart = dynamic(() => import("@/components/viz/MrosChart"));
+
+const EMBEDS: Record<string, React.ComponentType> = {
+  "funnel:mortgage": MortgageFunnel,
+  "viz:exponential-steps": ExponentialSteps,
+  "viz:j-curve": JCurve,
+  "viz:exploit-window": ExploitWindow,
+  "viz:mros-series": MrosChart,
+};
 
 function parseMarkdown(md: string): React.ReactNode[] {
   const lines = md.split("\n");
@@ -14,9 +26,11 @@ function parseMarkdown(md: string): React.ReactNode[] {
   while (i < lines.length) {
     const line = lines[i];
 
-    // Custom component embeds
-    if (line.trim() === "<!-- funnel:mortgage -->") {
-      nodes.push(<MortgageFunnel key={key++} />);
+    // Custom component embeds: <!-- name --> lines mapped in EMBEDS
+    const embedMatch = line.trim().match(/^<!-- ([a-z:-]+) -->$/);
+    if (embedMatch && EMBEDS[embedMatch[1]]) {
+      const Embed = EMBEDS[embedMatch[1]];
+      nodes.push(<Embed key={key++} />);
       i++;
       continue;
     }
