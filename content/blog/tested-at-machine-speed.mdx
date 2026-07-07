@@ -1,0 +1,65 @@
+---
+title: "Your Software Will Be Tested at Machine Speed"
+date: "2026-07-03"
+excerpt: "The average time from vulnerability disclosure to first exploitation has collapsed from 2.3 years to roughly three hours. AI fills delivery pipelines with more change than human review can absorb. Testing is the next function that must become agentic, and in a bank it doubles as a governance control."
+---
+
+# Your Software Will Be Tested at Machine Speed
+
+In 2018, a newly published software vulnerability took 2.3 years on average to be exploited in the wild. By mid-2026, the mean time from disclosure to first confirmed exploitation is around three hours, based on the Zero-Day Clock dataset of more than 3'500 confirmed exploited CVEs (CISA and VulnCheck KEV catalogues) and consistent with Mandiant M-Trends 2026. **A flaw that becomes public at 18:00 is being exploited before the apéro ends.** The same data shows 28 percent of new vulnerabilities exploited within 24 hours of disclosure, often before a patch exists.
+
+For two decades, quality and security processes were built on an assumption nobody wrote down: the attacker needs weeks. That assumption has expired, and it took the rest of the operating model's timing with it.
+
+## Vulnerability discovery went autonomous
+
+The collapse has a supply side. Frontier models have moved from assisting human researchers to independently finding vulnerabilities, triaging them, and building exploit chains. The clearest public evidence comes from defence. In April 2026, Mozilla fixed 423 security bugs in Firefox releases in a single month, roughly 20 times its 2025 monthly average. 271 of them were found with Claude Mythos Preview running inside Mozilla's agentic pipeline; 180 were rated sec-high, exploitable by a user simply visiting a malicious webpage (Mozilla Hacks, May 2026).
+
+The pattern is industry-wide. Epoch AI counted roughly 1'500 critical- and high-severity vulnerabilities disclosed in one month by 21 large technology organisations, from Microsoft to Mozilla: more than 3.5 times the previous record (Epoch AI Data Insight, July 2026, based on cve.org). The jump followed Anthropic's announcement that Claude Mythos finds vulnerabilities autonomously; its Project Glasswing reports more than 10'000 finds across open-source software.
+
+The uncomfortable part: **the capability that hardens Firefox is the capability that probes your e-banking portal.** Public models ship with safeguards, and the baseline still shifts for everyone. Defence now has to assume opponents that work at machine speed, around the clock, at near-zero marginal cost.
+
+## The flood from inside
+
+Attackers are half the problem. The other half enters through your own delivery pipeline. Faros AI's 2026 AI Engineering Report, based on telemetry from 22'000 developers across 4'000 teams over two years, measured what AI-assisted development does to throughput and quality:
+
+- 210 percent more completed code tasks with an associated pull request, per team
+- 54 percent more bugs per developer entering the delivery pipeline
+- incidents per pull request tripled as velocity outran review
+- 31 percent more pull requests merged without any human review
+
+AI-generated code fails in a particular way: **syntactically perfect and logically wrong.** It compiles, passes the linter, and misapplies the rounding rule. Syntax filters catch none of it. In a bank, the damage sits in pricing logic, ledger sequencing, exception treatment, and regulatory calculations, where a wrong line of code is a liability measured in millions and discovered months later in reconciliation.
+
+## The arithmetic of the gap
+
+Put the two sides together. The exploit window is now measured in hours. The volume of change is a multiple of what your review process was sized for. And the typical regression cycle for a core banking release still takes days to weeks.
+
+**You cannot defend machine-speed change with human-speed testing.**
+
+The constraint has moved. A model drafts a patch in minutes; proving the patch safe is what takes three weeks. An institution with a three-week validation cycle carries a three-week exposure window against attackers who work in hours, and the gap cannot be closed by hiring more testers. Closing it requires testing that runs autonomously, continuously, and on a risk basis.
+
+## From something you run to something that runs
+
+Testing has its own autonomy ladder, and it mirrors the [five levels of banking autonomy](/blog/from-abs-to-autopilot):
+
+| Stage | Agency | What it looks like |
+|---|---|---|
+| 1. Automated | Human | Every step scripted in advance; the machine follows. |
+| 2. AI-augmented | Human, assisted | AI drafts and suggests; a person reviews every output and decides. |
+| 3. Autonomous | Agents, within a lane | Humans state intent for a defined scope; agents design, execute, and triage inside it. |
+| 4. Dark factory | The system | Quality plans, runs, and maintains itself end to end; humans set policy and teach. |
+
+Most institutions are in stage one. A few have reached stage two and concluded that letting a model write test scripts is the answer. It helps, and it addresses the smallest share of the work. Writing and executing tests is perhaps 20 percent of the job (an illustrative split, but a defensible one). The other 80 percent is orchestration across web, mobile, and core systems; keeping tests alive when applications change; linking requirements to tests to results; and producing evidence someone can audit. Autonomy in testing is reached when that 80 percent runs without a human in the operating loop. **Testing stops being something you run and becomes something that runs.**
+
+## In a bank, testing is a control
+
+For a regulated institution there is a second dimension. Testing is the mechanism that turns "the AI wrote it" into "the change is demonstrably safe": the independent audit of machine-generated logic against actual operating policy. FINMA Circular 2023/1 on operational risks and resilience makes ICT change management and resilience an explicit supervisory expectation. DORA (Regulation (EU) 2022/2554, Articles 24 to 27) requires EU financial entities, including the EU operations of Swiss institutions, to run a standing digital operational resilience testing programme.
+
+An autonomous quality system therefore has to behave like a control function: an immutable audit trail, segregation of duties (the agent that writes the code is never the agent that certifies it), and control evidence a supervisor can inspect without archaeology. Humans do here what they do everywhere in an [agentic operating model](/blog/escalation-by-design): define intent, set the policy envelope, and take the escalations. The routine operating loop belongs to the system.
+
+## The braking system
+
+Anti-lock brakes exist so that drivers can brake later and drive faster with the same margin of safety. Autonomous testing plays that role in an agentic institution: the braking system that makes machine-speed delivery safe enough to be permitted. Banks that build it first gain a compounding advantage. They ship faster, at lower risk, with evidence ready when the supervisor asks. Banks that do not will either slow delivery to the speed of their manual testing or accept an exposure window their attackers no longer need.
+
+Three moves, in order. Baseline where manual testing gates release speed and where AI-generated change enters production unvalidated, per application. Pilot one autonomous testing capability on a critical application and measure coverage gained, effort displaced, and defects found earlier. Then scale, with the governance layer in place from the start: policies, escalation thresholds, and approval rules that determine how much autonomy each part of the system earns.
+
+The breach makes the news. The tests that prevented it never do. **Your software will be tested at machine speed. The only open question is by whom.**
