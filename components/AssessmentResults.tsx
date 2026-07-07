@@ -457,6 +457,29 @@ export default function AssessmentResults({
             </div>
           </div>
 
+          {/* Export band */}
+          <div className="mb-16 p-8 md:p-10 text-center" style={{ background: "#F0ECE3", border: "1px solid #D8D3CB" }}>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>
+              Your report
+            </p>
+            <p
+              className="font-[family-name:var(--font-cormorant)] font-light mb-3"
+              style={{ fontSize: "clamp(20px, 3vw, 28px)", color: "#1A1A1A", lineHeight: 1.3 }}
+            >
+              Take the result to your leadership team
+            </p>
+            <p className="mb-7 text-sm mx-auto" style={{ color: "#6B6B6B", maxWidth: 440, lineHeight: 1.7 }}>
+              A short slide deck: your level, the dimension scores, key insights, and the first moves. Personalised with your name if you want.
+            </p>
+            <button
+              onClick={() => setShowExportDialog(true)}
+              className="btn-outline-slate"
+              style={{ background: "#2B3A52", color: "#F7F4EF" }}
+            >
+              Export as PDF
+            </button>
+          </div>
+
           {/* Category breakdown */}
           <div className="mb-16">
             <h2 className="font-[family-name:var(--font-cormorant)] font-light mb-8" style={{ fontSize: "1.5rem", color: "#1A1A1A" }}>
@@ -599,13 +622,22 @@ export default function AssessmentResults({
               <p className="mb-8 text-sm" style={{ color: "rgba(247,244,239,0.6)", maxWidth: 480, margin: "0 auto 2rem" }}>
                 Share this with your leadership team. If you want to discuss what the gaps mean for your institution, let&apos;s talk.
               </p>
-              <Link
-                href="/#contact"
-                className="inline-block px-8 py-3 border text-xs uppercase tracking-widest transition-colors duration-300 hover:bg-[#F7F4EF] hover:text-[#2B3A52]"
-                style={{ borderColor: "#F7F4EF", color: "#F7F4EF" }}
-              >
-                Start a conversation
-              </Link>
+              <div className="flex flex-wrap justify-center gap-4">
+                <button
+                  onClick={() => setShowExportDialog(true)}
+                  className="inline-block px-8 py-3 text-xs uppercase tracking-widest transition-opacity duration-300 hover:opacity-90"
+                  style={{ background: "#F7F4EF", color: "#2B3A52", border: "1px solid #F7F4EF", cursor: "pointer" }}
+                >
+                  Export as PDF
+                </button>
+                <Link
+                  href="/#contact"
+                  className="inline-block px-8 py-3 border text-xs uppercase tracking-widest transition-colors duration-300 hover:bg-[#F7F4EF] hover:text-[#2B3A52]"
+                  style={{ borderColor: "#F7F4EF", color: "#F7F4EF" }}
+                >
+                  Start a conversation
+                </Link>
+              </div>
             </div>
           </div>
 

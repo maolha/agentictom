@@ -24,7 +24,10 @@ function formatDistance(metres: number): { value: string; unit: string } {
 
 const MILESTONES: { min: number; text: string }[] = [
   { min: 751_000_000, text: "To the moon and most of the way back. The moon is 384'400 km away." },
-  { min: 370_000_000, text: "Almost at the moon, 384'400 km out." },
+  { min: 370_000_000, text: "Nine times around the world. Almost at the moon, 384'400 km out." },
+  { min: 160_300_000, text: "Four times around the world, almost halfway to the moon." },
+  { min: 80_150_000, text: "Twice around the world." },
+  { min: 40_075_000, text: "Once around the world (40'075 km), with room to spare." },
   { min: 20_200_000, text: "Past the GPS constellation, which orbits at 20'200 km." },
   { min: 400_000, text: "Past the orbit of the International Space Station, about 400 km up." },
   { min: 100_000, text: "Past the Kármán line at 100 km. This is space." },
