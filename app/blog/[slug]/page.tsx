@@ -154,10 +154,10 @@ export default async function BlogPost({
           <div className="print-hide mt-14 p-6 md:p-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ border: "1px solid #D8D3CB" }}>
             <div>
               <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "#8B7355" }}>
-                Stay with the argument
+                Stay in touch
               </p>
               <p className="text-sm" style={{ color: "#6B6B6B", lineHeight: 1.6 }}>
-                The conversation around these essays happens on LinkedIn.
+                Questions, disagreement, or a case from your institution: find Marc on LinkedIn.
               </p>
             </div>
             <a
@@ -167,7 +167,7 @@ export default async function BlogPost({
               className="btn-outline-slate shrink-0 text-center"
               style={{ fontSize: "0.7rem", padding: "10px 24px" }}
             >
-              Follow Marc on LinkedIn
+              Connect on LinkedIn
             </a>
           </div>
 
