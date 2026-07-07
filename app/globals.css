@@ -69,6 +69,28 @@ h1, h2, h3, h4 {
   border-radius: 2px;
 }
 
+/* Print: clean essay output for forwarding */
+@media print {
+  nav,
+  footer,
+  .print-hide {
+    display: none !important;
+  }
+  body {
+    background: #FFFFFF;
+  }
+  main {
+    background: #FFFFFF !important;
+  }
+  article {
+    padding-top: 0 !important;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
 a:focus:not(:focus-visible),
 button:focus:not(:focus-visible) {
   outline: none;

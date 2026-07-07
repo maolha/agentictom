@@ -1,6 +1,7 @@
 import FadeUp from "@/components/FadeUp";
 import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
+import Image from "next/image";
 import { getAllPosts, formatDate } from "@/lib/blog";
 import { LinkedInIcon, XIcon } from "@/components/SocialIcons";
 import StickyNav from "@/components/StickyNav";
@@ -96,8 +97,55 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── THE NUMBERS ── evidence strip */}
+      <section className="py-10 md:py-14 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB", background: "#F0ECE3" }}>
+        <div className="max-w-[900px] mx-auto">
+          <FadeUp>
+            <p className="text-xs uppercase tracking-widest mb-8" style={{ color: "#8B7355" }}>
+              The numbers that set the agenda
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
+              {[
+                {
+                  value: "3 hours",
+                  label: "from vulnerability disclosure to first exploitation",
+                  link: "/blog/tested-at-machine-speed",
+                },
+                {
+                  value: "84",
+                  label: "suspicious activity reports to MROS, per working day",
+                  link: "/blog/eighty-four-reports-a-day",
+                },
+                {
+                  value: "6%",
+                  label: "of companies report a significant EBIT effect from AI",
+                  link: "/blog/the-six-percent-club",
+                },
+                {
+                  value: "CHF 1'500",
+                  label: "processing cost per mortgage application",
+                  link: "/blog/the-tsunami-is-not-coming-from-inside-the-bank",
+                },
+              ].map((n) => (
+                <Link key={n.value} href={n.link} className="group">
+                  <p
+                    className="font-[family-name:var(--font-cormorant)] font-light group-hover:text-[#2B3A52] transition-colors"
+                    style={{ fontSize: "clamp(28px, 4vw, 40px)", color: "#2B3A52", lineHeight: 1.1 }}
+                  >
+                    {n.value}
+                  </p>
+                  <p className="text-xs mt-2 group-hover:underline" style={{ color: "#6B6B6B", lineHeight: 1.6 }}>
+                    {n.label}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
       {/* ── THE ARGUMENT ── condensed framework intro */}
-      <section id="the-argument" className="py-20 md:py-32 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB" }}>
+      <section id="the-argument" className="py-20 md:py-32 px-5 md:px-8">
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The Argument</p>
@@ -275,21 +323,36 @@ export default function Home() {
             >
               Marc Hauser
             </h2>
-            <p className="mb-4" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              Twenty years across digital banking, fintech, and emerging technologies. Multiple director-level roles at UBS covering digital channels, wealth management, and investment products across international markets. CEO of Trust Square, Z&uuml;rich&apos;s blockchain ecosystem. Managing Partner at Tenity, leading early-stage fintech investment and open innovation partnerships with Julius B&auml;r, UBS, and others. Co-founded an ETH AI spin-off. Now heading banking and financial services for UiPath in Switzerland.
-            </p>
-            <p className="mb-8" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              Based in Z&uuml;rich. One daughter who will be agent-native before she is old enough to open a bank account. This site is a framework I use in my own thinking, offered here as a basis for serious conversation with people working on the same questions.
-            </p>
-            <a
-              href="https://linkedin.com/in/marcoliverhauser"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm hover:underline"
-              style={{ color: "#2B3A52" }}
-            >
-              linkedin.com/in/marcoliverhauser
-            </a>
+            <div className="flex flex-col-reverse md:grid md:grid-cols-[1fr_260px] gap-10 md:gap-14 items-start">
+              <div>
+                <p className="mb-4" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
+                  Twenty years across digital banking, fintech, and emerging technologies. Multiple director-level roles at UBS covering digital channels, wealth management, and investment products across international markets. CEO of Trust Square, Z&uuml;rich&apos;s blockchain ecosystem. Managing Partner at Tenity, leading early-stage fintech investment and open innovation partnerships with Julius B&auml;r, UBS, and others. Co-founded an ETH AI spin-off. Now heading banking and financial services for UiPath in Switzerland. Keynotes and executive briefings across the Swiss financial centre.
+                </p>
+                <p className="mb-8" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
+                  Based in Z&uuml;rich. One daughter who will be agent-native before she is old enough to open a bank account. This site is a framework I use in my own thinking, offered here as a basis for serious conversation with people working on the same questions.
+                </p>
+                <a
+                  href="https://linkedin.com/in/marcoliverhauser"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm hover:underline"
+                  style={{ color: "#2B3A52" }}
+                >
+                  linkedin.com/in/marcoliverhauser
+                </a>
+              </div>
+              <div className="w-full max-w-[240px] md:max-w-none">
+                <Image
+                  src="/marc-hauser.jpg"
+                  alt="Marc Hauser"
+                  width={520}
+                  height={570}
+                  className="w-full h-auto"
+                  style={{ border: "1px solid #D8D3CB" }}
+                  sizes="(max-width: 768px) 240px, 260px"
+                />
+              </div>
+            </div>
           </FadeUp>
         </div>
       </section>
@@ -306,7 +369,7 @@ export default function Home() {
               Start a conversation.
             </h2>
             <p className="mb-12" style={{ maxWidth: 580, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-              I work with leaders in the field on what the agentic shift means for their institution. If any of this resonates, start a conversation &mdash; no agenda needed.
+              I work with leaders in the field on what the agentic shift means for their institution. If these questions are on your desk, start a conversation. No agenda needed.
             </p>
           </FadeUp>
           <FadeUp delay={0.1}>

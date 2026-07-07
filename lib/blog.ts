@@ -14,6 +14,7 @@ export type PostMeta = {
 
 export type Post = PostMeta & {
   content: string;
+  standfirst?: string;
 };
 
 function estimateReadingTime(text: string): number {
@@ -52,6 +53,7 @@ export function getPost(slug: string): Post | null {
     title: data.title,
     date: data.date,
     excerpt: data.excerpt,
+    standfirst: data.standfirst,
     readingTime: estimateReadingTime(content),
     content,
   };

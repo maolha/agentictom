@@ -143,6 +143,13 @@ export default function FrameworkPage() {
               <span aria-hidden="true" style={{ color: "#D8D3CB" }}>·</span>
               <span>One worked example</span>
             </div>
+            <a
+              href="/agentic-tom-one-pager.pdf"
+              className="inline-block mt-6 text-xs uppercase tracking-widest hover:underline"
+              style={{ color: "#2B3A52" }}
+            >
+              Download the framework as a one-pager (PDF) →
+            </a>
           </FadeUp>
         </div>
       </div>
@@ -374,6 +381,15 @@ export default function FrameworkPage() {
           >
             Take the assessment
           </Link>
+          <p className="mt-8">
+            <a
+              href="/agentic-tom-one-pager.pdf"
+              className="text-xs uppercase tracking-widest hover:underline"
+              style={{ color: "rgba(247,244,239,0.6)" }}
+            >
+              Or take the framework with you: the one-pager (PDF) →
+            </a>
+          </p>
         </div>
       </section>
 

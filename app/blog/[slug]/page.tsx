@@ -130,15 +130,49 @@ export default async function BlogPost({
             </p>
           </div>
           <h1
-            className="font-[family-name:var(--font-cormorant)] font-light mb-10 md:mb-12"
+            className="font-[family-name:var(--font-cormorant)] font-light mb-8 md:mb-10"
             style={{ fontSize: "clamp(28px, 5vw, 52px)", lineHeight: 1.2, color: "#1A1A1A" }}
           >
             {post.title}
           </h1>
+          {post.standfirst && (
+            <aside
+              className="mb-10 md:mb-12 p-5 md:p-6"
+              style={{ background: "#F0ECE3", borderLeft: "3px solid #8B7355" }}
+            >
+              <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#8B7355" }}>
+                In brief
+              </p>
+              <p className="text-sm" style={{ color: "#1A1A1A", lineHeight: 1.75 }}>
+                {post.standfirst}
+              </p>
+            </aside>
+          )}
           <BlogContent content={post.content} />
 
+          {/* Follow */}
+          <div className="print-hide mt-14 p-6 md:p-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ border: "1px solid #D8D3CB" }}>
+            <div>
+              <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "#8B7355" }}>
+                Stay with the argument
+              </p>
+              <p className="text-sm" style={{ color: "#6B6B6B", lineHeight: 1.6 }}>
+                New essays land on LinkedIn first.
+              </p>
+            </div>
+            <a
+              href="https://linkedin.com/in/marcoliverhauser"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline-slate shrink-0 text-center"
+              style={{ fontSize: "0.7rem", padding: "10px 24px" }}
+            >
+              Follow Marc on LinkedIn
+            </a>
+          </div>
+
           {/* Next / Previous navigation */}
-          <div className="mt-16 pt-8 flex flex-col sm:flex-row justify-between gap-8" style={{ borderTop: "1px solid #D8D3CB" }}>
+          <div className="print-hide mt-12 pt-8 flex flex-col sm:flex-row justify-between gap-8" style={{ borderTop: "1px solid #D8D3CB" }}>
             <div>
               {prev && (
                 <Link href={`/blog/${prev.slug}`} className="group block">

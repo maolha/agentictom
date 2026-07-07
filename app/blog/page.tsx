@@ -74,6 +74,60 @@ export default function BlogIndex() {
         </div>
       </section>
 
+      {/* START HERE */}
+      <section className="px-5 md:px-8 py-14 md:py-20" style={{ background: "#F0ECE3", borderBottom: "1px solid #D8D3CB" }}>
+        <div className="max-w-[900px] mx-auto">
+          <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>New here?</p>
+          <h2
+            className="font-[family-name:var(--font-cormorant)] font-light mb-10"
+            style={{ fontSize: "clamp(24px, 3.5vw, 34px)", color: "#1A1A1A" }}
+          >
+            Three essays to start with
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+            {[
+              {
+                step: "01",
+                tag: "The concept",
+                title: "What Is an Agentic Target Operating Model?",
+                slug: "agentic-tom-introduction",
+                line: "Three layers of workforce, escalation designed in, outcomes owned end-to-end.",
+              },
+              {
+                step: "02",
+                tag: "The pressure",
+                title: "The Tsunami Is Not Coming from Inside the Bank",
+                slug: "the-tsunami-is-not-coming-from-inside-the-bank",
+                line: "When every client sends an agent, volume multiplies and revenue does not.",
+              },
+              {
+                step: "03",
+                tag: "The habits",
+                title: "The 6% Club",
+                slug: "the-six-percent-club",
+                line: "What the few companies with a measurable EBIT effect do differently.",
+              },
+            ].map((s) => (
+              <Link key={s.slug} href={`/blog/${s.slug}`} className="group block">
+                <div className="flex items-baseline gap-3 mb-3">
+                  <span className="font-[family-name:var(--font-cormorant)] font-light" style={{ fontSize: "1.5rem", color: "#8B7355" }}>
+                    {s.step}
+                  </span>
+                  <span className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>{s.tag}</span>
+                </div>
+                <h3
+                  className="font-[family-name:var(--font-cormorant)] font-light mb-2 group-hover:underline"
+                  style={{ fontSize: "1.25rem", color: "#2B3A52", lineHeight: 1.3 }}
+                >
+                  {s.title}
+                </h3>
+                <p className="text-sm" style={{ color: "#6B6B6B", lineHeight: 1.6 }}>{s.line}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* POSTS */}
       <div className="px-5 md:px-8 py-16 md:py-24">
         <div className="max-w-[680px] mx-auto">
@@ -113,6 +167,27 @@ export default function BlogIndex() {
                 </article>
               </Link>
             ))}
+          </div>
+
+          {/* Follow */}
+          <div className="mt-10 p-6 md:p-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ border: "1px solid #D8D3CB" }}>
+            <div>
+              <p className="text-xs uppercase tracking-widest mb-1" style={{ color: "#8B7355" }}>
+                Stay with the argument
+              </p>
+              <p className="text-sm" style={{ color: "#6B6B6B", lineHeight: 1.6 }}>
+                New essays land on LinkedIn first.
+              </p>
+            </div>
+            <a
+              href="https://linkedin.com/in/marcoliverhauser"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline-slate shrink-0 text-center"
+              style={{ fontSize: "0.7rem", padding: "10px 24px" }}
+            >
+              Follow Marc on LinkedIn
+            </a>
           </div>
         </div>
       </div>
