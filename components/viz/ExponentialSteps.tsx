@@ -2,33 +2,46 @@
 
 import { useState } from "react";
 
+const STEP_METRES = 0.7; // an ordinary walking stride
+
 function swiss(n: number): string {
   return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
 }
 
 function formatDistance(metres: number): { value: string; unit: string } {
-  if (metres < 1000) return { value: swiss(metres), unit: metres === 1 ? "metre" : "metres" };
-  return { value: swiss(metres / 1000), unit: "km" };
+  if (metres < 100) {
+    const v = Math.round(metres * 10) / 10;
+    return { value: v.toString(), unit: "metres" };
+  }
+  if (metres < 1000) return { value: swiss(metres), unit: "metres" };
+  const km = metres / 1000;
+  if (km < 100) {
+    const v = Math.round(km * 10) / 10;
+    return { value: v.toString(), unit: "km" };
+  }
+  return { value: swiss(km), unit: "km" };
 }
 
 const MILESTONES: { min: number; text: string }[] = [
-  { min: 1_073_741_823, text: "To the moon and back, with margin. The moon is 384'400 km away." },
-  { min: 536_870_911, text: "Past the moon, 384'400 km out." },
-  { min: 33_554_431, text: "Past the GPS constellation, which orbits at 20'200 km." },
-  { min: 524_287, text: "Past the orbit of the International Space Station, about 400 km up." },
-  { min: 131_071, text: "Past the Kármán line at 100 km. This is space." },
-  { min: 16_383, text: "Above airliner cruising altitude, about 12 km." },
-  { min: 8_191, text: "Nearly twice the height of the Matterhorn (4'478 m)." },
-  { min: 1_023, text: "Just past one kilometre." },
-  { min: 127, text: "About the length of a football pitch." },
-  { min: 0, text: "Still inside the building." },
+  { min: 751_000_000, text: "To the moon and most of the way back. The moon is 384'400 km away." },
+  { min: 370_000_000, text: "Almost at the moon, 384'400 km out." },
+  { min: 20_200_000, text: "Past the GPS constellation, which orbits at 20'200 km." },
+  { min: 400_000, text: "Past the orbit of the International Space Station, about 400 km up." },
+  { min: 100_000, text: "Past the Kármán line at 100 km. This is space." },
+  { min: 45_000, text: "Into the stratosphere and beyond." },
+  { min: 11_000, text: "Above airliner cruising altitude, about 11 km." },
+  { min: 4_478, text: "Higher than the Matterhorn (4'478 m)." },
+  { min: 700, text: "From Paradeplatz down to the lake." },
+  { min: 100, text: "A football pitch behind you." },
+  { min: 40, text: "Out of the building." },
+  { min: 0, text: "Still in the corridor." },
 ];
 
 export default function ExponentialSteps() {
   const [steps, setSteps] = useState(10);
 
-  const linear = steps; // one metre per step
-  const exponential = Math.pow(2, steps) - 1; // doubling each step, cumulative
+  const linear = steps * STEP_METRES;
+  const exponential = STEP_METRES * (Math.pow(2, steps) - 1); // doubling each step, cumulative
   const milestone = MILESTONES.find((m) => exponential >= m.min)?.text ?? "";
   const lin = formatDistance(linear);
   const exp = formatDistance(exponential);
@@ -79,7 +92,7 @@ export default function ExponentialSteps() {
             {lin.value}
             <span style={{ fontSize: "1rem", marginLeft: 6 }}>{lin.unit}</span>
           </p>
-          <p className="text-xs mt-1" style={{ color: "#6B6B6B" }}>One metre each.</p>
+          <p className="text-xs mt-1" style={{ color: "#6B6B6B" }}>70 centimetres each.</p>
         </div>
         <div>
           <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#8B7355" }}>
@@ -94,7 +107,7 @@ export default function ExponentialSteps() {
       </div>
 
       <p className="text-xs" style={{ color: "#6B6B6B", lineHeight: 1.6 }}>
-        Cumulative distance after each step: one metre every time, against doubling every time. The same arithmetic as in the text.
+        Cumulative distance after each step: 70 centimetres every time, against doubling from the same first stride. The same arithmetic as in the text.
       </p>
     </div>
   );
