@@ -2,45 +2,61 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { LinkedInIcon, XIcon } from "@/components/SocialIcons";
 import StickyNav from "@/components/StickyNav";
+import FadeUp from "@/components/FadeUp";
+import ThreeLayerDiagram from "@/components/ThreeLayerDiagram";
 
 export const metadata: Metadata = {
-  title: "The Three-Layer Model — Agentic TOM",
-  description: "The agentic workforce has three layers: Bots, Agents, and Humans, each with different governance, accountability, and escalation design.",
+  title: "The Framework — Agentic TOM",
+  description:
+    "Three layers of workforce, five operating principles, and an autonomy ladder: the agentic target operating model for Swiss banking, with a worked example.",
   openGraph: {
-    title: "The Three-Layer Model — Agentic TOM",
-    description: "Bots, Agents, and Humans — the three-layer workforce model for agentic banking.",
+    title: "The Framework — Agentic TOM",
+    description: "Three layers, five principles, one autonomy ladder. The agentic operating model for banking.",
     url: "https://agentictom.com/framework",
     siteName: "Agentic TOM",
   },
 };
 
-const layerLinks = [
+const principles = [
   {
-    label: "Bots",
-    tag: "Deterministic backbone",
-    summary: "Where an agent's decision becomes a posted transaction in the system of record, with full audit trail.",
-    posts: [
-      { title: "The Easy Part Is the AI", slug: "the-easy-part-is-the-ai" },
-    ],
+    number: "01",
+    title: "Escalation is designed by cost of error",
+    body: "The trigger for human involvement is the cost of being wrong, calibrated per decision type. A fee waiver and a CHF 2 million lending exception should never share the same path.",
+    link: { title: "Escalation by Design", slug: "escalation-by-design" },
   },
   {
-    label: "Agents",
-    tag: "Knowledge workers at scale",
-    summary: "Goal-driven and probabilistic, escalating when the cost of being wrong exceeds the authorisation level.",
-    posts: [
-      { title: "Escalation by Design", slug: "escalation-by-design" },
-      { title: "From ABS to Autopilot", slug: "from-abs-to-autopilot" },
-    ],
+    number: "02",
+    title: "Humans govern outcomes, not tasks",
+    body: "People concentrate where judgement and accountability live: exceptions, envelope design, relationships. Routine work in the human layer is a design failure.",
+    link: { title: "What Is an Agentic TOM?", slug: "agentic-tom-introduction" },
   },
   {
-    label: "Humans",
-    tag: "Concentrated at the edges",
-    summary: "Exceptions, governance, relationships, irreversible decisions. Never routine.",
-    posts: [
-      { title: "Who Manages the Agents?", slug: "who-manages-the-agents" },
-      { title: "The Job Description No One Has Written", slug: "the-job-description-no-one-has-written" },
-    ],
+    number: "03",
+    title: "Every agent has a job description",
+    body: "Scope, policy envelope, escalation rules, a named owner, and a review cadence. An agent without a job description is unmanaged headcount.",
+    link: { title: "The Job Description No One Has Written", slug: "the-job-description-no-one-has-written" },
   },
+  {
+    number: "04",
+    title: "Autonomy is earned in levels",
+    body: "No board approves a jump from supervised recommendations to autonomous decisions. Evidence at each level is the permission slip for the next.",
+    link: { title: "From ABS to Autopilot", slug: "from-abs-to-autopilot" },
+  },
+  {
+    number: "05",
+    title: "The demand side sets the clock",
+    body: "When clients send agents, response time and unit cost stop being service metrics and become conversion drivers. The pace of redesign is set outside the bank.",
+    link: { title: "The Tsunami Is Not Coming from Inside the Bank", slug: "the-tsunami-is-not-coming-from-inside-the-bank" },
+  },
+];
+
+const ladder = [
+  { level: "0", name: "Fully manual", line: "Paper, spreadsheets, manual approvals.", marker: null },
+  { level: "1", name: "Assistance", line: "Bots extract, check, route. Deterministic.", marker: "most banks" },
+  { level: "2", name: "Partial automation", line: "AI recommends, a human reviews every output.", marker: "most banks" },
+  { level: "3", name: "Conditional autonomy", line: "Agents decide within envelopes, escalate beyond.", marker: "advantage begins" },
+  { level: "4", name: "High autonomy", line: "Agents run whole domains. Humans govern envelopes.", marker: null },
+  { level: "5", name: "Full autonomy", line: "Direction of travel. Regulatory, and later.", marker: null },
 ];
 
 const mortgageLayers = [
@@ -58,6 +74,27 @@ const mortgageLayers = [
     label: "Human layer",
     body: "Exception review. Relationship calls. Policy governance. Quarterly performance review of agents.",
     meta: "Time: where it matters. Cost: where it matters.",
+  },
+];
+
+const applied = [
+  {
+    domain: "Lending operations",
+    title: "Mortgage Lending in an Agentic TOM",
+    slug: "mortgage-lending-in-an-agentic-tom",
+    line: "One end-to-end process, redesigned across the three layers, grounded in FINMA's expectations.",
+  },
+  {
+    domain: "Financial crime compliance",
+    title: "Eighty-Four Reports a Day",
+    slug: "eighty-four-reports-a-day",
+    line: "A workload compounding at 32 percent a year meets a labour pool that cannot grow.",
+  },
+  {
+    domain: "Software quality",
+    title: "Your Software Will Be Tested at Machine Speed",
+    slug: "tested-at-machine-speed",
+    line: "The control function that decides how fast everything else is allowed to move.",
   },
 ];
 
@@ -86,248 +123,230 @@ export default function FrameworkPage() {
       {/* Hero */}
       <div className="px-5 md:px-8 pt-20 md:pt-32 pb-12 md:pb-16">
         <div className="max-w-[900px] mx-auto">
-          <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Framework</p>
-          <h1
-            className="font-[family-name:var(--font-cormorant)] font-light mb-8"
-            style={{ fontSize: "clamp(32px, 5vw, 52px)", lineHeight: 1.15, color: "#1A1A1A" }}
-          >
-            The three-layer model
-          </h1>
-          <p style={{ fontSize: "1.05rem", color: "#1A1A1A", lineHeight: 1.8, maxWidth: 660 }}>
-            Your operating model was designed for a workforce that was entirely human. <strong style={{ fontWeight: 700 }}>The agentic TOM replaces that assumption with three layers</strong>, each governed differently, each accountable for different decisions.
-          </p>
-        </div>
-      </div>
-
-      {/* The Diagram */}
-      <div className="px-5 md:px-8 pb-20 md:pb-32">
-        <div className="max-w-[900px] mx-auto">
-          {/* Governance wrapper */}
-          <div
-            className="p-6 md:p-10"
-            style={{ border: "2px solid #2B3A52" }}
-          >
-            <div className="flex items-center gap-3 mb-8">
-              <span style={{ width: 24, height: 2, background: "#2B3A52", display: "block" }} />
-              <p className="text-xs uppercase tracking-widest" style={{ color: "#2B3A52", fontWeight: 700 }}>
-                Governance layer
-              </p>
-            </div>
-            <p className="mb-10 text-sm" style={{ color: "#6B6B6B", maxWidth: 520, lineHeight: 1.7 }}>
-              Accountability, risk ownership, and regulatory responsibility. Humans set the boundaries within which all three layers operate.
+          <FadeUp>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Framework</p>
+            <h1
+              className="font-[family-name:var(--font-cormorant)] font-light mb-8"
+              style={{ fontSize: "clamp(32px, 5vw, 52px)", lineHeight: 1.15, color: "#1A1A1A" }}
+            >
+              The agentic operating model
+            </h1>
+            <p className="mb-6" style={{ fontSize: "1.05rem", color: "#1A1A1A", lineHeight: 1.8, maxWidth: 660 }}>
+              Your operating model was designed for a workforce that was entirely human. <strong style={{ fontWeight: 700 }}>The agentic TOM replaces that assumption with three layers</strong>: bots that execute, agents that decide, humans who govern. Each layer is governed differently, fails differently, and answers for different decisions.
             </p>
-
-            {/* Three layers */}
-            <div className="flex flex-col gap-0">
-              {/* Humans */}
-              <div
-                className="p-6 md:p-8"
-                style={{ background: "#2B3A52", color: "#F7F4EF" }}
-              >
-                <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
-                  <div className="md:w-48 md:shrink-0">
-                    <h2
-                      className="font-[family-name:var(--font-cormorant)] font-light"
-                      style={{ fontSize: "1.6rem" }}
-                    >
-                      Humans
-                    </h2>
-                    <p className="text-xs uppercase tracking-widest mt-1" style={{ color: "#8B7355" }}>
-                      Decision proxies
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm mb-4" style={{ lineHeight: 1.8, opacity: 0.85 }}>
-                      Own irreversible decisions, regulatory accountability, and relationship trust. Operate at the edges: exceptions, governance, judgment calls. Never touch routine.
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      {["Irreversible decisions", "Regulatory accountability", "Relationship trust", "Exception handling"].map((tag) => (
-                        <span key={tag} className="text-xs px-3 py-1" style={{ border: "1px solid rgba(247,244,239,0.3)", color: "rgba(247,244,239,0.7)" }}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Escalation indicator */}
-              <div className="flex items-center justify-center py-3" style={{ background: "rgba(43,58,82,0.06)" }}>
-                <span className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
-                  ↑ Escalation by design ↓
-                </span>
-              </div>
-
-              {/* Agents */}
-              <div
-                className="p-6 md:p-8"
-                style={{ background: "rgba(43,58,82,0.08)" }}
-              >
-                <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
-                  <div className="md:w-48 md:shrink-0">
-                    <h2
-                      className="font-[family-name:var(--font-cormorant)] font-light"
-                      style={{ fontSize: "1.6rem", color: "#2B3A52" }}
-                    >
-                      Agents
-                    </h2>
-                    <p className="text-xs uppercase tracking-widest mt-1" style={{ color: "#8B7355" }}>
-                      Knowledge workers at scale
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm mb-4" style={{ lineHeight: 1.8, color: "#1A1A1A" }}>
-                      Goal-driven, context-aware, probabilistic. Make decisions within a policy envelope defined by humans. Escalate when the cost of being wrong exceeds their authorisation level.
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      {["Goal pursuit", "Context awareness", "Policy envelopes", "Probabilistic decisions", "Escalation triggers"].map((tag) => (
-                        <span key={tag} className="text-xs px-3 py-1" style={{ border: "1px solid #D8D3CB", color: "#6B6B6B" }}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Delegation indicator */}
-              <div className="flex items-center justify-center py-3" style={{ background: "rgba(43,58,82,0.03)" }}>
-                <span className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
-                  ↑ Delegation ↓
-                </span>
-              </div>
-
-              {/* Bots */}
-              <div
-                className="p-6 md:p-8"
-                style={{ border: "1px solid #D8D3CB" }}
-              >
-                <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
-                  <div className="md:w-48 md:shrink-0">
-                    <h2
-                      className="font-[family-name:var(--font-cormorant)] font-light"
-                      style={{ fontSize: "1.6rem", color: "#2B3A52" }}
-                    >
-                      Bots
-                    </h2>
-                    <p className="text-xs uppercase tracking-widest mt-1" style={{ color: "#8B7355" }}>
-                      Industrial backbone
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm mb-4" style={{ lineHeight: 1.8, color: "#1A1A1A" }}>
-                      Rule-based, deterministic, auditable. Execute predefined processes on predefined inputs. Reconciliations, extractions, routing. No judgment. By design.
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      {["Rule-based", "Deterministic", "Auditable", "No judgment"].map((tag) => (
-                        <span key={tag} className="text-xs px-3 py-1" style={{ border: "1px solid #D8D3CB", color: "#6B6B6B" }}>
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs uppercase tracking-widest" style={{ color: "#6B6B6B" }}>
+              <span>Three layers</span>
+              <span aria-hidden="true" style={{ color: "#D8D3CB" }}>·</span>
+              <span>Five principles</span>
+              <span aria-hidden="true" style={{ color: "#D8D3CB" }}>·</span>
+              <span>One ladder</span>
+              <span aria-hidden="true" style={{ color: "#D8D3CB" }}>·</span>
+              <span>One worked example</span>
             </div>
-          </div>
+          </FadeUp>
         </div>
       </div>
 
-      {/* Drill into each layer */}
+      {/* The interactive diagram */}
+      <div className="px-5 md:px-8 pb-20 md:pb-28">
+        <div className="max-w-[900px] mx-auto">
+          <FadeUp delay={0.1}>
+            <ThreeLayerDiagram />
+          </FadeUp>
+        </div>
+      </div>
+
+      {/* Five principles */}
       <section className="px-5 md:px-8 py-20 md:py-28" style={{ background: "#F0ECE3" }}>
         <div className="max-w-[900px] mx-auto">
-          <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>By layer</p>
-          <h2
-            className="font-[family-name:var(--font-cormorant)] font-light mb-12"
-            style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
-          >
-            Read deeper
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
-            {layerLinks.map((layer) => (
-              <div key={layer.label}>
-                <div className="mb-4" style={{ width: 32, height: 2, background: "#8B7355" }} />
-                <h3
-                  className="font-[family-name:var(--font-cormorant)] font-light"
-                  style={{ fontSize: "1.4rem", color: "#2B3A52" }}
+          <FadeUp>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Operating principles</p>
+            <h2
+              className="font-[family-name:var(--font-cormorant)] font-light mb-4"
+              style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
+            >
+              Five principles carry the model
+            </h2>
+            <p className="mb-12 text-sm" style={{ color: "#6B6B6B", maxWidth: 560, lineHeight: 1.7 }}>
+              The layers describe the structure. The principles decide how it behaves under load. Each one is explored in depth in its own essay.
+            </p>
+          </FadeUp>
+          <div className="flex flex-col">
+            {principles.map((p, i) => (
+              <FadeUp key={p.number} delay={i * 0.05}>
+                <div
+                  className="py-7 md:py-8 grid md:grid-cols-[64px_1fr_auto] gap-3 md:gap-8 items-baseline"
+                  style={{ borderTop: "1px solid #D8D3CB" }}
                 >
-                  {layer.label}
-                </h3>
-                <p className="text-xs uppercase tracking-widest mt-1 mb-4" style={{ color: "#8B7355" }}>
-                  {layer.tag}
-                </p>
-                <p className="text-sm mb-6" style={{ color: "#1A1A1A", lineHeight: 1.7 }}>
-                  {layer.summary}
-                </p>
-                <ul className="flex flex-col gap-2">
-                  {layer.posts.map((p) => (
-                    <li key={p.slug}>
-                      <Link
-                        href={`/blog/${p.slug}`}
-                        className="text-xs uppercase tracking-widest hover:underline"
-                        style={{ color: "#2B3A52" }}
-                      >
-                        {p.title} →
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  <span
+                    className="font-[family-name:var(--font-cormorant)] font-light"
+                    style={{ fontSize: "1.6rem", color: "#8B7355" }}
+                  >
+                    {p.number}
+                  </span>
+                  <div>
+                    <h3
+                      className="font-[family-name:var(--font-cormorant)] font-light mb-2"
+                      style={{ fontSize: "1.45rem", color: "#2B3A52" }}
+                    >
+                      {p.title}
+                    </h3>
+                    <p className="text-sm" style={{ color: "#1A1A1A", lineHeight: 1.7, maxWidth: 560 }}>
+                      {p.body}
+                    </p>
+                  </div>
+                  <Link
+                    href={`/blog/${p.link.slug}`}
+                    className="text-xs uppercase tracking-widest hover:underline whitespace-nowrap"
+                    style={{ color: "#2B3A52" }}
+                  >
+                    The essay →
+                  </Link>
+                </div>
+              </FadeUp>
             ))}
           </div>
         </div>
       </section>
 
-      {/* What changes when you apply it */}
+      {/* Autonomy ladder */}
       <section className="px-5 md:px-8 py-20 md:py-28">
         <div className="max-w-[900px] mx-auto">
-          <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Worked example</p>
-          <h2
-            className="font-[family-name:var(--font-cormorant)] font-light mb-8"
-            style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
-          >
-            What changes when you apply it
-          </h2>
-          <p className="mb-12" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-            Take mortgage origination, the process every Swiss bank runs the same way. The three-layer model redesigns it without changing what FINMA requires.
-          </p>
-          <div className="flex flex-col">
-            {mortgageLayers.map((layer, i) => (
-              <div
-                key={layer.label}
-                className="py-6 md:py-8 flex flex-col md:flex-row gap-3 md:gap-8"
-                style={i > 0 ? { borderTop: "1px solid #D8D3CB" } : { borderTop: "1px solid #D8D3CB" }}
-              >
-                <div className="md:w-40 md:shrink-0">
-                  <h3
+          <FadeUp>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The ladder</p>
+            <h2
+              className="font-[family-name:var(--font-cormorant)] font-light mb-4"
+              style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
+            >
+              Autonomy is a progression
+            </h2>
+            <p className="mb-12 text-sm" style={{ color: "#6B6B6B", maxWidth: 560, lineHeight: 1.7 }}>
+              Borrowed from driving automation, applied to banking. Most Swiss institutions operate at Level 1 to 2. The structural advantage begins at Level 3.
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <div className="grid grid-cols-2 md:grid-cols-6" style={{ borderLeft: "1px solid #D8D3CB", borderTop: "1px solid #D8D3CB" }}>
+              {ladder.map((step) => (
+                <div
+                  key={step.level}
+                  className="p-4 md:p-5 flex flex-col gap-2"
+                  style={{
+                    borderRight: "1px solid #D8D3CB",
+                    borderBottom: "1px solid #D8D3CB",
+                    background: step.marker === "advantage begins" ? "rgba(43,58,82,0.06)" : "transparent",
+                  }}
+                >
+                  <span
                     className="font-[family-name:var(--font-cormorant)] font-light"
-                    style={{ fontSize: "1.3rem", color: "#2B3A52" }}
+                    style={{ fontSize: "1.8rem", color: step.marker === "advantage begins" ? "#2B3A52" : "#D8D3CB", lineHeight: 1 }}
                   >
+                    {step.level}
+                  </span>
+                  <p className="text-xs uppercase tracking-widest" style={{ color: "#2B3A52", fontWeight: 600 }}>
+                    {step.name}
+                  </p>
+                  <p className="text-xs" style={{ color: "#6B6B6B", lineHeight: 1.6 }}>
+                    {step.line}
+                  </p>
+                  {step.marker && (
+                    <p className="text-[10px] uppercase tracking-widest mt-auto pt-2" style={{ color: "#8B7355" }}>
+                      {step.marker}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+            <p className="text-xs mt-6" style={{ color: "#6B6B6B", maxWidth: 620, lineHeight: 1.7 }}>
+              FINMA Guidance 08/2024 permits autonomous use once systems are &ldquo;sufficiently reliable and this can ultimately be proven.&rdquo; The evidence generated at each level is the permission slip for the next.{" "}
+              <Link href="/blog/from-abs-to-autopilot" className="hover:underline" style={{ color: "#2B3A52" }}>
+                How trust accumulates →
+              </Link>
+            </p>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* Worked example */}
+      <section className="px-5 md:px-8 py-20 md:py-28" style={{ background: "#F0ECE3" }}>
+        <div className="max-w-[900px] mx-auto">
+          <FadeUp>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Worked example</p>
+            <h2
+              className="font-[family-name:var(--font-cormorant)] font-light mb-8"
+              style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
+            >
+              What changes when you apply it
+            </h2>
+            <p className="mb-12" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
+              Take mortgage origination, the process every Swiss bank runs the same way. The three-layer model redesigns it without changing what FINMA requires.
+            </p>
+          </FadeUp>
+          <div className="grid md:grid-cols-3" style={{ borderLeft: "1px solid #D8D3CB", borderTop: "1px solid #D8D3CB" }}>
+            {mortgageLayers.map((layer, i) => (
+              <FadeUp key={layer.label} delay={i * 0.07}>
+                <div className="p-6 md:p-7 h-full flex flex-col gap-3" style={{ borderRight: "1px solid #D8D3CB", borderBottom: "1px solid #D8D3CB" }}>
+                  <h3 className="font-[family-name:var(--font-cormorant)] font-light" style={{ fontSize: "1.3rem", color: "#2B3A52" }}>
                     {layer.label}
                   </h3>
-                </div>
-                <div>
-                  <p className="text-sm mb-2" style={{ color: "#1A1A1A", lineHeight: 1.7 }}>
+                  <p className="text-sm" style={{ color: "#1A1A1A", lineHeight: 1.7 }}>
                     {layer.body}
                   </p>
-                  <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+                  <p className="text-xs uppercase tracking-widest mt-auto" style={{ color: "#8B7355" }}>
                     {layer.meta}
                   </p>
                 </div>
-              </div>
+              </FadeUp>
             ))}
           </div>
-          <div className="mt-12 pt-8" style={{ borderTop: "1px solid #D8D3CB" }}>
-            <p className="text-sm mb-4" style={{ color: "#1A1A1A", maxWidth: 620, lineHeight: 1.7 }}>
-              Same process. Same FINMA requirements, designed in. Different cost structure. Different speed. Different accountability boundaries.
-            </p>
-            <Link
-              href="/blog/mortgage-lending-in-an-agentic-tom"
-              className="text-xs uppercase tracking-widest hover:underline"
-              style={{ color: "#2B3A52" }}
+          <FadeUp delay={0.15}>
+            <div className="mt-10">
+              <p className="text-sm mb-4" style={{ color: "#1A1A1A", maxWidth: 620, lineHeight: 1.7 }}>
+                Same process. Same FINMA requirements, designed in. Different cost structure, different speed, different accountability boundaries.
+              </p>
+              <Link
+                href="/blog/mortgage-lending-in-an-agentic-tom"
+                className="text-xs uppercase tracking-widest hover:underline"
+                style={{ color: "#2B3A52" }}
+              >
+                Read the full case sketch →
+              </Link>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* Applied elsewhere */}
+      <section className="px-5 md:px-8 py-20 md:py-28">
+        <div className="max-w-[900px] mx-auto">
+          <FadeUp>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Beyond lending</p>
+            <h2
+              className="font-[family-name:var(--font-cormorant)] font-light mb-12"
+              style={{ fontSize: "clamp(28px, 4vw, 42px)", color: "#1A1A1A" }}
             >
-              Read the full case sketch →
-            </Link>
+              The same model, other domains
+            </h2>
+          </FadeUp>
+          <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+            {applied.map((a, i) => (
+              <FadeUp key={a.slug} delay={i * 0.07}>
+                <Link href={`/blog/${a.slug}`} className="group block h-full">
+                  <div className="mb-4" style={{ width: 32, height: 2, background: "#8B7355" }} />
+                  <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>
+                    {a.domain}
+                  </p>
+                  <h3
+                    className="font-[family-name:var(--font-cormorant)] font-light mb-3 group-hover:underline"
+                    style={{ fontSize: "1.35rem", color: "#2B3A52", lineHeight: 1.3 }}
+                  >
+                    {a.title}
+                  </h3>
+                  <p className="text-sm" style={{ color: "#6B6B6B", lineHeight: 1.7 }}>
+                    {a.line}
+                  </p>
+                </Link>
+              </FadeUp>
+            ))}
           </div>
         </div>
       </section>
@@ -340,10 +359,13 @@ export default function FrameworkPage() {
             className="font-[family-name:var(--font-cormorant)] font-light mb-6"
             style={{ fontSize: "clamp(24px, 3.5vw, 36px)", color: "#F7F4EF", lineHeight: 1.3 }}
           >
-            Where does your bank stand today?
+            Where does your institution stand today?
           </h2>
-          <p className="mb-10 text-sm" style={{ color: "rgba(247,244,239,0.6)", maxWidth: 480, margin: "0 auto 2.5rem", lineHeight: 1.7 }}>
-            Fifteen questions across five dimensions. Five minutes. Exportable as PDF for your leadership team.
+          <p className="mb-4 text-sm" style={{ color: "rgba(247,244,239,0.6)", maxWidth: 480, margin: "0 auto 1rem", lineHeight: 1.7 }}>
+            Fifteen questions across the five dimensions this framework defines. About five minutes. Exportable as a PDF for your leadership team.
+          </p>
+          <p className="mb-10 text-xs" style={{ color: "rgba(247,244,239,0.45)" }}>
+            No registration. Individual answers stay in your browser.
           </p>
           <Link
             href="/assessment"

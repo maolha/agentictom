@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { track } from "@vercel/analytics";
 import { questions, categories, levels, categoryInsights, type CategoryScore, type AssessmentLevel } from "@/lib/assessment";
 import AnimatedNumber from "@/components/AnimatedNumber";
+import RadarChart from "@/components/RadarChart";
 
 type Results = {
   categoryScores: CategoryScore[];
@@ -14,8 +15,12 @@ type Results = {
   levelIndex: number;
 };
 
+function getInsight(category: string) {
+  return categoryInsights.find((c) => c.category === category);
+}
+
 function getInsightText(cat: CategoryScore): string {
-  const insight = categoryInsights.find((c) => c.category === cat.category);
+  const insight = getInsight(cat.category);
   if (!insight) return "";
   const pct = cat.score / cat.max;
   if (pct >= 0.66) return insight.high;
@@ -23,16 +28,21 @@ function getInsightText(cat: CategoryScore): string {
   return insight.low;
 }
 
-function getInsightQuestion(category: string): string {
-  return categoryInsights.find((c) => c.category === category)?.question ?? "";
+function statusWord(cat: CategoryScore): string {
+  const pct = cat.score / cat.max;
+  if (pct >= 0.66) return "Designed";
+  if (pct >= 0.33) return "Developing";
+  return "Exposed";
 }
 
 export default function AssessmentResults({
   results,
   answers,
+  onRetake,
 }: {
   results: Results;
   answers: (number | null)[];
+  onRetake?: () => void;
 }) {
   const [showExportDialog, setShowExportDialog] = useState(false);
   const [exporting, setExporting] = useState(false);
@@ -40,8 +50,10 @@ export default function AssessmentResults({
   const [exportCompany, setExportCompany] = useState("");
   const pct = Math.round((results.totalScore / results.maxScore) * 100);
 
-  const strongest = [...results.categoryScores].sort((a, b) => b.score / b.max - a.score / a.max)[0];
-  const weakest = [...results.categoryScores].sort((a, b) => a.score / a.max - b.score / b.max)[0];
+  const byExposure = [...results.categoryScores].sort((a, b) => a.score / a.max - b.score / b.max);
+  const weakest = byExposure[0];
+  const strongest = byExposure[byExposure.length - 1];
+  const priorityCats = byExposure.filter((c) => c.score / c.max < 0.66).slice(0, 2);
 
   async function exportPDF() {
     setExporting(true);
@@ -51,8 +63,9 @@ export default function AssessmentResults({
 
       const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: [254, 143] });
 
-      const slideIds = ["slide-title", "slide-summary", "slide-categories", "slide-insights", "slide-responses", "slide-next"];
+      const slideIds = ["slide-title", "slide-summary", "slide-categories", "slide-insights", "slide-moves", "slide-responses", "slide-next"];
 
+      let pageAdded = false;
       for (let i = 0; i < slideIds.length; i++) {
         const el = document.getElementById(slideIds[i]);
         if (!el) continue;
@@ -62,8 +75,9 @@ export default function AssessmentResults({
         el.style.display = "none";
 
         const imgData = canvas.toDataURL("image/jpeg", 0.95);
-        if (i > 0) pdf.addPage([254, 143], "landscape");
+        if (pageAdded) pdf.addPage([254, 143], "landscape");
         pdf.addImage(imgData, "JPEG", 0, 0, 254, 143);
+        pageAdded = true;
       }
 
       const name = exportName || "assessment";
@@ -197,7 +211,7 @@ export default function AssessmentResults({
         {/* Slide 3: Categories */}
         <div id="slide-categories" style={{ width: 1016, height: 572, background: "#F7F4EF", display: "none", flexDirection: "column", padding: 80 }}>
           <div style={{ fontSize: 14, color: "#8B7355", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 24 }}>
-            By Category
+            By Dimension
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
             {results.categoryScores.map((cat) => {
@@ -205,11 +219,14 @@ export default function AssessmentResults({
               return (
                 <div key={cat.category}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-                    <span style={{ fontSize: 15, color: "#1A1A1A" }}>{cat.category}</span>
+                    <span style={{ fontSize: 15, color: "#1A1A1A" }}>
+                      {cat.category}
+                      <span style={{ fontSize: 11, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.12em", marginLeft: 12 }}>{statusWord(cat)}</span>
+                    </span>
                     <span style={{ fontSize: 15, color: "#6B6B6B" }}>{cat.score} / {cat.max}</span>
                   </div>
-                  <div style={{ height: 6, background: "#D8D3CB", width: "100%" }}>
-                    <div style={{ height: "100%", width: `${catPct}%`, background: catPct >= 66 ? "#2B3A52" : catPct >= 33 ? "#8B7355" : "#1A1A1A" }} />
+                  <div style={{ height: 6, background: "#E3DDD1", width: "100%" }}>
+                    <div style={{ height: "100%", width: `${catPct}%`, background: "#2B3A52" }} />
                   </div>
                 </div>
               );
@@ -231,7 +248,7 @@ export default function AssessmentResults({
                 {getInsightText(weakest)}
               </div>
               <div style={{ fontSize: 13, color: "#2B3A52", fontStyle: "italic", lineHeight: 1.6 }}>
-                {getInsightQuestion(weakest.category)}
+                {getInsight(weakest.category)?.question}
               </div>
             </div>
             <div style={{ width: 1, background: "#D8D3CB" }} />
@@ -241,7 +258,7 @@ export default function AssessmentResults({
                 {getInsightText(strongest)}
               </div>
               <div style={{ fontSize: 13, color: "#2B3A52", fontStyle: "italic", lineHeight: 1.6 }}>
-                {getInsightQuestion(strongest.category)}
+                {getInsight(strongest.category)?.question}
               </div>
             </div>
           </div>
@@ -249,7 +266,35 @@ export default function AssessmentResults({
           <div style={{ position: "absolute", top: 0, right: 0, width: 6, height: "100%", background: "#2B3A52" }} />
         </div>
 
-        {/* Slide 5: Responses */}
+        {/* Slide 5: First moves */}
+        {priorityCats.length > 0 && (
+          <div id="slide-moves" style={{ width: 1016, height: 572, background: "#F7F4EF", display: "none", flexDirection: "column", padding: 80, overflow: "hidden" }}>
+            <div style={{ fontSize: 14, color: "#8B7355", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 32 }}>
+              Where to Start
+            </div>
+            <div style={{ display: "flex", gap: 40 }}>
+              {priorityCats.map((cat) => (
+                <div key={cat.category} style={{ flex: 1 }}>
+                  <div style={{ fontSize: 12, color: "#8B7355", textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: 8 }}>
+                    {cat.category} · {cat.score}/{cat.max}
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 16, marginTop: 16 }}>
+                    {getInsight(cat.category)?.moves.map((m, mi) => (
+                      <div key={mi} style={{ display: "flex", gap: 12 }}>
+                        <span style={{ fontSize: 20, fontWeight: 300, color: "#8B7355", lineHeight: 1.3 }}>{mi + 1}</span>
+                        <span style={{ fontSize: 14, color: "#1A1A1A", lineHeight: 1.7 }}>{m}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div style={{ position: "absolute", bottom: 80, right: 80, fontSize: 14, color: "#8B7355" }}>agentictom.com</div>
+            <div style={{ position: "absolute", top: 0, right: 0, width: 6, height: "100%", background: "#2B3A52" }} />
+          </div>
+        )}
+
+        {/* Slide 6: Responses */}
         <div id="slide-responses" style={{ width: 1016, height: 572, background: "#F7F4EF", display: "none", flexDirection: "column", padding: "60px 80px", overflow: "hidden" }}>
           <div style={{ fontSize: 14, color: "#8B7355", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 16 }}>
             Your Responses
@@ -269,7 +314,7 @@ export default function AssessmentResults({
           <div style={{ position: "absolute", top: 0, right: 0, width: 6, height: "100%", background: "#2B3A52" }} />
         </div>
 
-        {/* Slide 6: Next steps */}
+        {/* Slide 7: Next steps */}
         <div id="slide-next" style={{ width: 1016, height: 572, background: "#2B3A52", display: "none", flexDirection: "column", justifyContent: "center", padding: 80 }}>
           <div style={{ fontSize: 14, color: "#8B7355", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: 24 }}>
             What Next
@@ -296,13 +341,24 @@ export default function AssessmentResults({
           >
             agenticTOM
           </Link>
-          <button
-            onClick={() => setShowExportDialog(true)}
-            className="btn-outline-slate"
-            style={{ fontSize: "0.7rem", padding: "8px 20px" }}
-          >
-            Export PDF
-          </button>
+          <div className="flex items-center gap-5">
+            {onRetake && (
+              <button
+                onClick={onRetake}
+                className="text-xs uppercase tracking-widest hover:underline"
+                style={{ color: "#6B6B6B", background: "none", border: "none", cursor: "pointer" }}
+              >
+                Retake
+              </button>
+            )}
+            <button
+              onClick={() => setShowExportDialog(true)}
+              className="btn-outline-slate"
+              style={{ fontSize: "0.7rem", padding: "8px 20px" }}
+            >
+              Export PDF
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -323,7 +379,7 @@ export default function AssessmentResults({
           </p>
 
           {/* Score */}
-          <div className="flex items-baseline gap-3 mb-16">
+          <div className="flex items-baseline gap-3 mb-12">
             <AnimatedNumber
               value={results.totalScore}
               duration={1.5}
@@ -335,34 +391,51 @@ export default function AssessmentResults({
             </span>
           </div>
 
-          {/* Level progression */}
+          {/* Level track with thresholds */}
           <div className="mb-16">
-            <div className="flex justify-between mb-3">
-              {levels.map((l, i) => (
-                <div key={l.name} className="text-center" style={{ flex: 1 }}>
-                  <div
-                    className="mx-auto mb-2"
-                    style={{
-                      width: i === results.levelIndex ? 14 : 10,
-                      height: i === results.levelIndex ? 14 : 10,
-                      borderRadius: "50%",
-                      background: i <= results.levelIndex ? "#2B3A52" : "#D8D3CB",
-                    }}
-                  />
-                  <p
-                    className="text-xs uppercase tracking-widest hidden sm:block"
-                    style={{
-                      color: i === results.levelIndex ? "#2B3A52" : "#6B6B6B",
-                      fontWeight: i === results.levelIndex ? 700 : 400,
-                    }}
-                  >
-                    {l.name}
-                  </p>
-                </div>
+            <div className="relative mb-3" style={{ height: 3, background: "#E3DDD1" }}>
+              <div style={{ height: "100%", width: `${pct}%`, background: "#2B3A52", transition: "width 1s ease-in-out" }} />
+              {levels.slice(1).map((l) => (
+                <span
+                  key={l.name}
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    left: `${(l.threshold / results.maxScore) * 100}%`,
+                    top: -4,
+                    width: 1,
+                    height: 11,
+                    background: "#B9B2A4",
+                  }}
+                />
               ))}
             </div>
-            <div style={{ height: 2, background: "#D8D3CB" }}>
-              <div style={{ height: "100%", width: `${pct}%`, background: "#2B3A52", transition: "width 1s ease-in-out" }} />
+            <div className="flex justify-between">
+              {levels.map((l, i) => (
+                <p
+                  key={l.name}
+                  className="text-xs uppercase tracking-widest"
+                  style={{
+                    color: i === results.levelIndex ? "#2B3A52" : "#6B6B6B",
+                    fontWeight: i === results.levelIndex ? 700 : 400,
+                  }}
+                >
+                  {l.name}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          {/* Radar */}
+          <div className="mb-16">
+            <h2 className="font-[family-name:var(--font-cormorant)] font-light mb-2" style={{ fontSize: "1.5rem", color: "#1A1A1A" }}>
+              The shape of your readiness
+            </h2>
+            <p className="text-sm mb-6" style={{ color: "#6B6B6B" }}>
+              Five dimensions, scored 0 to 9. The gaps matter more than the average.
+            </p>
+            <div className="mx-auto" style={{ maxWidth: 560 }}>
+              <RadarChart data={results.categoryScores.map((c) => ({ label: c.category, score: c.score, max: c.max }))} />
             </div>
           </div>
 
@@ -387,7 +460,7 @@ export default function AssessmentResults({
           {/* Category breakdown */}
           <div className="mb-16">
             <h2 className="font-[family-name:var(--font-cormorant)] font-light mb-8" style={{ fontSize: "1.5rem", color: "#1A1A1A" }}>
-              By category
+              By dimension
             </h2>
             <div className="flex flex-col gap-6">
               {results.categoryScores.map((cat) => {
@@ -395,11 +468,14 @@ export default function AssessmentResults({
                 return (
                   <div key={cat.category}>
                     <div className="flex justify-between items-baseline mb-2">
-                      <p className="text-sm" style={{ color: "#1A1A1A" }}>{cat.category}</p>
-                      <p className="text-sm" style={{ color: "#6B6B6B" }}>{cat.score} / {cat.max}</p>
+                      <p className="text-sm" style={{ color: "#1A1A1A" }}>
+                        {cat.category}
+                        <span className="text-[10px] uppercase tracking-widest ml-3" style={{ color: "#8B7355" }}>{statusWord(cat)}</span>
+                      </p>
+                      <p className="text-sm" style={{ color: "#6B6B6B", fontVariantNumeric: "tabular-nums" }}>{cat.score} / {cat.max}</p>
                     </div>
-                    <div style={{ height: 4, background: "#D8D3CB" }}>
-                      <div style={{ height: "100%", width: `${catPct}%`, background: catPct >= 66 ? "#2B3A52" : catPct >= 33 ? "#8B7355" : "#1A1A1A", transition: "width 0.8s ease-in-out" }} />
+                    <div style={{ height: 4, background: "#E3DDD1" }}>
+                      <div style={{ height: "100%", width: `${catPct}%`, background: "#2B3A52", transition: "width 0.8s ease-in-out" }} />
                     </div>
                   </div>
                 );
@@ -408,31 +484,83 @@ export default function AssessmentResults({
           </div>
 
           {/* Implication */}
-          <div className="p-6 md:p-8 mb-16" style={{ borderLeft: "3px solid #2B3A52", background: "rgba(43,58,82,0.04)" }}>
+          <div className="p-6 md:p-8 mb-4" style={{ borderLeft: "3px solid #2B3A52", background: "rgba(43,58,82,0.04)" }}>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Implication</p>
             <p style={{ color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
               {results.level.implication}
             </p>
           </div>
+          <p className="text-xs mb-16" style={{ color: "#6B6B6B", lineHeight: 1.7, maxWidth: 620 }}>
+            For context: McKinsey&apos;s State of AI survey (2025) puts the share of companies reporting a significant EBIT effect from AI at six percent. The gap this assessment measures is the reason.{" "}
+            <Link href="/blog/the-six-percent-club" className="hover:underline" style={{ color: "#2B3A52" }}>
+              The 6% Club →
+            </Link>
+          </p>
+
+          {/* Where to start */}
+          {priorityCats.length > 0 && (
+            <div className="mb-16">
+              <h2 className="font-[family-name:var(--font-cormorant)] font-light mb-2" style={{ fontSize: "1.5rem", color: "#1A1A1A" }}>
+                Where to start
+              </h2>
+              <p className="text-sm mb-8" style={{ color: "#6B6B6B" }}>
+                First moves for your most exposed {priorityCats.length === 1 ? "dimension" : "dimensions"}.
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
+                {priorityCats.map((cat) => (
+                  <div key={cat.category} className="p-6" style={{ border: "1px solid #D8D3CB" }}>
+                    <p className="text-xs uppercase tracking-widest mb-4" style={{ color: "#8B7355" }}>
+                      {cat.category} · {cat.score}/{cat.max}
+                    </p>
+                    <ol className="flex flex-col gap-3">
+                      {getInsight(cat.category)?.moves.map((m, mi) => (
+                        <li key={mi} className="flex gap-3 text-sm" style={{ color: "#1A1A1A", lineHeight: 1.7 }}>
+                          <span className="font-[family-name:var(--font-cormorant)] font-light shrink-0" style={{ fontSize: "1.2rem", color: "#8B7355", lineHeight: 1.4 }}>
+                            {mi + 1}
+                          </span>
+                          {m}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Category insights */}
           <div className="mb-16">
             <h2 className="font-[family-name:var(--font-cormorant)] font-light mb-8" style={{ fontSize: "1.5rem", color: "#1A1A1A" }}>
               What this means
             </h2>
-            {results.categoryScores.map((cat) => (
-              <div key={cat.category} className="mb-8 pb-8" style={{ borderBottom: "1px solid #D8D3CB" }}>
-                <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#8B7355" }}>
-                  {cat.category} — {cat.score}/{cat.max}
-                </p>
-                <p className="text-sm mb-3" style={{ color: "#1A1A1A", lineHeight: 1.7 }}>
-                  {getInsightText(cat)}
-                </p>
-                <p className="text-sm italic" style={{ color: "#2B3A52" }}>
-                  {getInsightQuestion(cat.category)}
-                </p>
-              </div>
-            ))}
+            {results.categoryScores.map((cat) => {
+              const insight = getInsight(cat.category);
+              return (
+                <div key={cat.category} className="mb-8 pb-8" style={{ borderBottom: "1px solid #D8D3CB" }}>
+                  <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#8B7355" }}>
+                    {cat.category} — {cat.score}/{cat.max}
+                  </p>
+                  <p className="text-sm mb-3" style={{ color: "#1A1A1A", lineHeight: 1.7 }}>
+                    {getInsightText(cat)}
+                  </p>
+                  <p className="text-sm italic mb-3" style={{ color: "#2B3A52" }}>
+                    {insight?.question}
+                  </p>
+                  <div className="flex flex-wrap gap-x-5 gap-y-1">
+                    {insight?.posts.map((p) => (
+                      <Link
+                        key={p.slug}
+                        href={`/blog/${p.slug}`}
+                        className="text-xs uppercase tracking-widest hover:underline"
+                        style={{ color: "#2B3A52" }}
+                      >
+                        {p.title} →
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           {/* Responses */}
@@ -473,7 +601,7 @@ export default function AssessmentResults({
               </p>
               <Link
                 href="/#contact"
-                className="inline-block px-8 py-3 border text-xs uppercase tracking-widest transition-colors duration-300"
+                className="inline-block px-8 py-3 border text-xs uppercase tracking-widest transition-colors duration-300 hover:bg-[#F7F4EF] hover:text-[#2B3A52]"
                 style={{ borderColor: "#F7F4EF", color: "#F7F4EF" }}
               >
                 Start a conversation
@@ -487,13 +615,24 @@ export default function AssessmentResults({
               <p className="text-xs" style={{ color: "#6B6B6B" }}>
                 agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
               </p>
-              <button
-                onClick={() => setShowExportDialog(true)}
-                className="text-xs uppercase tracking-widest hover:underline"
-                style={{ color: "#2B3A52", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
-              >
-                Export PDF
-              </button>
+              <div className="flex gap-5">
+                {onRetake && (
+                  <button
+                    onClick={onRetake}
+                    className="text-xs uppercase tracking-widest hover:underline"
+                    style={{ color: "#6B6B6B", background: "none", border: "none", cursor: "pointer" }}
+                  >
+                    Retake assessment
+                  </button>
+                )}
+                <button
+                  onClick={() => setShowExportDialog(true)}
+                  className="text-xs uppercase tracking-widest hover:underline"
+                  style={{ color: "#2B3A52", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}
+                >
+                  Export PDF
+                </button>
+              </div>
             </div>
           </div>
         </div>
