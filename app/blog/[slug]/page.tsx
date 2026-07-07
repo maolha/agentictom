@@ -157,7 +157,7 @@ export default async function BlogPost({
                 Stay with the argument
               </p>
               <p className="text-sm" style={{ color: "#6B6B6B", lineHeight: 1.6 }}>
-                New essays land on LinkedIn first.
+                The conversation around these essays happens on LinkedIn.
               </p>
             </div>
             <a
