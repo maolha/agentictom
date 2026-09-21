@@ -8,6 +8,7 @@ const ExponentialSteps = dynamic(() => import("@/components/viz/ExponentialSteps
 const JCurve = dynamic(() => import("@/components/viz/JCurve"));
 const ExploitWindow = dynamic(() => import("@/components/viz/ExploitWindow"));
 const MrosChart = dynamic(() => import("@/components/viz/MrosChart"));
+const ReliabilityMatrix = dynamic(() => import("@/components/viz/ReliabilityMatrix"));
 
 const EMBEDS: Record<string, React.ComponentType> = {
   "funnel:mortgage": MortgageFunnel,
@@ -15,6 +16,7 @@ const EMBEDS: Record<string, React.ComponentType> = {
   "viz:j-curve": JCurve,
   "viz:exploit-window": ExploitWindow,
   "viz:mros-series": MrosChart,
+  "viz:reliability-matrix": ReliabilityMatrix,
 };
 
 function parseMarkdown(md: string): React.ReactNode[] {
