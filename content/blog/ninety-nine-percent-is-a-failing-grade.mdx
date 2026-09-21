@@ -9,7 +9,7 @@ standfirst: "Reliability compounds across a chain. Ten steps at 90 percent compl
 
 Getting to 80 percent takes 20 percent of the effort. Getting to 99.9 percent takes a hundred times more.
 
-The framing is Ashu Garg's, of Foundation Capital, and I keep returning to it because it explains most of what I see in the field. One good model and a clean interface get you to 80 percent. **Closing the gap from mostly works to reliably works is where almost all the engineering lives.**
+The framing is [Ashu Garg's](https://ashugarg.substack.com/p/what-it-takes-to-build-ai-agents), of Foundation Capital, and I keep returning to it because it explains most of what I see in the field. One good model and a clean interface get you to 80 percent. **Closing the gap from mostly works to reliably works is where almost all the engineering lives.**
 
 There is a comfortable belief in circulation that deep engineering matters less as models improve. The opposite is true. Anyone can build an agent that performs beautifully in a demo. Building one that runs a process every day, across thousands of real cases, is a different discipline. The last stretch is a mathematical problem before it is a polish problem.
 
@@ -27,7 +27,7 @@ The numbers behave in a way intuition does not. Moving from 99 to 99.9 reads lik
 
 ## The illusion of diminishing returns
 
-Sinha and colleagues measured this directly in The Illusion of Diminishing Returns (arXiv 2509.09677, September 2025), a paper on long horizon execution in language models. Their finding: a model improving from 89 to 91 to 93 percent on a single step benchmark looks like slow progress, and that impression is an artefact of how we measure. Across a long workflow, the same small gains compound into a different capability entirely.
+Sinha and colleagues measured this directly in [The Illusion of Diminishing Returns](https://arxiv.org/abs/2509.09677) (arXiv 2509.09677, September 2025), a paper on long horizon execution in language models. Their finding: a model improving from 89 to 91 to 93 percent on a single step benchmark looks like slow progress, and that impression is an artefact of how we measure. Across a long workflow, the same small gains compound into a different capability entirely.
 
 A system that handles ten steps at 90 percent handles 100 steps at 99. Add one more nine, to 99.9, and it runs 1'000 steps at the same completion rate. The relationship is hyperbolic. The closer a step gets to perfect, the larger the payoff from the next decimal.
 
@@ -59,8 +59,9 @@ Compare two chains for the same five step process.
 |---|---|---|
 | Five agent steps at 90 percent each | 0.9 × 0.9 × 0.9 × 0.9 × 0.9 | 59 percent |
 | One agent step at 90 percent, four deterministic steps | 0.9 × 1.0 × 1.0 × 1.0 × 1.0 | 90 percent |
+| The same agent step with a review that catches four errors in five, four deterministic steps | 0.98 × 1.0 × 1.0 × 1.0 × 1.0 | 98 percent |
 
-Same process. Same intelligence where it is genuinely needed. **31 points of reliability difference, and none of them came from a better model.** Illustrative calculation, assuming independent steps.
+Same process. Same intelligence where it is genuinely needed. **31 points of reliability difference between the first two chains, and none of them came from a better model.** The third chain adds a review layer, human or automated, on the one step that can fail. A reviewer multiplies the residual rather than the whole chain: they only have to catch the errors of a single legible step, which is a task a person can actually do. Illustrative calculation, assuming independent steps and a reviewer who catches four errors in five.
 
 This is also the quiet answer to the recurring claim that RPA is dead. Deterministic execution anchors a chain long enough for agents to be worth deploying at all. In the [three layer model](/blog/agentic-tom-introduction), the bots hold the number up.
 
@@ -74,7 +75,7 @@ Models are a poor choice for what comes next. If a lookup is needed, the databas
 
 That line is the reliability boundary. Above it, probabilistic is acceptable. Below it sits the part you trust when the answer has to be right, and in a bank that is [the layer that writes to the system of record](/blog/the-easy-part-is-the-ai).
 
-The best public example I have seen is Maximor, which builds for finance teams where close enough means wrong. Their chain runs roughly like this: a language model interprets the accounting policy, a trained model predicts the value, a deterministic calculator applies the formula, a model drafts the explanation, and a verifier checks every step against the underlying data. When something breaks, it shows up in the trace. The intelligence sits in the composition.
+The pattern that holds in finance, where close enough means wrong, runs roughly like this: a language model interprets the policy, a deterministic calculator applies the formula, a model drafts the explanation, and a verifier checks every step against the underlying data. When something breaks, it shows up in the trace. The intelligence sits in the composition.
 
 I have watched plenty of teams get this backwards, and the failure mode is consistent. A prompt grows into a 2'000 word wall of conditionals, reference tables, and negative constraints. The model is asked to run lookups against a table pasted into its own context, and eventually invents a plausible code that does not exist. Deterministic logic would have been exactly correct and roughly free. **The model is 99 percent right at best, and in payments or onboarding that last percent is the only part anyone remembers.**
 
@@ -98,10 +99,10 @@ This is unglamorous, and it is the product. **In automation, reliability is not 
 
 Models and reasoning capability are commoditising in front of us. What will not commoditise is the engineering that makes them trustworthy in production: the arithmetic of chained reliability, the orchestration logic that contains failure, the deterministic components that hold the multipliers at 1.0, and the instrumentation that tells you how a process behaved across a thousand runs rather than across one impressive one. That instrumentation is also the evidence FINMA Guidance 08/2024 expects before autonomy is extended, [level by level](/blog/from-abs-to-autopilot).
 
-Most teams will ship the 80 percent version. It will demo well. Count how many steps their agents run before a human has to step in, and the curve tells you the rest.
+Most teams will ship the 80 percent version. It will [demo well](/blog/the-six-percent-club). Count how many steps their agents run before a human has to step in, and the curve tells you the rest.
 
 Build systems that think. Then do the harder work and build systems that think reliably.
 
 In the end, the math decides.
 
-**Notes.** The 80 to 99.9 framing and the observation that reliability is the product come from Ashu Garg of Foundation Capital, writing about Maximor AI. The long horizon execution research is Sinha et al., The Illusion of Diminishing Returns: Measuring Long Horizon Execution in LLMs, arXiv 2509.09677, September 2025. All chain figures in this post are illustrative calculations: the completion rate of a chain is the per step accuracy raised to the power of the number of steps, assuming independent steps.
+**Notes.** The 80 to 99.9 framing and the observation that reliability is the product come from Ashu Garg of Foundation Capital, [What it takes to build AI agents that actually work](https://ashugarg.substack.com/p/what-it-takes-to-build-ai-agents). The long horizon execution research is Sinha, Arun, Goel, Staab, and Geiping, [The Illusion of Diminishing Returns: Measuring Long Horizon Execution in LLMs](https://arxiv.org/abs/2509.09677), arXiv 2509.09677, September 2025. All chain figures in this post are illustrative calculations: the completion rate of a chain is the per step accuracy raised to the power of the number of steps, assuming independent steps.

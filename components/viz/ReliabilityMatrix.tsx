@@ -19,10 +19,23 @@ function chain(accuracy: number, steps: number): number {
   return Math.pow(accuracy / 100, steps) * 100;
 }
 
+// Precision follows the value, and a chain never rounds up to 100:
+// 0.9999^5 is 99.95, and the difference is the point of the figure.
 function formatRate(v: number): string {
+  if (v >= 99.9) return v.toFixed(2);
+  if (v >= 99) return v.toFixed(1);
   if (v >= 10) return Math.round(v).toString();
   if (v >= 0.1) return (Math.round(v * 10) / 10).toString();
   return "<0.1";
+}
+
+function formatFail(v: number): string {
+  const f = 100 - v;
+  if (v >= 99.9) return f.toFixed(2);
+  if (v >= 99) return f.toFixed(1);
+  if (v >= 10) return Math.round(f).toString();
+  if (v >= 0.1) return (Math.round(f * 10) / 10).toString();
+  return ">99.9";
 }
 
 function formatAccuracy(a: number): string {
@@ -41,9 +54,7 @@ function cellColor(v: number): { background: string; color: string } {
 
 function describe(accuracy: number, steps: number): string {
   const v = chain(accuracy, steps);
-  const rate = formatRate(v);
-  const fail = v >= 10 ? `${Math.round(100 - v)}` : v >= 0.1 ? `${Math.round((100 - v) * 10) / 10}` : ">99.9";
-  return `${swiss(steps)} steps at ${formatAccuracy(accuracy)} percent per step complete ${rate} percent of the time. ${fail} percent of runs fail somewhere in the chain.`;
+  return `${swiss(steps)} steps at ${formatAccuracy(accuracy)} percent per step complete ${formatRate(v)} percent of the time. ${formatFail(v)} percent of runs fail somewhere in the chain.`;
 }
 
 export default function ReliabilityMatrix() {
@@ -59,8 +70,8 @@ export default function ReliabilityMatrix() {
         Interactive · Pick a chain
       </p>
 
-      <div className="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-        <div>
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+        <div className="shrink-0">
           <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#6B6B6B" }}>
             {swiss(active.s)} steps · {formatAccuracy(active.a)} percent per step
           </p>
@@ -68,18 +79,18 @@ export default function ReliabilityMatrix() {
             className="font-[family-name:var(--font-cormorant)] font-light"
             style={{ fontSize: "clamp(34px, 5vw, 48px)", color: "#2B3A52", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}
           >
-            {formatRate(activeValue)}
+            <span style={{ display: "inline-block", minWidth: "3.2ch" }}>{formatRate(activeValue)}</span>
             <span style={{ fontSize: "1rem", marginLeft: 8 }}>percent of runs complete</span>
           </p>
         </div>
-        <p className="text-xs sm:max-w-[240px] sm:text-right" style={{ color: "#6B6B6B", lineHeight: 1.6 }} aria-live="polite">
+        <p className="text-xs sm:max-w-[260px] sm:text-right" style={{ color: "#6B6B6B", lineHeight: 1.6, minHeight: "4.8em" }} aria-live="polite">
           {describe(active.a, active.s)}
         </p>
       </div>
 
       <div className="overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0">
         <table
-          style={{ width: "100%", minWidth: 440, borderCollapse: "separate", borderSpacing: 2, fontSize: "0.8rem", fontVariantNumeric: "tabular-nums" }}
+          style={{ width: "100%", minWidth: 440, tableLayout: "fixed", borderCollapse: "separate", borderSpacing: 2, fontSize: "0.8rem", fontVariantNumeric: "tabular-nums" }}
           onMouseLeave={() => setHovered(null)}
         >
           <caption className="sr-only">
@@ -90,7 +101,7 @@ export default function ReliabilityMatrix() {
               <th
                 scope="col"
                 className="text-left text-[10px] uppercase tracking-widest pb-2 pr-2"
-                style={{ color: "#8B7355", fontWeight: 400, whiteSpace: "nowrap", verticalAlign: "bottom" }}
+                style={{ width: "22%", color: "#8B7355", fontWeight: 400, whiteSpace: "nowrap", verticalAlign: "bottom" }}
               >
                 Accuracy per step
               </th>
@@ -140,7 +151,9 @@ export default function ReliabilityMatrix() {
                           style={{
                             background,
                             color,
-                            padding: "10px 4px",
+                            padding: "10px 2px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
                             borderRadius: 3,
                             border: "none",
                             outline: isActive ? "2px solid #8B7355" : "2px solid transparent",
