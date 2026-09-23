@@ -116,7 +116,7 @@ export default function AssessmentResults({
               Export your report
             </h3>
             <p className="text-sm mb-6" style={{ color: "#6B6B6B" }}>
-              Optional — personalise your PDF with your name and company.
+              Optional: personalise your PDF with your name and company.
             </p>
             <div className="flex flex-col gap-4 mb-8">
               <input
@@ -516,7 +516,7 @@ export default function AssessmentResults({
           <p className="text-xs mb-16" style={{ color: "#6B6B6B", lineHeight: 1.7, maxWidth: 620 }}>
             For context: McKinsey&apos;s State of AI survey (2025) puts the share of companies reporting a significant EBIT effect from AI at six percent. The gap this assessment measures is the reason.{" "}
             <Link href="/blog/the-six-percent-club" className="hover:underline" style={{ color: "#2B3A52" }}>
-              The 6% Club →
+              The Six Percent Club →
             </Link>
           </p>
 
@@ -561,7 +561,7 @@ export default function AssessmentResults({
               return (
                 <div key={cat.category} className="mb-8 pb-8" style={{ borderBottom: "1px solid #D8D3CB" }}>
                   <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#8B7355" }}>
-                    {cat.category} — {cat.score}/{cat.max}
+                    {cat.category} · {cat.score}/{cat.max}
                   </p>
                   <p className="text-sm mb-3" style={{ color: "#1A1A1A", lineHeight: 1.7 }}>
                     {getInsightText(cat)}

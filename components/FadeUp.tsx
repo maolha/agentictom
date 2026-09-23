@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 
 export default function FadeUp({
@@ -14,6 +14,16 @@ export default function FadeUp({
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const reduced = useReducedMotion();
+
+  // With reduced motion the content is simply shown: no offset, no delay.
+  if (reduced) {
+    return (
+      <div ref={ref} className={className}>
+        {children}
+      </div>
+    );
+  }
 
   return (
     <motion.div

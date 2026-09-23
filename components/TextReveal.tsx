@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 /**
  * Reveals text word by word with a staggered fade-in and slight upward motion.
- * Used on the homepage hero headline for editorial gravitas.
+ * Used on the homepage hero headline. Respects the reduced-motion preference.
  */
 export default function TextReveal({
   text,
@@ -17,6 +17,15 @@ export default function TextReveal({
   style?: React.CSSProperties;
   delay?: number;
 }) {
+  const reduced = useReducedMotion();
+  if (reduced) {
+    return (
+      <span className={className} style={style}>
+        {text}
+      </span>
+    );
+  }
+
   const words = text.split(" ");
 
   return (
@@ -28,7 +37,7 @@ export default function TextReveal({
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: 0.5,
-            delay: delay + i * 0.08,
+            delay: delay + i * 0.06,
             ease: [0.25, 0.1, 0.25, 1],
           }}
           style={{ display: "inline-block", marginRight: "0.3em" }}

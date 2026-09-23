@@ -3,17 +3,25 @@ import ContactForm from "@/components/ContactForm";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts, formatDate } from "@/lib/blog";
-import { LinkedInIcon, XIcon } from "@/components/SocialIcons";
-import StickyNav from "@/components/StickyNav";
+import SiteNav from "@/components/SiteNav";
+import SiteFooter from "@/components/SiteFooter";
+import { pageMetadata, SITE_URL, LINKEDIN_URL, X_URL, AUTHOR_TITLE } from "@/lib/site";
 import TextReveal from "@/components/TextReveal";
+
+export const metadata = pageMetadata({
+  title: "Agentic TOM",
+  description: "The operating model for banks where AI is a first-class participant. Framework, thinking, and speaking by Marc Hauser.",
+  path: "/",
+});
 
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Marc Hauser",
-  url: "https://agentictom.com",
-  sameAs: ["https://linkedin.com/in/marcoliverhauser", "https://x.com/marc_hauser"],
-  jobTitle: "Head of Banking & Financial Services, UiPath Switzerland",
+  url: SITE_URL,
+  image: `${SITE_URL}/marc-hauser.jpg`,
+  sameAs: [LINKEDIN_URL, X_URL],
+  jobTitle: AUTHOR_TITLE,
   knowsAbout: ["Agentic AI", "Target Operating Models", "Swiss Banking", "Financial Services"],
 };
 
@@ -29,21 +37,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
-      {/* NAV */}
-      <StickyNav>
-        <div className="max-w-[900px] mx-auto flex justify-between items-center">
-          <a href="#top" className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide text-[#1A1A1A]">
-            agenticTOM
-          </a>
-          <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
-            <Link href="/framework" className="hover:text-[#2B3A52] transition-colors">Framework</Link>
-            <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
-            <Link href="/assessment" className="hidden sm:inline hover:text-[#2B3A52] transition-colors">Assessment</Link>
-            <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
-            <a href="#contact" className="hidden sm:inline-block px-4 py-2 border border-[#2B3A52] text-[#2B3A52] hover:bg-[#2B3A52] hover:text-[#F7F4EF] transition-colors duration-300 text-xs tracking-widest">Let&apos;s talk</a>
-          </div>
-        </div>
-      </StickyNav>
+      <SiteNav home />
 
       {/* HERO */}
       <section className="min-h-screen flex flex-col justify-center pt-20 pb-16 md:pb-24 px-5 md:px-8 overflow-hidden">
@@ -123,7 +117,7 @@ export default function Home() {
                 },
                 {
                   value: "CHF 1'500",
-                  label: "processing cost per mortgage application",
+                  label: "processing cost per mortgage application, industry estimate",
                   link: "/blog/the-tsunami-is-not-coming-from-inside-the-bank",
                 },
               ].map((n) => (
@@ -177,7 +171,7 @@ export default function Home() {
                 },
                 {
                   label: "The pressure",
-                  desc: "Customer AI agents will query 30 banks simultaneously. Your inbound volume increases tenfold. Your revenue does not.",
+                  desc: "When every client's agent queries thirty banks at once, inbound volume rises tenfold. Revenue does not.",
                   link: "/blog/the-tsunami-is-not-coming-from-inside-the-bank",
                   cta: "See the numbers",
                 },
@@ -326,13 +320,13 @@ export default function Home() {
             <div className="flex flex-col-reverse md:grid md:grid-cols-[1fr_260px] gap-10 md:gap-14 items-start">
               <div>
                 <p className="mb-4" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
-                  Twenty years across digital banking, fintech, and emerging technologies. Multiple director-level roles at UBS covering digital channels, wealth management, and investment products across international markets. CEO of Trust Square, Z&uuml;rich&apos;s blockchain ecosystem. Managing Partner at Tenity, leading early-stage fintech investment and open innovation partnerships with Julius B&auml;r, UBS, and others. Co-founded an ETH AI spin-off. Now heading banking and financial services for UiPath in Switzerland. Keynotes and executive briefings across the Swiss financial centre.
+                  Twenty years across digital banking, fintech, and emerging technologies. Multiple director-level roles at UBS covering digital channels, wealth management, and investment products across international markets. CEO of Trust Square, the Z&uuml;rich blockchain hub. Managing Partner at Tenity, leading early-stage fintech investment and open innovation partnerships with Julius B&auml;r, UBS, and others. Co-founded an ETH AI spin-off. Now heading banking and financial services for UiPath in Switzerland. Keynotes and executive briefings across the Swiss financial centre.
                 </p>
                 <p className="mb-8" style={{ maxWidth: 620, color: "#1A1A1A", lineHeight: 1.8, fontSize: "0.95rem" }}>
                   Based in Z&uuml;rich. One daughter who will be agent-native before she is old enough to open a bank account. This site is a framework I use in my own thinking, offered here as a basis for serious conversation with people working on the same questions.
                 </p>
                 <a
-                  href="https://linkedin.com/in/marcoliverhauser"
+                  href={LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm hover:underline"
@@ -378,40 +372,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-12 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB" }}>
-        <div className="max-w-[900px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-          <p className="text-sm" style={{ color: "#6B6B6B" }}>
-            agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
-          </p>
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm" style={{ color: "#6B6B6B" }}>
-            <Link href="/framework" className="hover:text-[#2B3A52] transition-colors">Framework</Link>
-            <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
-            <Link href="/assessment" className="hover:text-[#2B3A52] transition-colors">Assessment</Link>
-            <a href="#about" className="hover:text-[#2B3A52] transition-colors">About</a>
-            <a href="#contact" className="hover:text-[#2B3A52] transition-colors">Contact</a>
-            <span aria-hidden="true" style={{ color: "#D8D3CB" }}>·</span>
-            <a
-              href="https://linkedin.com/in/marcoliverhauser"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              className="hover:text-[#2B3A52] transition-colors inline-flex"
-            >
-              <LinkedInIcon />
-            </a>
-            <a
-              href="https://x.com/marc_hauser"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X"
-              className="hover:text-[#2B3A52] transition-colors inline-flex"
-            >
-              <XIcon />
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter home />
     </main>
   );
 }
