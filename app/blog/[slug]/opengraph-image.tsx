@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import { notFound } from "next/navigation";
+import { getPost } from "@/lib/blog";
 
 export const alt = "Agentic TOM";
 export const size = { width: 1200, height: 630 };
@@ -13,14 +12,10 @@ export default async function OGImage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-
-  let title = "Agentic TOM";
-  const filePath = path.join(process.cwd(), "content/blog", `${slug}.mdx`);
-  if (fs.existsSync(filePath)) {
-    const raw = fs.readFileSync(filePath, "utf-8");
-    const { data } = matter(raw);
-    title = data.title ?? title;
-  }
+  // getPost applies the publication date, so a scheduled post has no card before its day.
+  const post = getPost(slug);
+  if (!post) notFound();
+  const title = post.title;
 
   return new ImageResponse(
     (
@@ -44,7 +39,7 @@ export default async function OGImage({
             marginBottom: 24,
           }}
         >
-          agenticTOM — Writing
+          agenticTOM — Thoughts
         </div>
         <div
           style={{
