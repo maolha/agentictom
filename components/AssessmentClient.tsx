@@ -5,7 +5,7 @@ import Link from "next/link";
 import { track } from "@vercel/analytics";
 import { questions, calculateResults, categories, categoryLines, levels } from "@/lib/assessment";
 import AssessmentResults from "@/components/AssessmentResults";
-import StickyNav from "@/components/StickyNav";
+import SiteNav from "@/components/SiteNav";
 import FadeUp from "@/components/FadeUp";
 
 const QUESTIONS_PER_CATEGORY = 3;
@@ -86,22 +86,7 @@ export default function AssessmentClient() {
   if (!started) {
     return (
       <main style={{ background: "#F7F4EF", color: "#1A1A1A", minHeight: "100vh" }}>
-        <StickyNav>
-          <div className="max-w-[900px] mx-auto flex justify-between items-center">
-            <Link
-              href="/"
-              className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide"
-              style={{ color: "#1A1A1A" }}
-            >
-              agenticTOM
-            </Link>
-            <div className="flex items-center gap-5 md:gap-8 text-xs md:text-sm tracking-widest uppercase text-[#6B6B6B]">
-              <Link href="/framework" className="hover:text-[#2B3A52] transition-colors">Framework</Link>
-              <Link href="/blog" className="hover:text-[#2B3A52] transition-colors">Thoughts</Link>
-              <Link href="/#about" className="hover:text-[#2B3A52] transition-colors">About</Link>
-            </div>
-          </div>
-        </StickyNav>
+        <SiteNav />
 
         <div className="px-5 md:px-8 pt-24 md:pt-36 pb-16 md:pb-24">
           <div className="max-w-[760px] mx-auto w-full">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SiteNav from "@/components/SiteNav";
 
 export default function NotFound() {
   return (
@@ -6,22 +7,9 @@ export default function NotFound() {
       style={{ background: "#F7F4EF", color: "#1A1A1A", minHeight: "100vh" }}
       className="flex flex-col"
     >
-      <nav
-        className="px-5 md:px-8 py-4 md:py-5"
-        style={{ borderBottom: "1px solid #D8D3CB" }}
-      >
-        <div className="max-w-[900px] mx-auto">
-          <Link
-            href="/"
-            className="font-[family-name:var(--font-cormorant)] text-lg md:text-xl font-light tracking-wide"
-            style={{ color: "#1A1A1A" }}
-          >
-            agenticTOM
-          </Link>
-        </div>
-      </nav>
+      <SiteNav />
 
-      <div className="flex-1 flex flex-col items-center justify-center px-5 md:px-8">
+      <div className="flex-1 flex flex-col items-center justify-center px-5 md:px-8 pt-20">
         <p
           className="font-[family-name:var(--font-cormorant)] font-light select-none"
           style={{ fontSize: "clamp(80px, 16vw, 160px)", lineHeight: 0.85, color: "#2B3A52", opacity: 0.12 }}
@@ -38,9 +26,14 @@ export default function NotFound() {
         <p className="mb-10 text-center" style={{ color: "#6B6B6B", maxWidth: 420 }}>
           The page you are looking for does not exist or has been moved.
         </p>
-        <Link href="/" className="btn-outline-slate">
-          Back to home
-        </Link>
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Link href="/" className="btn-outline-slate">
+            Back to home
+          </Link>
+          <Link href="/blog" className="btn-outline-slate">
+            All essays
+          </Link>
+        </div>
       </div>
     </main>
   );

@@ -1,6 +1,7 @@
 ---
 title: "Escalation by Design: Why Human Oversight Is an Architecture Decision"
 date: "2026-01-22"
+theme: "escalation-and-autonomy"
 excerpt: "The failure mode of most automation projects is not that machines make wrong decisions. It is that nobody designed when and how the decision returns to a human."
 standfirst: "Automation rarely fails because machines decide badly. It fails because nobody designed when and how a decision returns to a human. Escalation is an architecture decision, taken before deployment."
 ---
@@ -13,27 +14,25 @@ An agent approves a CHF 2 million credit line for a client whose risk profile ch
 
 ## The wrong model
 
-Most organisations treat escalation as a residual — the thing that happens when the system cannot proceed. A queue fills up. Someone notices. A human intervenes.
+Most organisations treat escalation as a residual: the thing that happens when the system cannot proceed. A queue fills up. Someone notices. A human intervenes.
 
 In this model, escalation is a failure state. The goal is to minimise it.
 
 **For agentic systems, this model is dangerous.**
 
-When you deploy an agent into a consequential process, you are making a delegation decision — one of the core design questions in an [agentic target operating model](/blog/agentic-tom-introduction). This system is authorised to make decisions of this type, up to this threshold of consequence. Everything beyond that threshold must come back to a human.
+When you deploy an agent into a consequential process, you are making a delegation decision, one of the core design questions in an [agentic target operating model](/blog/agentic-tom-introduction). This system is authorised to make decisions of this type, up to this threshold of consequence. Everything beyond that threshold must come back to a human.
 
-Not because the system failed. Because **the system correctly identified that the cost of being wrong exceeds its authorisation level**.
-
-The trigger is not "I do not know." The trigger is "the cost of being wrong here exceeds my authorisation level." That is a design-level distinction.
+The system has not failed. **It has correctly identified that the cost of being wrong exceeds its authorisation level.** That is the trigger, and it is a design-level distinction: an agent escalates on the cost of error, never on its own uncertainty.
 
 ## Four things to get right
 
-If escalation is a design requirement, it must be designed. Not left to emerge.
+If escalation is a design requirement, it must be designed rather than left to emerge.
 
 **Define authorisation levels explicitly.** What types of decisions can the agent make autonomously? What requires human review? What requires human approval? These are policy questions, not technical ones.
 
 **Design the escalation interface.** When an agent escalates, what does it hand off? The context, the reasoning, the options it considered, its recommendation. A human receiving an escalation from a well-designed agent should be able to act in seconds.
 
-**Measure escalation rates.** An agent that escalates too rarely may be taking on decisions it should not. An agent that escalates too often signals a policy envelope that is too narrow. **Escalation rate is a performance metric**, not a failure metric.
+**Measure escalation rates.** An agent that escalates too rarely may be taking on decisions it should not. An agent that escalates too often signals a policy envelope that is too narrow. **Escalation rate is a performance metric.** Treating it as a failure metric hides the information it carries.
 
 **Close the loop.** When a human resolves an escalation, that resolution flows back to the agent as signal. This is how agents improve. Without the loop, you have delegation without learning.
 
@@ -41,8 +40,6 @@ If escalation is a design requirement, it must be designed. Not left to emerge.
 
 Organisations that design escalation well end up with something they did not expect: **a real-time map of where human judgment is actually required**.
 
-Not where it used to be required. Not where the org chart says it is required. Where it is actually required — revealed by the behaviour of systems operating at scale.
-
-Some of those places will surprise you. Many decisions that feel like they need human judgment turn out to be pattern-matchable. Some decisions that seem routine turn out to carry consequences that only a human should own.
+Where it used to be required, and where the org chart says it is required, both turn out to be poor guides. The behaviour of systems operating at scale draws the real map. Many decisions that feel like they need human judgment turn out to be pattern-matchable. Some decisions that seem routine turn out to carry consequences that only a human should own.
 
 This is one of the underappreciated outputs of an agentic TOM: **clarity about what humans are actually for**.

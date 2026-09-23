@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# agentictom.com
 
-## Getting Started
+The site behind the Agentic Target Operating Model: a framework for Swiss banking and financial services leadership, written by Marc Hauser. Next.js 16 (App Router), React 19, Tailwind 4, deployed on Vercel.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # production build
+npm run lint       # ESLint and the content checks
+npm run lint:content
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Node 20 or later. The contact form needs `GMAIL_USER`, `GMAIL_APP_PASSWORD` and optionally `CONTACT_EMAIL` and `NEXT_PUBLIC_CONTACT_EMAIL` in `.env.local`; without them the form returns an error and everything else works.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Where things live
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Path | What it is |
+|---|---|
+| `content/blog/*.mdx` | One file per essay. The file name is the URL slug. |
+| `lib/blog.ts` | Reads the essays: publication gating, themes, related posts, date formatting. |
+| `lib/site.ts` | Site constants and the per-page metadata helper. |
+| `components/BlogContent.tsx` | Renders an essay: GitHub-flavoured markdown via react-markdown, plus the interactive figures. |
+| `components/viz/*` | The interactive figures embedded in essays. |
+| `lib/assessment.ts` | Questions, scoring and result copy for the readiness assessment. |
+| `app/finma-guidance-08-2024/` | The canonical explainer the essays link to instead of repeating it. |
+| `scripts/lint-content.mjs` | Mechanical checks derived from EDITOR.md. |
+| `EDITOR.md` | The editorial standard. Read it before writing or editing any text on the site. |
 
-## Learn More
+## Writing an essay
 
-To learn more about Next.js, take a look at the following resources:
+Create `content/blog/<slug>.mdx`:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```yaml
+---
+title: "The Six Percent Club"
+date: "2026-07-07"          # publication day. The essay is invisible before it.
+theme: "the-model"          # the-model | escalation-and-autonomy | demand-side | in-practice
+excerpt: "One sentence for the index and search results. Under 160 characters."
+standfirst: "The argument in two or three sentences. Shown in the In brief box."
+dateline: "Written on 8 April 2026, the morning of ..."   # optional, for pieces tied to a day
+disclosure: true            # optional, adds the employer disclosure at the end
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# The Six Percent Club
 
-## Deploy on Vercel
+Body in markdown. Bold the takeaway, not the setup.
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Supported in the body: headings from `##` down, paragraphs, bold, links, bullet and numbered lists, tables, horizontal rules, blockquotes, inline code and footnotes (`[^1]`, rendered as Notes at the end). The `# Title` line is kept for plain-text readers and skipped by the renderer.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Embed an interactive figure with a comment on its own line:
+
+```
+<!-- viz:j-curve -->
+```
+
+Available: `viz:exponential-steps`, `viz:j-curve`, `viz:exploit-window`, `viz:mros-series`, `viz:reliability-matrix`, `funnel:mortgage`. To add one, create a client component under `components/viz/` and register it in `components/BlogContent.tsx`.
+
+### Publishing and scheduling
+
+`getAllPosts` and `getPost` only return essays whose `date` has arrived (UTC). The index, feed, sitemap and essay pages revalidate hourly, so an essay dated in the future goes live on its day without a redeploy, as long as the file was deployed before then. Its URL and Open Graph card return 404 until that day.
+
+### Before you commit
+
+```bash
+npm run lint:content
+```
+
+It checks frontmatter, excerpt length, em dash count, the banned word list from EDITOR.md, internal link targets and figure names. The rest of EDITOR.md (attribution, illustrative figures labelled, one "not X, it is Y" per essay, strong opening and closing lines) needs a reader.
+
+## Pages
+
+`/` homepage, `/framework`, `/assessment`, `/blog` and `/blog/<slug>`, `/finma-guidance-08-2024`, `/privacy`, plus `/feed.xml`, `/sitemap.xml`, `/robots.txt` and generated Open Graph images.
