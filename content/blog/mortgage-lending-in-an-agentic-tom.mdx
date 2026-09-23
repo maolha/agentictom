@@ -1,7 +1,8 @@
 ---
 title: "Case Sketch: Mortgage Lending in an Agentic TOM"
 date: "2026-03-05"
-excerpt: "What does mortgage origination look like when bots, agents, and humans each play their designed role? A worked example of the three-layer model applied to one end-to-end process — grounded in FINMA's regulatory expectations."
+theme: "in-practice"
+excerpt: "Mortgage origination redesigned across bots, agents and humans, grounded in what FINMA actually requires. Same rules, different cost structure, different speed."
 standfirst: "One end-to-end process, redesigned across bots, agents, and humans, grounded in FINMA's expectations. Same regulatory requirements, different cost structure, different speed."
 ---
 
@@ -13,13 +14,13 @@ The previous pieces on this site describe what an [agentic target operating mode
 
 ## The regulatory frame
 
-FINMA Guidance 08/2024 says something specific about autonomous AI decisions. The regulatory constraint is less restrictive than most Swiss bankers assume, and more specific than they expect.
+[FINMA Guidance 08/2024](/finma-guidance-08-2024) says something specific about autonomous AI decisions. The regulatory constraint is less restrictive than most Swiss bankers assume, and more specific than they expect.
 
 Three requirements matter here:
 
-**Accountability cannot be delegated to AI.** A named human must be accountable for every decision an agent makes. This does not mean a human must approve every decision. It means someone — with authority and expertise — owns the outcomes. The accountability is organisational, not transactional.
+**Accountability cannot be delegated to AI.** A named human must be accountable for every decision an agent makes. This does not mean a human must approve every decision. It means someone with authority and expertise owns the outcomes. The accountability is organisational, not transactional.
 
-**Autonomous operation requires demonstrated reliability.** FINMA states that AI systems may be used autonomously once they are "sufficiently reliable and this can ultimately be proven." This is a design requirement, not a prohibition. The bank must demonstrate that the agent operates reliably within its defined envelope: testing, monitoring, and evidence.
+**Autonomous operation requires demonstrated reliability.** FINMA states that AI systems may be used autonomously once they are "sufficiently reliable and this can ultimately be proven." This is a design requirement rather than a prohibition. The bank must demonstrate that the agent operates reliably within its defined envelope: testing, monitoring, and evidence.
 
 **The institution must retain the expertise to override.** The bank cannot become so dependent on AI that no human understands or can challenge its decisions. Skilled personnel must be able to review, explain, and if necessary reverse any AI-driven outcome.
 
@@ -70,7 +71,7 @@ This is the critical design question: what constitutes the reliability envelope?
 - Confidence interval too wide → escalate
 - Any case outside the documented reliability envelope → escalate
 
-**The trigger is never "I do not know." The trigger is "the cost of being wrong here exceeds my authorisation level."** Under FINMA 08/2024, the escalation architecture is not optional; it is the mechanism by which the bank fulfils its accountability obligations.
+**The trigger is the cost of being wrong exceeding the agent's authorisation level, never mere uncertainty.** Under FINMA 08/2024, the escalation architecture is the mechanism by which the bank fulfils its accountability obligations.
 
 **Time: minutes to hours.** For a standard application within the proven envelope, the customer receives an offer without human involvement. The bank can explain every decision, override any outcome, and demonstrate the reliability of the process.
 
@@ -82,7 +83,7 @@ Humans handle what only humans should handle. **They never touch routine.** Unde
 
 **A well-designed escalation means the human can decide in minutes, not hours.** This is also where FINMA's requirement to "retain expertise" is fulfilled. Humans stay sharp because they handle the hard cases, not the routine ones.
 
-**Relationship decisions.** The applicant is a private banking client with CHF 5 million in assets and a 20-year relationship. The mortgage is straightforward, but the relationship is not. The client expects a conversation, a personal touch, a sense that the bank knows them. A human handles this. Not because the process requires it, but because the relationship does.
+**Relationship decisions.** The applicant is a private banking client with CHF 5 million in assets and a 20-year relationship. The mortgage is straightforward, but the relationship is not. The client expects a conversation, a personal touch, a sense that the bank knows them. A human handles this. The relationship requires it, even though the process does not.
 
 **Policy governance.** Humans set and review the agent's policy envelope. What is the maximum autonomous approval? What risk scores require review? How often should the pricing model be recalibrated? What evidence demonstrates that the agent is operating reliably? This is quarterly governance work: managing the agent's performance, not doing its job. Under FINMA 08/2024, **this governance is a supervisory expectation.**
 
@@ -112,7 +113,7 @@ This sketch is deliberately incomplete. The real work is in the design decisions
 
 ## The question
 
-Every Swiss bank processes mortgages. The process is broadly similar across institutions. The economics are broadly similar. The regulatory framework — including FINMA 08/2024 — permits the model described here, provided the governance is designed, not assumed.
+Every Swiss bank processes mortgages. The process is broadly similar across institutions. The economics are broadly similar. The regulatory framework, FINMA 08/2024 included, permits the model described here, provided the governance is designed, not assumed.
 
 **The banks that redesign this process around the [three-layer model](/blog/agentic-tom-introduction) will respond faster, at lower cost, with better risk management, and with higher client satisfaction.** The ones that do not will spend CHF 1'500 per application in a market where the winners spend CHF 100.
 
