@@ -210,18 +210,18 @@ function Tile({
   );
 }
 
-function CopyLink({ label, event }: { label: string; event: string }) {
+function CopyLink({ label, event, text, done = "Link copied" }: { label: string; event: string; text?: () => string; done?: string }) {
   const [state, setState] = useState<"idle" | "done" | "fail">("idle");
   const copy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(text ? text() : window.location.href);
       setState("done");
       track(event);
     } catch {
       setState("fail");
     }
     setTimeout(() => setState("idle"), 2200);
-  }, [event]);
+  }, [event, text]);
   return (
     <button
       type="button"
@@ -229,7 +229,7 @@ function CopyLink({ label, event }: { label: string; event: string }) {
       className="btn-outline-slate"
       style={{ fontSize: "0.7rem", padding: "9px 18px" }}
     >
-      {state === "done" ? "Link copied" : state === "fail" ? "Copy the address bar" : label}
+      {state === "done" ? done : state === "fail" ? "Copy the address bar" : label}
     </button>
   );
 }
@@ -489,6 +489,10 @@ export default function ChainCalculator() {
   const updateStep = (i: number, patch: Partial<Step>) =>
     setSteps((prev) => prev.map((s, idx) => (idx === i ? { ...s, ...patch } : s)));
 
+  const checks = steps.filter((s) => s.check !== "none").length;
+  const deterministic = steps.filter((s) => s.p <= 0).length;
+  const chainSummary = `A chain of ${steps.length} steps, ${deterministic} of them deterministic, with ${checks} ${checks === 1 ? "check" : "checks"}: ${perThousand(result.undetected)} undetected errors per 1'000 cases, at ${swiss(result.touches * 1000)} human touches. Without the checks it would be ${perThousand(result.noChecks)}.`;
+
   const failPct = pct((1 - ok) * 100);
   const headline =
     n === 1
@@ -589,6 +593,7 @@ export default function ChainCalculator() {
                 </div>
                 <div className="mt-5 flex flex-wrap items-center gap-3">
                   <CopyLink label="Copy link to this scenario" event="calculator_copy_simple" />
+                  <CopyLink label="Copy text for a post" event="calculator_copy_text_simple" done="Text copied" text={() => `${headline} Run your own chain: ${window.location.href}`} />
                   <span className="text-xs" style={{ color: MUTED }}>The address bar always carries your settings.</span>
                 </div>
               </div>
@@ -705,17 +710,23 @@ export default function ChainCalculator() {
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <CopyLink label="Copy link to this chain" event="calculator_copy_chain" />
-              <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://agentictom.com/calculator")}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <CopyLink label="Copy text for a post" event="calculator_copy_text_chain" done="Text copied" text={() => `${chainSummary} Run your own chain: ${window.location.href}`} />
+              <button
+                type="button"
                 className="btn-outline-slate"
                 style={{ fontSize: "0.7rem", padding: "9px 18px" }}
-                onClick={() => track("calculator_share_linkedin")}
+                onClick={() => {
+                  track("calculator_share_linkedin");
+                  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, "_blank", "noopener,noreferrer");
+                }}
               >
                 Share on LinkedIn
-              </a>
+              </button>
             </div>
+            <p className="text-xs mt-3 max-w-[70ch]" style={{ color: MUTED, lineHeight: 1.6 }}>
+              LinkedIn takes a link and nothing else, so it shows the page card with your chain behind it. To say something
+              with it, copy the post text and paste it above the link.
+            </p>
           </section>
 
           {/* ---------------- Levers ---------------- */}
