@@ -227,7 +227,7 @@ function CopyLink({ label, event }: { label: string; event: string }) {
       type="button"
       onClick={copy}
       className="btn-outline-slate"
-      style={{ fontSize: "0.7rem", padding: "9px 18px", background: "transparent" }}
+      style={{ fontSize: "0.7rem", padding: "9px 18px" }}
     >
       {state === "done" ? "Link copied" : state === "fail" ? "Copy the address bar" : label}
     </button>
@@ -667,10 +667,10 @@ export default function ChainCalculator() {
               </table>
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              <button type="button" className="btn-outline-slate" style={{ fontSize: "0.7rem", padding: "9px 18px", background: "transparent" }} onClick={() => steps.length < 30 && setSteps((prev) => [...prev, { name: "New step", p: 2, check: "none", c: 0 }])}>
+              <button type="button" className="btn-outline-slate" style={{ fontSize: "0.7rem", padding: "9px 18px" }} onClick={() => steps.length < 30 && setSteps((prev) => [...prev, { name: "New step", p: 2, check: "none", c: 0 }])}>
                 Add a step
               </button>
-              <button type="button" className="btn-outline-slate" style={{ fontSize: "0.7rem", padding: "9px 18px", background: "transparent" }} onClick={() => setSteps(DEFAULT_STEPS)}>
+              <button type="button" className="btn-outline-slate" style={{ fontSize: "0.7rem", padding: "9px 18px" }} onClick={() => setSteps(DEFAULT_STEPS)}>
                 Reset the example
               </button>
               <span className="text-xs" style={{ color: MUTED }}>Error rate zero means a deterministic step. Catch rates are the check&apos;s own, per case it sees.</span>
@@ -710,7 +710,7 @@ export default function ChainCalculator() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-outline-slate"
-                style={{ fontSize: "0.7rem", padding: "9px 18px", background: "transparent" }}
+                style={{ fontSize: "0.7rem", padding: "9px 18px" }}
                 onClick={() => track("calculator_share_linkedin")}
               >
                 Share on LinkedIn
