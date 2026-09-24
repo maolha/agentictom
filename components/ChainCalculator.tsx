@@ -378,12 +378,31 @@ function FailureCurve({ e, n, tol, maxN }: { e: number; n: number; tol: number; 
 /* ------------------------------------------------------------------ */
 
 function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
+  const [hover, setHover] = useState<number | null>(null);
   const n = steps.length;
   const slot = 72;
   const width = Math.max(320, n * slot + 24);
-  const height = 96;
-  const cy = 40;
+  const height = 168;
+  const cy = 112;
   const maxContrib = Math.max(1e-9, ...result.contrib);
+  const totalUndetected = result.contrib.reduce((a, b) => a + b, 0);
+
+  const tip = hover === null ? null : (() => {
+    const s = steps[hover];
+    const cx = 12 + slot / 2 + hover * slot;
+    const share = totalUndetected > 0 ? (result.contrib[hover] / totalUndetected) * 100 : 0;
+    const l1 = `${hover + 1}. ${s.name}`;
+    const l2 = s.p <= 0 ? "Deterministic, error rate 0 percent" : `${s.p} percent error per case`;
+    const l3 =
+      s.check === "none"
+        ? "No check after this step"
+        : `${s.check === "auto" ? "Automated check" : "Human review"} after it, catching ${s.c} percent`;
+    const l4 = s.p <= 0 ? "Contributes nothing to the undetected errors" : `${share >= 10 ? Math.round(share) : share.toFixed(1)} percent of the undetected errors start here`;
+    const lines = [l1, l2, l3, l4];
+    const boxW = Math.min(width - 8, Math.max(...lines.map((t) => t.length)) * 6.1 + 24);
+    const x = Math.max(4, Math.min(width - 4 - boxW, cx - boxW / 2));
+    return { cx, x, boxW, lines };
+  })();
 
   return (
     <div className="overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0">
@@ -392,6 +411,7 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
         role="img"
         aria-label={`The chain as a row of ${n} steps. Filled circles are probabilistic steps, sized by their error rate. Hollow circles are deterministic. A square marks a check.`}
         style={{ width: "100%", minWidth: Math.min(width, 640), height: "auto", display: "block" }}
+        onMouseLeave={() => setHover(null)}
       >
         <line x1={12} y1={cy} x2={width - 12} y2={cy} stroke={LINE2} strokeWidth={1.5} />
         {steps.map((s, i) => {
@@ -399,12 +419,20 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
           const r = s.p <= 0 ? 7 : 7 + Math.min(11, Math.sqrt(s.p) * 3.2);
           const det = s.p <= 0;
           const share = result.contrib[i] / maxContrib;
+          const dim = hover !== null && hover !== i;
+          const on = hover === i;
           return (
-            <g key={i}>
-              <title>{`${i + 1}. ${s.name}: ${s.p} percent error${s.check !== "none" ? `, ${s.check === "auto" ? "automated check" : "human review"} catching ${s.c} percent` : ""}`}</title>
-              {/* contribution to residual, under the node */}
+            <g
+              key={i}
+              onMouseEnter={() => setHover(i)}
+              onClick={() => setHover(on ? null : i)}
+              style={{ cursor: "default", opacity: dim ? 0.45 : 1, transition: "opacity 0.15s" }}
+            >
+              {/* wide hit area */}
+              <rect x={cx - slot / 2} y={cy - 40} width={slot} height={92} fill="transparent" />
               <rect x={cx - 14} y={cy + 24} width={28} height={6} fill={SUNK} />
               <rect x={cx - 14} y={cy + 24} width={28 * share} height={6} fill={BRICK} opacity={share > 0 ? 1 : 0} />
+              {on && <circle cx={cx} cy={cy} r={r + 5} fill="none" stroke={BROWN} strokeWidth={1.5} />}
               <circle cx={cx} cy={cy} r={r} fill={det ? "#F7F4EF" : SLATE} stroke={SLATE} strokeWidth={det ? 1.5 : 0} />
               <text x={cx} y={cy + 4} textAnchor="middle" fontSize={10} fill={det ? SLATE : "#F7F4EF"} fontWeight={700} style={{ fontVariantNumeric: "tabular-nums" }}>
                 {i + 1}
@@ -417,12 +445,25 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
                   </text>
                 </g>
               )}
-              <text x={cx} y={cy + 46} textAnchor="middle" fontSize={9} fill={MUTED} style={{ fontVariantNumeric: "tabular-nums" }}>
+              <text x={cx} y={cy + 46} textAnchor="middle" fontSize={9} fill={on ? INK : MUTED} fontWeight={on ? 700 : 400} style={{ fontVariantNumeric: "tabular-nums" }}>
                 {s.p}%
               </text>
             </g>
           );
         })}
+
+        {tip && (
+          <g style={{ pointerEvents: "none" }}>
+            <line x1={tip.cx} y1={cy - 30} x2={tip.cx} y2={cy - 16} stroke={BROWN} strokeWidth={1} />
+            <rect x={tip.x} y={6} width={tip.boxW} height={66} fill="#F7F4EF" stroke={BROWN} strokeWidth={1} />
+            <rect x={tip.x} y={6} width={3} height={66} fill={BROWN} />
+            {tip.lines.map((t, i) => (
+              <text key={i} x={tip.x + 12} y={22 + i * 14} fontSize={i === 0 ? 11 : 10.5} fontWeight={i === 0 ? 700 : 400} fill={i === 0 ? INK : MUTED} style={{ fontVariantNumeric: "tabular-nums" }}>
+                {t}
+              </text>
+            ))}
+          </g>
+        )}
       </svg>
       <div className="flex flex-wrap gap-x-5 gap-y-2 mt-2 text-xs" style={{ color: MUTED }}>
         <span className="flex items-center gap-2"><span style={{ width: 12, height: 12, borderRadius: 6, background: SLATE, display: "inline-block" }} /> probabilistic step, sized by error</span>
