@@ -19,6 +19,8 @@ There is a comfortable belief in circulation that deep engineering matters less 
 
 Automation lives and dies on chain reliability: how a system performs across a long sequence of steps rather than on one isolated task.
 
+An error does not stay in its step. Every step after it works on a wrong case, and the output at the end is consistent, plausible, and wrong. The arithmetic says how often that happens. Where in the chain it happens says how much of the case is contaminated and how hard the error is to find.
+
 Take a process with ten steps. If each step succeeds 90 percent of the time, the whole process succeeds 35 percent of the time, because 0.9 to the power of ten is 0.35. Lift every step to 99 percent and the process completes 90 percent of the time. Now stretch the same process to 100 steps, and 99 percent per step collapses to 37 percent overall.
 
 At 99.9 percent per step, those 100 steps complete 90 percent of the time.
