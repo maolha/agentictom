@@ -11,17 +11,26 @@ import SiteFooter from "@/components/SiteFooter";
 /* ------------------------------------------------------------------ */
 
 type Check = "none" | "auto" | "human";
-type Step = { name: string; p: number; check: Check; c: number };
+type Scope = "step" | "case"; // what a check sees: this step's output, or the whole case so far
+type Step = { name: string; p: number; check: Check; c: number; scope: Scope };
 
 const DEFAULT_STEPS: Step[] = [
-  { name: "Read the client instruction", p: 3, check: "none", c: 0 },
-  { name: "Extract the fields", p: 4, check: "auto", c: 70 },
-  { name: "Match the counterparty", p: 2, check: "none", c: 0 },
-  { name: "Check the policy (rule engine)", p: 0, check: "none", c: 0 },
-  { name: "Calculate the amounts (code)", p: 0, check: "none", c: 0 },
-  { name: "Decide and route", p: 5, check: "human", c: 85 },
-  { name: "Post the booking (API)", p: 0.1, check: "auto", c: 95 },
+  { name: "Read the client instruction", p: 3, check: "none", c: 0, scope: "step" },
+  { name: "Extract the fields", p: 4, check: "auto", c: 70, scope: "step" },
+  { name: "Match the counterparty", p: 2, check: "none", c: 0, scope: "step" },
+  { name: "Check the policy (rule engine)", p: 0, check: "none", c: 0, scope: "step" },
+  { name: "Calculate the amounts (code)", p: 0, check: "none", c: 0, scope: "step" },
+  { name: "Decide and route", p: 5, check: "human", c: 85, scope: "case" },
+  { name: "Post the booking (API)", p: 0.1, check: "auto", c: 95, scope: "case" },
 ];
+
+const DEFAULT_SCOPE: Record<Check, Scope> = { none: "step", auto: "step", human: "case" };
+
+/** Does the check after step j see an error made in step i? */
+function applies(steps: Step[], j: number, i: number): boolean {
+  const st = steps[j];
+  return st.check !== "none" && (j === i || st.scope === "case");
+}
 
 const INK = "#1A1A1A";
 const MUTED = "#6B6B6B";
@@ -91,14 +100,14 @@ type ChainResult = {
 
 function computeChain(steps: Step[]): ChainResult {
   const n = steps.length;
-  const p = steps.map((s) => Math.max(0, Math.min(1, s.p / 100)));
-  const c = steps.map((s) => (s.check === "none" ? 0 : Math.max(0, Math.min(1, s.c / 100))));
+  const p = steps.map((st) => Math.max(0, Math.min(1, st.p / 100)));
+  const c = steps.map((st) => (st.check === "none" ? 0 : Math.max(0, Math.min(1, st.c / 100))));
 
-  // survive[i]: probability that an error made at step i passes every later check
+  // survive[i]: probability that an error made at step i passes every later check that sees it
   const survive = new Array<number>(n);
-  let acc = 1;
-  for (let i = n - 1; i >= 0; i--) {
-    acc *= 1 - c[i];
+  for (let i = 0; i < n; i++) {
+    let acc = 1;
+    for (let j = i; j < n; j++) if (applies(steps, j, i)) acc *= 1 - c[j];
     survive[i] = acc;
   }
 
@@ -123,8 +132,9 @@ function computeChain(steps: Step[]): ChainResult {
     }
     let noFlag = 1;
     for (let i = 0; i <= j; i++) {
+      if (!applies(steps, j, i)) continue;
       let pass = 1;
-      for (let k = i; k < j; k++) pass *= 1 - c[k];
+      for (let k = i; k < j; k++) if (applies(steps, k, i)) pass *= 1 - c[k];
       noFlag *= 1 - p[i] * pass * c[j];
     }
     const f = 1 - noFlag;
@@ -145,19 +155,21 @@ function computeChain(steps: Step[]): ChainResult {
 
 function encodeSteps(steps: Step[]): string {
   return steps
-    .map((s) => [s.name.replace(/[|~]/g, " "), s.p, s.check[0], s.c].join("|"))
+    .map((s) => [s.name.replace(/[|~]/g, " "), s.p, s.check[0], s.c, s.scope[0]].join("|"))
     .join("~");
 }
 function decodeSteps(raw: string): Step[] | null {
   try {
     const rows = raw.split("~").map((r) => {
-      const [name, p, ch, c] = r.split("|");
+      const [name, p, ch, c, sc] = r.split("|");
       const check: Check = ch === "a" ? "auto" : ch === "h" ? "human" : "none";
+      const scope: Scope = sc === "c" ? "case" : sc === "s" ? "step" : DEFAULT_SCOPE[check];
       return {
         name: (name || "Step").slice(0, 60),
         p: Math.max(0, Math.min(60, parseFloat(p) || 0)),
         check,
         c: check === "none" ? 0 : Math.max(0, Math.min(100, parseFloat(c) || 0)),
+        scope,
       };
     });
     return rows.length > 0 && rows.length <= 30 ? rows : null;
@@ -407,9 +419,9 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
       let noneChecked = 1;
       for (let k = 0; k <= i; k++) {
         let pass = 1;
-        for (let m = k; m < i; m++) pass *= 1 - c[m];
+        for (let m = k; m < i; m++) if (applies(steps, m, k)) pass *= 1 - c[m];
         none *= 1 - p[k] * pass;
-        noneChecked *= 1 - p[k] * pass * (1 - c[i]);
+        noneChecked *= 1 - p[k] * pass * (applies(steps, i, k) ? 1 - c[i] : 1);
       }
       afterStep.push(1 - none);
       afterCheck.push(1 - noneChecked);
@@ -460,7 +472,7 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
       const flagged = perThousand(result.flags[focus.i]);
       lines = [
         `${st.check === "auto" ? "Automated check" : "Human review"} after step ${focus.i + 1}`,
-        st.check === "auto" ? `Catches ${st.c} percent of the errors it sees` : `Looks at every case, catches ${st.c} percent of the errors`,
+        `${st.check === "auto" ? `Catches ${st.c} percent of the errors it sees` : `Looks at every case, catches ${st.c} percent of the errors`}, ${st.scope === "case" ? "across the whole case so far" : "in this step's output only"}`,
         st.check === "auto" ? `Flags ${flagged} cases in 1'000, each one a human touch` : `Corrects ${flagged} cases in 1'000, at 1'000 touches`,
         `Error carried: ${pct(build.afterStep[focus.i] * 100)} % before, ${pct(build.afterCheck[focus.i] * 100)} % after`,
       ];
@@ -835,11 +847,11 @@ export default function ChainCalculator() {
             <ChainStrip steps={steps} result={result} />
 
             <div className="overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0 mt-8">
-              <table style={{ width: "100%", minWidth: 680, borderCollapse: "collapse", fontSize: "0.85rem" }}>
+              <table style={{ width: "100%", minWidth: 900, borderCollapse: "collapse", fontSize: "0.85rem" }}>
                 <thead>
                   <tr>
-                    {["#", "Step", "Error rate", "Check after this step", "Catch rate", "Share of undetected", ""].map((h, i) => (
-                      <th key={i} className="text-left text-[10px] uppercase tracking-widest py-2 pr-3" style={{ borderBottom: `2px solid ${SLATE}`, color: SLATE, fontWeight: 700, whiteSpace: "nowrap", width: i === 0 ? 28 : i === 1 ? "34%" : undefined }}>
+                    {["#", "Step", "Error rate", "Check after this step", "Catch rate", "What it sees", "Share of undetected", ""].map((h, i) => (
+                      <th key={i} className="text-left text-[10px] uppercase tracking-widest py-2 pr-3" style={{ borderBottom: `2px solid ${SLATE}`, color: SLATE, fontWeight: 700, whiteSpace: "nowrap", width: [28, undefined, 96, 150, 96, 128, 110, 32][i] }}>
                         {h}
                       </th>
                     ))}
@@ -861,10 +873,10 @@ export default function ChainCalculator() {
                             <span className="text-xs" style={{ color: MUTED }}>%</span>
                           </div>
                         </td>
-                        <td className="py-2 pr-3" style={{ borderBottom: `1px solid ${LINE}`, width: 170 }}>
-                          <select id={`step-check-${i}`} value={s.check} onChange={(ev) => { const check = ev.target.value as Check; updateStep(i, { check, c: check === "none" ? 0 : s.c === 0 ? (check === "human" ? 85 : 70) : s.c }); }} style={inputStyle} aria-label={`Check after step ${i + 1}`}>
+                        <td className="py-2 pr-3" style={{ borderBottom: `1px solid ${LINE}`, width: 150 }}>
+                          <select id={`step-check-${i}`} value={s.check} onChange={(ev) => { const check = ev.target.value as Check; updateStep(i, { check, c: check === "none" ? 0 : s.c === 0 ? (check === "human" ? 85 : 70) : s.c, scope: DEFAULT_SCOPE[check] }); }} style={inputStyle} aria-label={`Check after step ${i + 1}`}>
                             <option value="none">None</option>
-                            <option value="auto">Automated check</option>
+                            <option value="auto">Automated</option>
                             <option value="human">Human review</option>
                           </select>
                         </td>
@@ -873,6 +885,12 @@ export default function ChainCalculator() {
                             <input id={`step-c-${i}`} type="number" min={0} max={100} step={1} value={s.c} disabled={s.check === "none"} onChange={(ev) => updateStep(i, { c: Math.max(0, Math.min(100, parseFloat(ev.target.value) || 0)) })} style={{ ...inputStyle, fontVariantNumeric: "tabular-nums", width: 68, opacity: s.check === "none" ? 0.4 : 1 }} aria-label={`Catch rate of the check after step ${i + 1} in percent`} />
                             <span className="text-xs" style={{ color: MUTED }}>%</span>
                           </div>
+                        </td>
+                        <td className="py-2 pr-3" style={{ borderBottom: `1px solid ${LINE}`, width: 128 }}>
+                          <select id={`step-scope-${i}`} value={s.scope} disabled={s.check === "none"} onChange={(ev) => updateStep(i, { scope: ev.target.value as Scope })} style={{ ...inputStyle, opacity: s.check === "none" ? 0.4 : 1 }} aria-label={`What the check after step ${i + 1} sees`}>
+                            <option value="step">This step</option>
+                            <option value="case">Whole case</option>
+                          </select>
                         </td>
                         <td className="py-2 pr-3" style={{ borderBottom: `1px solid ${LINE}`, width: 110 }}>
                           <div style={{ height: 6, background: SUNK, position: "relative" }} title="Share of the errors that leave the chain undetected">
@@ -891,13 +909,13 @@ export default function ChainCalculator() {
               </table>
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              <button type="button" className="btn-outline-slate" style={{ fontSize: "0.7rem", padding: "9px 18px" }} onClick={() => steps.length < 30 && setSteps((prev) => [...prev, { name: "New step", p: 2, check: "none", c: 0 }])}>
+              <button type="button" className="btn-outline-slate" style={{ fontSize: "0.7rem", padding: "9px 18px" }} onClick={() => steps.length < 30 && setSteps((prev) => [...prev, { name: "New step", p: 2, check: "none", c: 0, scope: "step" }])}>
                 Add a step
               </button>
               <button type="button" className="btn-outline-slate" style={{ fontSize: "0.7rem", padding: "9px 18px" }} onClick={() => setSteps(DEFAULT_STEPS)}>
                 Reset the example
               </button>
-              <span className="text-xs" style={{ color: MUTED }}>Error rate zero means a deterministic step. Catch rates are the check&apos;s own, per case it sees.</span>
+              <span className="text-xs" style={{ color: MUTED }}>Error rate zero means a deterministic step. A check that sees this step only, a schema or a rule, catches nothing from earlier steps. A check that sees the whole case, a person or a reconciliation against the source, does.</span>
             </div>
 
             {/* Outcome bar */}
@@ -962,7 +980,7 @@ export default function ChainCalculator() {
               </div>
               <div>
                 <h3 className="font-[family-name:var(--font-cormorant)] font-light mb-2" style={{ fontSize: "1.4rem", color: SLATE }}>Put checks where errors are expensive</h3>
-                <p className="text-sm" style={{ color: MUTED, lineHeight: 1.7 }}>A check lowers the residual of every step before it and costs touches. Early in the chain it protects more steps, late in the chain it sees more of the damage. An automated check with a person on the flags scales. A person on every case does not.</p>
+                <p className="text-sm" style={{ color: MUTED, lineHeight: 1.7 }}>A check lowers the residual of every step before it and costs touches. Early in the chain it protects more steps, late in the chain it sees more of the damage. An automated check with a person on the flags scales. A person on every case does not. And a flag is never free: a chain whose flags all become manual cases has rebuilt the manual process for its hardest cases.</p>
               </div>
             </div>
           </section>
@@ -976,7 +994,8 @@ export default function ChainCalculator() {
               <p className="mb-3"><strong style={{ color: INK }}>Part 1.</strong> With an error rate p per step and n steps, the chain completes with probability (1 − p)<sup>n</sup> and fails with probability 1 − (1 − p)<sup>n</sup>. The longest chain within a tolerance t is the whole number part of ln(1 − t) / ln(1 − p).</p>
               <p className="mb-3"><strong style={{ color: INK }}>Part 2.</strong> An error made at step i survives when it passes every later check, with probability equal to the product of (1 − c<sub>j</sub>) over all checks j at or after i. A case runs clean with probability equal to the product of (1 − p<sub>i</sub>). It leaves without an undetected error with probability equal to the product of (1 − p<sub>i</sub> · survive<sub>i</sub>). Caught is the difference between the two. Undetected is one minus the second product.</p>
               <p className="mb-3"><strong style={{ color: INK }}>Touches.</strong> An automated check hands every flag to a person, so its touches are the probability that it fires. A human review looks at every case, so its touches are one per case. A check flags an error from an earlier step only if that error passed the checks in between.</p>
-              <p><strong style={{ color: INK }}>Assumptions.</strong> Steps are independent, a check looks at the whole case so far, a caught error is corrected, and checks add no errors of their own. The figures are inputs, not measurements. The calculation becomes evidence only with error rates measured in your own pilot.</p>
+              <p className="mb-3"><strong style={{ color: INK }}>Scope.</strong> A check that sees this step only catches errors made in that step. A check that sees the whole case catches errors from every earlier step that no check has caught yet, at the same rate as its own step&apos;s errors. That is generous for a person late in the chain, where an upstream error has long since turned into a plausible looking case.</p>
+              <p><strong style={{ color: INK }}>Assumptions.</strong> Steps are independent, a caught error is treated as corrected, and checks add no errors of their own. The work that correction takes, a fix in place, a rerun from the failing step, or a manual takeover of the case, is outside this calculation. The figures are inputs, not measurements. The calculation becomes evidence only with error rates measured in your own pilot.</p>
             </div>
           </details>
         </div>
