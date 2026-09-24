@@ -381,6 +381,7 @@ type Focus = { kind: "step" | "check"; i: number };
 
 function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
   const [hover, setHover] = useState<Focus | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const n = steps.length;
   const slot = 72;
   const width = Math.max(320, n * slot + 24);
@@ -473,10 +474,42 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
   const dimming = hover !== null;
   const focusX = focus.kind === "step" ? xOf(focus.i) : xCheck(focus.i);
   const focusY = focus.kind === "step" ? yOf(build.afterStep[focus.i]) : yOf(build.afterCheck[focus.i]);
+  const focusValue = focus.kind === "step" ? build.afterStep[focus.i] : build.afterCheck[focus.i];
+  const focusNoChecks = build.noChecks[focus.i];
+
+  // Hovering the chart picks the nearest step or check on the x axis.
+  const onChartMove = (ev: React.MouseEvent<SVGRectElement>) => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const rect = svg.getBoundingClientRect();
+    const x = ((ev.clientX - rect.left) / rect.width) * width;
+    let best: Focus = { kind: "step", i: 0 };
+    let bestD = Infinity;
+    for (let i = 0; i < n; i++) {
+      const d = Math.abs(x - xOf(i));
+      if (d < bestD) { bestD = d; best = { kind: "step", i }; }
+      if (steps[i].check !== "none") {
+        const dc = Math.abs(x - xCheck(i));
+        if (dc < bestD) { bestD = dc; best = { kind: "check", i }; }
+      }
+    }
+    if (!hover || hover.kind !== best.kind || hover.i !== best.i) setHover(best);
+  };
+
+  // Inline readout beside the marker, kept inside the plot.
+  const labelRight = focusX + 150 > width;
+  const labelX = labelRight ? focusX - 8 : focusX + 8;
+  let labelY = focusY < chartTop + 34 ? focusY + 16 : focusY - 18;
+  if (labelY + 12 > chartBottom - 2) labelY = focusY - 18;
+  const hideEndLabels = focusX > lastX - 90;
+  const labelLine1 = `${perThousand(focusValue)} ${focus.kind === "check" ? "after the check" : `after step ${focus.i + 1}`}`;
+  const labelLine2 = `${perThousand(focusNoChecks)} without checks`;
+  const labelW = Math.max(labelLine1.length * 5.6, labelLine2.length * 5.2);
 
   return (
     <div className="overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0">
       <svg
+        ref={svgRef}
         viewBox={`0 0 ${width} ${height}`}
         role="img"
         aria-label={`The chain as a row of ${n} steps with its checks, and below it the share of cases carrying an error after each step: rising at probabilistic steps, dropping at checks, ending at ${perThousand(result.undetected)} in 1'000 against ${perThousand(result.noChecks)} without checks.`}
@@ -556,13 +589,37 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
         <path d={dashed} fill="none" stroke={MUTED} strokeWidth={1.3} strokeDasharray="4 3" strokeLinejoin="round" />
         <path d={solid} fill="none" stroke={BRICK} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
         <line x1={focusX} y1={chartTop} x2={focusX} y2={chartBottom} stroke={LINE2} strokeWidth={1} />
+        <circle cx={xOf(focus.i)} cy={yOf(focusNoChecks)} r={3} fill="#F7F4EF" stroke={MUTED} strokeWidth={1.2} />
         <circle cx={focusX} cy={focusY} r={3.5} fill={BRICK} stroke="#F7F4EF" strokeWidth={1.5} />
-        <text x={Math.min(width - 4, lastX + 6)} y={Math.min(chartBottom - 2, yOf(build.afterCheck[n - 1]) + 4)} fontSize={9} fill={BRICK} fontWeight={700} textAnchor={lastX + 60 > width ? "end" : "start"} style={{ fontVariantNumeric: "tabular-nums" }} dx={lastX + 60 > width ? -8 : 0} dy={lastX + 60 > width ? -8 : 0}>
-          {perThousand(result.undetected)}
-        </text>
-        <text x={Math.min(width - 4, xOf(n - 1) + 6)} y={Math.max(chartTop + 8, yOf(build.noChecks[n - 1]) - 5)} fontSize={9} fill={MUTED} textAnchor={xOf(n - 1) + 60 > width ? "end" : "start"} dx={xOf(n - 1) + 60 > width ? -8 : 0} style={{ fontVariantNumeric: "tabular-nums" }}>
-          {perThousand(result.noChecks)} without checks
-        </text>
+        <g style={{ pointerEvents: "none" }}>
+          <rect
+            x={labelRight ? labelX - labelW - 4 : labelX - 4}
+            y={labelY - 10}
+            width={labelW + 8}
+            height={27}
+            fill="#F7F4EF"
+            opacity={0.94}
+            stroke={LINE2}
+            strokeWidth={1}
+          />
+          <text x={labelX} y={labelY} fontSize={9.5} fill={BRICK} fontWeight={700} textAnchor={labelRight ? "end" : "start"} style={{ fontVariantNumeric: "tabular-nums" }}>
+            {labelLine1}
+          </text>
+          <text x={labelX} y={labelY + 12} fontSize={9} fill={MUTED} textAnchor={labelRight ? "end" : "start"} style={{ fontVariantNumeric: "tabular-nums" }}>
+            {labelLine2}
+          </text>
+        </g>
+        {!hideEndLabels && (
+          <text x={Math.min(width - 4, lastX + 6)} y={Math.min(chartBottom - 2, yOf(build.afterCheck[n - 1]) + 4)} fontSize={9} fill={BRICK} fontWeight={700} textAnchor={lastX + 60 > width ? "end" : "start"} style={{ fontVariantNumeric: "tabular-nums" }} dx={lastX + 60 > width ? -8 : 0} dy={lastX + 60 > width ? -8 : 0}>
+            {perThousand(result.undetected)}
+          </text>
+        )}
+        {!hideEndLabels && (
+          <text x={Math.min(width - 4, xOf(n - 1) + 6)} y={Math.max(chartTop + 8, yOf(build.noChecks[n - 1]) - 5)} fontSize={9} fill={MUTED} textAnchor={xOf(n - 1) + 60 > width ? "end" : "start"} dx={xOf(n - 1) + 60 > width ? -8 : 0} style={{ fontVariantNumeric: "tabular-nums" }}>
+            {perThousand(result.noChecks)} without checks
+          </text>
+        )}
+        <rect x={12} y={chartTop - 16} width={width - 24} height={chartBottom - chartTop + 24} fill="transparent" onMouseMove={onChartMove} style={{ cursor: "crosshair" }} />
       </svg>
       <div className="flex flex-wrap gap-x-5 gap-y-2 mt-2 text-xs" style={{ color: MUTED }}>
         <span className="flex items-center gap-2"><span style={{ width: 12, height: 12, borderRadius: 6, background: SLATE, display: "inline-block" }} /> probabilistic step, sized by error</span>
