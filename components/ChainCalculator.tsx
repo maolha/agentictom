@@ -452,7 +452,7 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
         st.p <= 0 ? "Deterministic, error rate 0 percent" : `${st.p} percent error per case`,
         st.check === "none" ? "No check after this step" : `${st.check === "auto" ? "Automated check" : "Human review"} after it, catching ${st.c} percent`,
         st.p <= 0 ? "Adds nothing to the undetected errors" : `${share >= 10 ? Math.round(share) : share.toFixed(1)} percent of the undetected errors start here`,
-        `Cases carrying an error after this step: ${perThousand(build.afterStep[focus.i])} in 1'000`,
+        `Error carried after this step: ${pct(build.afterStep[focus.i] * 100)} % of cases, ${perThousand(build.afterStep[focus.i])} in 1'000`,
       ];
     } else {
       cx = xCheck(focus.i);
@@ -462,7 +462,7 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
         `${st.check === "auto" ? "Automated check" : "Human review"} after step ${focus.i + 1}`,
         st.check === "auto" ? `Catches ${st.c} percent of the errors it sees` : `Looks at every case, catches ${st.c} percent of the errors`,
         st.check === "auto" ? `Flags ${flagged} cases in 1'000, each one a human touch` : `Corrects ${flagged} cases in 1'000, at 1'000 touches`,
-        `Cases carrying an error: ${perThousand(build.afterStep[focus.i])} before, ${perThousand(build.afterCheck[focus.i])} after`,
+        `Error carried: ${pct(build.afterStep[focus.i] * 100)} % before, ${pct(build.afterCheck[focus.i] * 100)} % after`,
       ];
     }
     const boxH = 12 + lines.length * 14 + 4;
@@ -502,8 +502,8 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
   let labelY = focusY < chartTop + 34 ? focusY + 16 : focusY - 18;
   if (labelY + 12 > chartBottom - 2) labelY = focusY - 18;
   const hideEndLabels = focusX > lastX - 90;
-  const labelLine1 = `${perThousand(focusValue)} ${focus.kind === "check" ? "after the check" : `after step ${focus.i + 1}`}`;
-  const labelLine2 = `${perThousand(focusNoChecks)} without checks`;
+  const labelLine1 = `${pct(focusValue * 100)} % ${focus.kind === "check" ? "after the check" : `after step ${focus.i + 1}`} · ${perThousand(focusValue)} in 1'000`;
+  const labelLine2 = `${pct(focusNoChecks * 100)} % without checks`;
   const labelW = Math.max(labelLine1.length * 5.6, labelLine2.length * 5.2);
 
   return (
@@ -578,11 +578,11 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
 
         {/* ---- build up chart ---- */}
         <text x={12} y={chartTop - 10} fontSize={9} fill={FAINT} letterSpacing="0.1em" style={{ textTransform: "uppercase" }}>
-          {"Cases carrying an error, per 1'000"}
+          Cases carrying an error
         </text>
         <line x1={12} y1={chartTop} x2={width - 12} y2={chartTop} stroke={LINE} strokeWidth={1} />
         <text x={width - 12} y={chartTop - 3} textAnchor="end" fontSize={9} fill={FAINT} style={{ fontVariantNumeric: "tabular-nums" }}>
-          {perThousand(yMax)}
+          {parseFloat((yMax * 100).toFixed(2))} %
         </text>
         <line x1={12} y1={chartBottom} x2={width - 12} y2={chartBottom} stroke={LINE2} strokeWidth={1} />
         <path d={area} fill={BRICK} opacity={0.12} />
@@ -611,12 +611,12 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
         </g>
         {!hideEndLabels && (
           <text x={Math.min(width - 4, lastX + 6)} y={Math.min(chartBottom - 2, yOf(build.afterCheck[n - 1]) + 4)} fontSize={9} fill={BRICK} fontWeight={700} textAnchor={lastX + 60 > width ? "end" : "start"} style={{ fontVariantNumeric: "tabular-nums" }} dx={lastX + 60 > width ? -8 : 0} dy={lastX + 60 > width ? -8 : 0}>
-            {perThousand(result.undetected)}
+            {pct(result.undetected * 100)} %
           </text>
         )}
         {!hideEndLabels && (
           <text x={Math.min(width - 4, xOf(n - 1) + 6)} y={Math.max(chartTop + 8, yOf(build.noChecks[n - 1]) - 5)} fontSize={9} fill={MUTED} textAnchor={xOf(n - 1) + 60 > width ? "end" : "start"} dx={xOf(n - 1) + 60 > width ? -8 : 0} style={{ fontVariantNumeric: "tabular-nums" }}>
-            {perThousand(result.noChecks)} without checks
+            {pct(result.noChecks * 100)} % without checks
           </text>
         )}
         <rect x={12} y={chartTop - 16} width={width - 24} height={chartBottom - chartTop + 24} fill="transparent" onMouseMove={onChartMove} style={{ cursor: "crosshair" }} />
