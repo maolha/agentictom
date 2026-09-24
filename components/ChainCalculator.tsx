@@ -489,9 +489,30 @@ export default function ChainCalculator() {
   const updateStep = (i: number, patch: Partial<Step>) =>
     setSteps((prev) => prev.map((s, idx) => (idx === i ? { ...s, ...patch } : s)));
 
+  // Post texts: three short lines that stand on their own in a feed, then the link.
+  const round = (v: number) => (v >= 10 ? Math.round(v).toString() : v >= 1 ? v.toFixed(1) : pct(v));
+  const accShort = fmtAccuracy(e).replace(/\.0+$/, "");
+  const postSimple = () =>
+    [
+      `An AI agent that gets each step right ${accShort} percent of the time sounds reliable.`,
+      n === 1
+        ? `On a single step it still fails ${round((1 - ok) * 100)} percent of the time.`
+        : `Run it across a process of ${n} steps and ${round((1 - ok) * 100)} percent of cases fail somewhere along the way.`,
+      `Reliability in automation compounds. The arithmetic decides.`,
+      `Run your own chain: ${window.location.href}`,
+    ].join("\n\n");
   const checks = steps.filter((s) => s.check !== "none").length;
-  const deterministic = steps.filter((s) => s.p <= 0).length;
-  const chainSummary = `A chain of ${steps.length} steps, ${deterministic} of them deterministic, with ${checks} ${checks === 1 ? "check" : "checks"}: ${perThousand(result.undetected)} undetected errors per 1'000 cases, at ${swiss(result.touches * 1000)} human touches. Without the checks it would be ${perThousand(result.noChecks)}.`;
+  const postChain = () => {
+    const lines = [
+      `An automated process is a chain of steps. Each one can go wrong, and the errors add up.`,
+      checks === 0
+        ? `This chain: ${steps.length} steps, no checks, ${perThousand(result.undetected)} undetected errors in 1'000 cases.`
+        : `This chain: ${steps.length} steps, ${checks} ${checks === 1 ? "check" : "checks"}, ${perThousand(result.undetected)} undetected errors in 1'000 cases. Without the checks: ${perThousand(result.noChecks)} in 1'000.`,
+    ];
+    if (checks > 0) lines.push(`The checks cost ${swiss(result.touches * 1000)} human touches per 1'000 cases. That is the trade.`);
+    lines.push(`Run your own chain: ${window.location.href}`);
+    return lines.join("\n\n");
+  };
 
   const failPct = pct((1 - ok) * 100);
   const headline =
@@ -593,7 +614,7 @@ export default function ChainCalculator() {
                 </div>
                 <div className="mt-5 flex flex-wrap items-center gap-3">
                   <CopyLink label="Copy link to this scenario" event="calculator_copy_simple" />
-                  <CopyLink label="Copy text for a post" event="calculator_copy_text_simple" done="Text copied" text={() => `${headline} Run your own chain: ${window.location.href}`} />
+                  <CopyLink label="Copy text for a post" event="calculator_copy_text_simple" done="Text copied" text={postSimple} />
                   <span className="text-xs" style={{ color: MUTED }}>The address bar always carries your settings.</span>
                 </div>
               </div>
@@ -710,7 +731,7 @@ export default function ChainCalculator() {
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <CopyLink label="Copy link to this chain" event="calculator_copy_chain" />
-              <CopyLink label="Copy text for a post" event="calculator_copy_text_chain" done="Text copied" text={() => `${chainSummary} Run your own chain: ${window.location.href}`} />
+              <CopyLink label="Copy text for a post" event="calculator_copy_text_chain" done="Text copied" text={postChain} />
               <button
                 type="button"
                 className="btn-outline-slate"
