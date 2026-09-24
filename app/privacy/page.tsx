@@ -59,7 +59,8 @@ export default function PrivacyPage() {
           </p>
           <p className="mb-4" style={p}>
             <strong style={{ fontWeight: 700 }}>Usage statistics.</strong> The site uses Vercel Web Analytics to count page
-            views. It sets no cookies and does not identify visitors: the visitor hash it derives from the request is discarded
+            views and a few anonymous interactions, such as a share button being used or the end of an essay being
+            reached. It sets no cookies and does not identify visitors: the visitor hash it derives from the request is discarded
             within 24 hours and is never linked to a person.
           </p>
           <p className="mb-6" style={p}>
