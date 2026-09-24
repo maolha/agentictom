@@ -641,6 +641,10 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
         <span className="flex items-center gap-2"><span style={{ width: 16, height: 0, borderTop: `2px solid ${BRICK}`, display: "inline-block" }} /> error carried, with checks</span>
         <span className="flex items-center gap-2"><span style={{ width: 16, height: 0, borderTop: `1.5px dashed ${MUTED}`, display: "inline-block" }} /> the same chain without checks</span>
       </div>
+      <p className="text-xs mt-3 max-w-[70ch]" style={{ color: MUTED, lineHeight: 1.6 }}>
+        An error does not fade on the way. It rides along, step after step, until a check sees it. The curve shows the ride,
+        and every step after the error works on a case that is already wrong.
+      </p>
     </div>
   );
 }
