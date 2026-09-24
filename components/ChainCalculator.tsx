@@ -377,100 +377,200 @@ function FailureCurve({ e, n, tol, maxN }: { e: number; n: number; tol: number; 
 /* Part 2 chain strip                                                   */
 /* ------------------------------------------------------------------ */
 
+type Focus = { kind: "step" | "check"; i: number };
+
 function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
-  const [hover, setHover] = useState<number | null>(null);
+  const [hover, setHover] = useState<Focus | null>(null);
   const n = steps.length;
   const slot = 72;
   const width = Math.max(320, n * slot + 24);
-  const height = 168;
-  const cy = 112;
+  const height = 300;
+  const cy = 128; // node row
+  const chartTop = 206;
+  const chartBottom = 284;
   const maxContrib = Math.max(1e-9, ...result.contrib);
   const totalUndetected = result.contrib.reduce((a, b) => a + b, 0);
+  const xOf = (i: number) => 12 + slot / 2 + i * slot;
+  const xCheck = (i: number) => xOf(i) + slot / 2;
 
-  const tip = hover === null ? null : (() => {
-    const s = steps[hover];
-    const cx = 12 + slot / 2 + hover * slot;
-    const share = totalUndetected > 0 ? (result.contrib[hover] / totalUndetected) * 100 : 0;
-    const l1 = `${hover + 1}. ${s.name}`;
-    const l2 = s.p <= 0 ? "Deterministic, error rate 0 percent" : `${s.p} percent error per case`;
-    const l3 =
-      s.check === "none"
-        ? "No check after this step"
-        : `${s.check === "auto" ? "Automated check" : "Human review"} after it, catching ${s.c} percent`;
-    const l4 = s.p <= 0 ? "Contributes nothing to the undetected errors" : `${share >= 10 ? Math.round(share) : share.toFixed(1)} percent of the undetected errors start here`;
-    const lines = [l1, l2, l3, l4];
+  // Error carried by a case along the chain: after each step, and after the check that follows it.
+  const build = useMemo(() => {
+    const p = steps.map((st) => Math.max(0, Math.min(1, st.p / 100)));
+    const c = steps.map((st) => (st.check === "none" ? 0 : Math.max(0, Math.min(1, st.c / 100))));
+    const afterStep: number[] = [];
+    const afterCheck: number[] = [];
+    const noChecks: number[] = [];
+    let clean = 1;
+    for (let i = 0; i < n; i++) {
+      let none = 1;
+      let noneChecked = 1;
+      for (let k = 0; k <= i; k++) {
+        let pass = 1;
+        for (let m = k; m < i; m++) pass *= 1 - c[m];
+        none *= 1 - p[k] * pass;
+        noneChecked *= 1 - p[k] * pass * (1 - c[i]);
+      }
+      afterStep.push(1 - none);
+      afterCheck.push(1 - noneChecked);
+      clean *= 1 - p[i];
+      noChecks.push(1 - clean);
+    }
+    return { afterStep, afterCheck, noChecks };
+  }, [steps, n]);
+
+  const focus: Focus = hover ?? { kind: "step", i: 0 };
+  const yMaxRaw = Math.max(1e-6, ...build.noChecks, ...build.afterStep);
+  const yMax = [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1].find((v) => v >= yMaxRaw) ?? 1;
+  const yOf = (v: number) => chartBottom - (chartBottom - chartTop) * Math.max(0, Math.min(1, v / yMax));
+
+  // Paths for the build up chart
+  let solid = `M12 ${yOf(0).toFixed(1)}`;
+  let dashed = `M12 ${yOf(0).toFixed(1)}`;
+  for (let i = 0; i < n; i++) {
+    solid += ` L${xOf(i)} ${yOf(build.afterStep[i]).toFixed(1)}`;
+    if (steps[i].check !== "none") {
+      solid += ` L${xCheck(i)} ${yOf(build.afterStep[i]).toFixed(1)} L${xCheck(i)} ${yOf(build.afterCheck[i]).toFixed(1)}`;
+    }
+    dashed += ` L${xOf(i)} ${yOf(build.noChecks[i]).toFixed(1)}`;
+  }
+  const lastX = steps[n - 1].check !== "none" ? xCheck(n - 1) : xOf(n - 1);
+  const area = `${solid} L${lastX} ${yOf(0).toFixed(1)} Z`;
+
+  const card = (() => {
+    const st = steps[focus.i];
+    let lines: string[];
+    let cx: number;
+    let pointerTo: number;
+    if (focus.kind === "step") {
+      cx = xOf(focus.i);
+      const share = totalUndetected > 0 ? (result.contrib[focus.i] / totalUndetected) * 100 : 0;
+      const r = st.p <= 0 ? 7 : 7 + Math.min(11, Math.sqrt(st.p) * 3.2);
+      pointerTo = cy - r - 4;
+      lines = [
+        `${focus.i + 1}. ${st.name}`,
+        st.p <= 0 ? "Deterministic, error rate 0 percent" : `${st.p} percent error per case`,
+        st.check === "none" ? "No check after this step" : `${st.check === "auto" ? "Automated check" : "Human review"} after it, catching ${st.c} percent`,
+        st.p <= 0 ? "Adds nothing to the undetected errors" : `${share >= 10 ? Math.round(share) : share.toFixed(1)} percent of the undetected errors start here`,
+        `Cases carrying an error after this step: ${perThousand(build.afterStep[focus.i])} in 1'000`,
+      ];
+    } else {
+      cx = xCheck(focus.i);
+      pointerTo = cy - 9;
+      const flagged = perThousand(result.flags[focus.i]);
+      lines = [
+        `${st.check === "auto" ? "Automated check" : "Human review"} after step ${focus.i + 1}`,
+        st.check === "auto" ? `Catches ${st.c} percent of the errors it sees` : `Looks at every case, catches ${st.c} percent of the errors`,
+        st.check === "auto" ? `Flags ${flagged} cases in 1'000, each one a human touch` : `Corrects ${flagged} cases in 1'000, at 1'000 touches`,
+        `Cases carrying an error: ${perThousand(build.afterStep[focus.i])} before, ${perThousand(build.afterCheck[focus.i])} after`,
+      ];
+    }
+    const boxH = 12 + lines.length * 14 + 4;
     const boxW = Math.min(width - 8, Math.max(...lines.map((t) => t.length)) * 6.1 + 24);
     const x = Math.max(4, Math.min(width - 4 - boxW, cx - boxW / 2));
-    return { cx, x, boxW, lines };
+    return { cx, x, boxW, boxH, lines, pointerTo };
   })();
+
+  const dimming = hover !== null;
+  const focusX = focus.kind === "step" ? xOf(focus.i) : xCheck(focus.i);
+  const focusY = focus.kind === "step" ? yOf(build.afterStep[focus.i]) : yOf(build.afterCheck[focus.i]);
 
   return (
     <div className="overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0">
       <svg
         viewBox={`0 0 ${width} ${height}`}
         role="img"
-        aria-label={`The chain as a row of ${n} steps. Filled circles are probabilistic steps, sized by their error rate. Hollow circles are deterministic. A square marks a check.`}
+        aria-label={`The chain as a row of ${n} steps with its checks, and below it the share of cases carrying an error after each step: rising at probabilistic steps, dropping at checks, ending at ${perThousand(result.undetected)} in 1'000 against ${perThousand(result.noChecks)} without checks.`}
         style={{ width: "100%", minWidth: Math.min(width, 640), height: "auto", display: "block" }}
         onMouseLeave={() => setHover(null)}
       >
+        {/* ---- chain row ---- */}
         <line x1={12} y1={cy} x2={width - 12} y2={cy} stroke={LINE2} strokeWidth={1.5} />
-        {steps.map((s, i) => {
-          const cx = 12 + slot / 2 + i * slot;
-          const r = s.p <= 0 ? 7 : 7 + Math.min(11, Math.sqrt(s.p) * 3.2);
-          const det = s.p <= 0;
+        {steps.map((st, i) => {
+          const cx = xOf(i);
+          const r = st.p <= 0 ? 7 : 7 + Math.min(11, Math.sqrt(st.p) * 3.2);
+          const det = st.p <= 0;
           const share = result.contrib[i] / maxContrib;
-          const dim = hover !== null && hover !== i;
-          const on = hover === i;
+          const onStep = focus.kind === "step" && focus.i === i;
+          const onCheck = focus.kind === "check" && focus.i === i;
+          const dimStep = dimming && !onStep;
+          const dimCheck = dimming && !onCheck;
           return (
-            <g
-              key={i}
-              onMouseEnter={() => setHover(i)}
-              onClick={() => setHover(on ? null : i)}
-              style={{ cursor: "default", opacity: dim ? 0.45 : 1, transition: "opacity 0.15s" }}
-            >
-              {/* wide hit area */}
-              <rect x={cx - slot / 2} y={cy - 40} width={slot} height={92} fill="transparent" />
-              <rect x={cx - 14} y={cy + 24} width={28} height={6} fill={SUNK} />
-              <rect x={cx - 14} y={cy + 24} width={28 * share} height={6} fill={BRICK} opacity={share > 0 ? 1 : 0} />
-              {on && <circle cx={cx} cy={cy} r={r + 5} fill="none" stroke={BROWN} strokeWidth={1.5} />}
-              <circle cx={cx} cy={cy} r={r} fill={det ? "#F7F4EF" : SLATE} stroke={SLATE} strokeWidth={det ? 1.5 : 0} />
-              <text x={cx} y={cy + 4} textAnchor="middle" fontSize={10} fill={det ? SLATE : "#F7F4EF"} fontWeight={700} style={{ fontVariantNumeric: "tabular-nums" }}>
-                {i + 1}
-              </text>
-              {s.check !== "none" && (
-                <g>
-                  <rect x={cx + slot / 2 - 7} y={cy - 7} width={14} height={14} fill={s.check === "human" ? BROWN : "#F7F4EF"} stroke={BROWN} strokeWidth={1.5} />
-                  <text x={cx + slot / 2} y={cy + 3.5} textAnchor="middle" fontSize={9} fill={s.check === "human" ? "#F7F4EF" : BROWN} fontWeight={700}>
-                    {s.check === "human" ? "H" : "A"}
+            <g key={i}>
+              <g
+                onMouseEnter={() => setHover({ kind: "step", i })}
+                onClick={() => setHover(hover?.kind === "step" && hover.i === i ? null : { kind: "step", i })}
+                style={{ cursor: "default", opacity: dimStep ? 0.45 : 1, transition: "opacity 0.15s" }}
+              >
+                <rect x={cx - slot / 2 + (st.check !== "none" ? 0 : 0)} y={cy - 40} width={st.check !== "none" ? slot - 20 : slot} height={92} fill="transparent" />
+                <rect x={cx - 14} y={cy + 24} width={28} height={6} fill={SUNK} />
+                <rect x={cx - 14} y={cy + 24} width={28 * share} height={6} fill={BRICK} opacity={share > 0 ? 1 : 0} />
+                {onStep && <circle cx={cx} cy={cy} r={r + 5} fill="none" stroke={BROWN} strokeWidth={1.5} />}
+                <circle cx={cx} cy={cy} r={r} fill={det ? "#F7F4EF" : SLATE} stroke={SLATE} strokeWidth={det ? 1.5 : 0} />
+                <text x={cx} y={cy + 4} textAnchor="middle" fontSize={10} fill={det ? SLATE : "#F7F4EF"} fontWeight={700} style={{ fontVariantNumeric: "tabular-nums" }}>
+                  {i + 1}
+                </text>
+                <text x={cx} y={cy + 46} textAnchor="middle" fontSize={9} fill={onStep ? INK : MUTED} fontWeight={onStep ? 700 : 400} style={{ fontVariantNumeric: "tabular-nums" }}>
+                  {st.p}%
+                </text>
+              </g>
+              {st.check !== "none" && (
+                <g
+                  onMouseEnter={() => setHover({ kind: "check", i })}
+                  onClick={() => setHover(hover?.kind === "check" && hover.i === i ? null : { kind: "check", i })}
+                  style={{ cursor: "default", opacity: dimCheck ? 0.45 : 1, transition: "opacity 0.15s" }}
+                >
+                  <rect x={xCheck(i) - 12} y={cy - 40} width={24} height={92} fill="transparent" />
+                  {onCheck && <rect x={xCheck(i) - 11} y={cy - 11} width={22} height={22} fill="none" stroke={BROWN} strokeWidth={1.5} />}
+                  <rect x={xCheck(i) - 7} y={cy - 7} width={14} height={14} fill={st.check === "human" ? BROWN : "#F7F4EF"} stroke={BROWN} strokeWidth={1.5} />
+                  <text x={xCheck(i)} y={cy + 3.5} textAnchor="middle" fontSize={9} fill={st.check === "human" ? "#F7F4EF" : BROWN} fontWeight={700}>
+                    {st.check === "human" ? "H" : "A"}
                   </text>
                 </g>
               )}
-              <text x={cx} y={cy + 46} textAnchor="middle" fontSize={9} fill={on ? INK : MUTED} fontWeight={on ? 700 : 400} style={{ fontVariantNumeric: "tabular-nums" }}>
-                {s.p}%
-              </text>
             </g>
           );
         })}
 
-        {tip && (
-          <g style={{ pointerEvents: "none" }}>
-            <line x1={tip.cx} y1={cy - 30} x2={tip.cx} y2={cy - 16} stroke={BROWN} strokeWidth={1} />
-            <rect x={tip.x} y={6} width={tip.boxW} height={66} fill="#F7F4EF" stroke={BROWN} strokeWidth={1} />
-            <rect x={tip.x} y={6} width={3} height={66} fill={BROWN} />
-            {tip.lines.map((t, i) => (
-              <text key={i} x={tip.x + 12} y={22 + i * 14} fontSize={i === 0 ? 11 : 10.5} fontWeight={i === 0 ? 700 : 400} fill={i === 0 ? INK : MUTED} style={{ fontVariantNumeric: "tabular-nums" }}>
-                {t}
-              </text>
-            ))}
-          </g>
-        )}
+        {/* ---- card ---- */}
+        <g style={{ pointerEvents: "none" }}>
+          <line x1={card.cx} y1={card.boxH + 8} x2={card.cx} y2={card.pointerTo} stroke={BROWN} strokeWidth={1} />
+          <rect x={card.x} y={6} width={card.boxW} height={card.boxH} fill="#F7F4EF" stroke={BROWN} strokeWidth={1} />
+          <rect x={card.x} y={6} width={3} height={card.boxH} fill={BROWN} />
+          {card.lines.map((t, i) => (
+            <text key={i} x={card.x + 12} y={22 + i * 14} fontSize={i === 0 ? 11 : 10.5} fontWeight={i === 0 ? 700 : 400} fill={i === 0 ? INK : MUTED} style={{ fontVariantNumeric: "tabular-nums" }}>
+              {t}
+            </text>
+          ))}
+        </g>
+
+        {/* ---- build up chart ---- */}
+        <text x={12} y={chartTop - 10} fontSize={9} fill={FAINT} letterSpacing="0.1em" style={{ textTransform: "uppercase" }}>
+          {"Cases carrying an error, per 1'000"}
+        </text>
+        <line x1={12} y1={chartTop} x2={width - 12} y2={chartTop} stroke={LINE} strokeWidth={1} />
+        <text x={width - 12} y={chartTop - 3} textAnchor="end" fontSize={9} fill={FAINT} style={{ fontVariantNumeric: "tabular-nums" }}>
+          {perThousand(yMax)}
+        </text>
+        <line x1={12} y1={chartBottom} x2={width - 12} y2={chartBottom} stroke={LINE2} strokeWidth={1} />
+        <path d={area} fill={BRICK} opacity={0.12} />
+        <path d={dashed} fill="none" stroke={MUTED} strokeWidth={1.3} strokeDasharray="4 3" strokeLinejoin="round" />
+        <path d={solid} fill="none" stroke={BRICK} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+        <line x1={focusX} y1={chartTop} x2={focusX} y2={chartBottom} stroke={LINE2} strokeWidth={1} />
+        <circle cx={focusX} cy={focusY} r={3.5} fill={BRICK} stroke="#F7F4EF" strokeWidth={1.5} />
+        <text x={Math.min(width - 4, lastX + 6)} y={Math.min(chartBottom - 2, yOf(build.afterCheck[n - 1]) + 4)} fontSize={9} fill={BRICK} fontWeight={700} textAnchor={lastX + 60 > width ? "end" : "start"} style={{ fontVariantNumeric: "tabular-nums" }} dx={lastX + 60 > width ? -8 : 0} dy={lastX + 60 > width ? -8 : 0}>
+          {perThousand(result.undetected)}
+        </text>
+        <text x={Math.min(width - 4, xOf(n - 1) + 6)} y={Math.max(chartTop + 8, yOf(build.noChecks[n - 1]) - 5)} fontSize={9} fill={MUTED} textAnchor={xOf(n - 1) + 60 > width ? "end" : "start"} dx={xOf(n - 1) + 60 > width ? -8 : 0} style={{ fontVariantNumeric: "tabular-nums" }}>
+          {perThousand(result.noChecks)} without checks
+        </text>
       </svg>
       <div className="flex flex-wrap gap-x-5 gap-y-2 mt-2 text-xs" style={{ color: MUTED }}>
         <span className="flex items-center gap-2"><span style={{ width: 12, height: 12, borderRadius: 6, background: SLATE, display: "inline-block" }} /> probabilistic step, sized by error</span>
         <span className="flex items-center gap-2"><span style={{ width: 12, height: 12, borderRadius: 6, border: `1.5px solid ${SLATE}`, display: "inline-block" }} /> deterministic step</span>
         <span className="flex items-center gap-2"><span style={{ width: 11, height: 11, border: `1.5px solid ${BROWN}`, display: "inline-block" }} /> automated check</span>
         <span className="flex items-center gap-2"><span style={{ width: 11, height: 11, background: BROWN, display: "inline-block" }} /> human review</span>
-        <span className="flex items-center gap-2"><span style={{ width: 16, height: 5, background: BRICK, display: "inline-block" }} /> share of the undetected errors</span>
+        <span className="flex items-center gap-2"><span style={{ width: 16, height: 0, borderTop: `2px solid ${BRICK}`, display: "inline-block" }} /> error carried, with checks</span>
+        <span className="flex items-center gap-2"><span style={{ width: 16, height: 0, borderTop: `1.5px dashed ${MUTED}`, display: "inline-block" }} /> the same chain without checks</span>
       </div>
     </div>
   );
