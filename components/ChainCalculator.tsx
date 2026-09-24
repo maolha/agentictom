@@ -954,7 +954,8 @@ export default function ChainCalculator() {
                 style={{ fontSize: "0.7rem", padding: "9px 18px" }}
                 onClick={() => {
                   track("calculator_share_linkedin");
-                  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, "_blank", "noopener,noreferrer");
+                  const shared = `${window.location.href}${window.location.search ? "&" : "?"}utm_source=linkedin&utm_medium=share&utm_campaign=calculator`;
+                  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shared)}`, "_blank", "noopener,noreferrer");
                 }}
               >
                 Share on LinkedIn

@@ -6,6 +6,8 @@ import { SITE_URL, SITE_NAME, AUTHOR, AUTHOR_TITLE, LINKEDIN_URL, RSS_ALTERNATE,
 import BlogContent from "@/components/BlogContent";
 import TracingBeam from "@/components/TracingBeam";
 import ShareLinks from "@/components/ShareLinks";
+import ReadDepth from "@/components/ReadDepth";
+import TrackedLink from "@/components/TrackedLink";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -158,6 +160,7 @@ export default async function BlogPost({
             </p>
           )}
           <BlogContent content={post.content} />
+          <ReadDepth slug={slug} />
 
           {post.disclosure && (
             <p className="mt-10 text-xs" style={{ color: "#6B6B6B", lineHeight: 1.7 }}>
@@ -177,7 +180,7 @@ export default async function BlogPost({
                   Written to be sent to a colleague or a board member.
                 </p>
               </div>
-              <ShareLinks url={url} title={post.title} />
+              <ShareLinks url={url} title={post.title} slug={slug} />
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-6" style={{ borderTop: "1px solid #D8D3CB" }}>
               <div>
@@ -189,15 +192,15 @@ export default async function BlogPost({
                   <a href="/feed.xml" className="underline underline-offset-4">RSS feed</a>.
                 </p>
               </div>
-              <a
+              <TrackedLink
                 href={LINKEDIN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                event="post_connect"
+                data={{ slug }}
                 className="btn-outline-slate shrink-0 text-center"
                 style={{ fontSize: "0.7rem", padding: "10px 24px" }}
               >
                 Connect on LinkedIn
-              </a>
+              </TrackedLink>
             </div>
           </div>
 
