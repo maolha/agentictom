@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: SITE_URL, lastModified: latest, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE_URL}/blog`, lastModified: latest, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/assessment`, lastModified: new Date("2026-09-01"), changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE_URL}/calculator`, lastModified: new Date("2026-09-24"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/framework`, lastModified: new Date("2026-09-01"), changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE_URL}/finma-guidance-08-2024`, lastModified: new Date("2026-09-23"), changeFrequency: "yearly", priority: 0.5 },
     { url: `${SITE_URL}/privacy`, lastModified: new Date("2026-09-23"), changeFrequency: "yearly", priority: 0.2 },

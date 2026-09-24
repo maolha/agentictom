@@ -25,7 +25,7 @@ At 99.9 percent per step, those 100 steps complete 90 percent of the time.
 
 <!-- viz:reliability-matrix -->
 
-The numbers behave in a way intuition does not. Moving from 99 to 99.9 reads like a rounding difference. **It is the difference between running ten steps and running 100.**
+The numbers behave in a way intuition does not. Moving from 99 to 99.9 reads like a rounding difference. **It is the difference between running ten steps and running 100.** The matrix assumes every step is equal and nothing checks the output. For a chain with mixed steps and checks in between, [the calculator](/calculator) runs the full arithmetic and gives you a link to the result.
 
 ## The illusion of diminishing returns
 
@@ -64,6 +64,8 @@ Compare two chains for the same five step process.
 | The same agent step with a review that catches four errors in five, four deterministic steps | 0.98 × 1.0 × 1.0 × 1.0 × 1.0 | 98 percent |
 
 Same process. Same intelligence where it is genuinely needed. **31 points of reliability difference between the first two chains, and none of them came from a better model.** The third chain adds a review layer, human or automated, on the one step that can fail. A reviewer multiplies the residual rather than the whole chain: they only have to catch the errors of a single legible step, which is a task a person can actually do. Illustrative calculation, assuming independent steps and a reviewer who catches four errors in five.
+
+Run your own chain, with its deterministic steps and its checks, in [Where the Chain Breaks](/calculator).
 
 This is also the quiet answer to the recurring claim that RPA is dead. Deterministic execution anchors a chain long enough for agents to be worth deploying at all. In the [three layer model](/blog/agentic-tom-introduction), the bots hold the number up.
 
