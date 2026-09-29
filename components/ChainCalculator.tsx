@@ -508,15 +508,17 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
     if (!hover || hover.kind !== best.kind || hover.i !== best.i) setHover(best);
   };
 
-  // Inline readout beside the marker, kept inside the plot.
-  const labelRight = focusX + 150 > width;
-  const labelX = labelRight ? focusX - 8 : focusX + 8;
-  let labelY = focusY < chartTop + 34 ? focusY + 16 : focusY - 18;
-  if (labelY + 12 > chartBottom - 2) labelY = focusY - 18;
-  const hideEndLabels = focusX > lastX - 90;
-  const labelLine1 = `${pct(focusValue * 100)} % ${focus.kind === "check" ? "after the check" : `after step ${focus.i + 1}`} · ${perThousand(focusValue)} in 1'000`;
-  const labelLine2 = `${pct(focusNoChecks * 100)} % without checks`;
-  const labelW = Math.max(labelLine1.length * 5.6, labelLine2.length * 5.2);
+  // Readout at the two dots. The dashed line is never below the solid one, so its
+  // label sits above its dot and the solid label below, and they cannot collide.
+  const labelRight = focusX + 170 > width;
+  const labelX = labelRight ? focusX - 9 : focusX + 9;
+  const dashedY = yOf(focusNoChecks);
+  const solidLabelY = Math.min(chartBottom - 3, focusY + 14);
+  const dashedLabelY = Math.max(chartTop + 9, Math.min(dashedY - 7, solidLabelY - 13));
+  const solidLabel = `${pct(focusValue * 100)} % ${focus.kind === "check" ? "after the check" : `after step ${focus.i + 1}`}`;
+  const solidSub = `${perThousand(focusValue)} in 1'000`;
+  const dashedLabel = `${pct(focusNoChecks * 100)} % without checks`;
+  const halo: React.CSSProperties = { paintOrder: "stroke", stroke: "#F7F4EF", strokeWidth: 3.5, strokeLinejoin: "round", fontVariantNumeric: "tabular-nums" };
 
   return (
     <div className="overflow-x-auto -mx-5 px-5 md:mx-0 md:px-0">
@@ -592,46 +594,35 @@ function ChainStrip({ steps, result }: { steps: Step[]; result: ChainResult }) {
         <text x={12} y={chartTop - 10} fontSize={9} fill={FAINT} letterSpacing="0.1em" style={{ textTransform: "uppercase" }}>
           Cases carrying an error
         </text>
+        <text x={width - 12} y={chartTop - 10} textAnchor="end" fontSize={9} style={{ fontVariantNumeric: "tabular-nums" }}>
+          <tspan fill={BRICK} fontWeight={700}>{pct(result.undetected * 100)} % leave wrong</tspan>
+          <tspan fill={FAINT}> · </tspan>
+          <tspan fill={MUTED}>{pct(result.noChecks * 100)} % without checks</tspan>
+        </text>
         <line x1={12} y1={chartTop} x2={width - 12} y2={chartTop} stroke={LINE} strokeWidth={1} />
-        <text x={width - 12} y={chartTop - 3} textAnchor="end" fontSize={9} fill={FAINT} style={{ fontVariantNumeric: "tabular-nums" }}>
+        <text x={14} y={chartTop + 10} fontSize={8.5} fill={FAINT} style={{ fontVariantNumeric: "tabular-nums" }}>
           {parseFloat((yMax * 100).toFixed(2))} %
         </text>
         <line x1={12} y1={chartBottom} x2={width - 12} y2={chartBottom} stroke={LINE2} strokeWidth={1} />
         <path d={area} fill={BRICK} opacity={0.12} />
         <path d={dashed} fill="none" stroke={MUTED} strokeWidth={1.3} strokeDasharray="4 3" strokeLinejoin="round" />
         <path d={solid} fill="none" stroke={BRICK} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
-        <line x1={focusX} y1={chartTop} x2={focusX} y2={chartBottom} stroke={LINE2} strokeWidth={1} />
-        <circle cx={xOf(focus.i)} cy={yOf(focusNoChecks)} r={3} fill="#F7F4EF" stroke={MUTED} strokeWidth={1.2} />
-        <circle cx={focusX} cy={focusY} r={3.5} fill={BRICK} stroke="#F7F4EF" strokeWidth={1.5} />
+        <line x1={focusX} y1={cy + 52} x2={focusX} y2={chartTop - 24} stroke={BROWN} strokeWidth={1} strokeDasharray="2 3" opacity={0.8} />
+        <line x1={focusX} y1={chartTop - 4} x2={focusX} y2={chartBottom} stroke={BROWN} strokeWidth={1} strokeDasharray="2 3" opacity={0.8} />
+        <circle cx={xOf(focus.i)} cy={dashedY} r={3} fill="#F7F4EF" stroke={MUTED} strokeWidth={1.2} />
+        <circle cx={focusX} cy={focusY} r={4} fill={BRICK} stroke="#F7F4EF" strokeWidth={1.5} />
         <g style={{ pointerEvents: "none" }}>
-          <rect
-            x={labelRight ? labelX - labelW - 4 : labelX - 4}
-            y={labelY - 10}
-            width={labelW + 8}
-            height={27}
-            fill="#F7F4EF"
-            opacity={0.94}
-            stroke={LINE2}
-            strokeWidth={1}
-          />
-          <text x={labelX} y={labelY} fontSize={9.5} fill={BRICK} fontWeight={700} textAnchor={labelRight ? "end" : "start"} style={{ fontVariantNumeric: "tabular-nums" }}>
-            {labelLine1}
+          <text x={labelX} y={dashedLabelY} fontSize={9} fill={MUTED} textAnchor={labelRight ? "end" : "start"} style={halo}>
+            {dashedLabel}
           </text>
-          <text x={labelX} y={labelY + 12} fontSize={9} fill={MUTED} textAnchor={labelRight ? "end" : "start"} style={{ fontVariantNumeric: "tabular-nums" }}>
-            {labelLine2}
+          <text x={labelX} y={solidLabelY} fontSize={10} fill={BRICK} fontWeight={700} textAnchor={labelRight ? "end" : "start"} style={halo}>
+            {solidLabel}
+          </text>
+          <text x={labelX} y={solidLabelY + 11} fontSize={8.5} fill={MUTED} textAnchor={labelRight ? "end" : "start"} style={halo}>
+            {solidSub}
           </text>
         </g>
-        {!hideEndLabels && (
-          <text x={Math.min(width - 4, lastX + 6)} y={Math.min(chartBottom - 2, yOf(build.afterCheck[n - 1]) + 4)} fontSize={9} fill={BRICK} fontWeight={700} textAnchor={lastX + 60 > width ? "end" : "start"} style={{ fontVariantNumeric: "tabular-nums" }} dx={lastX + 60 > width ? -8 : 0} dy={lastX + 60 > width ? -8 : 0}>
-            {pct(result.undetected * 100)} %
-          </text>
-        )}
-        {!hideEndLabels && (
-          <text x={Math.min(width - 4, xOf(n - 1) + 6)} y={Math.max(chartTop + 8, yOf(build.noChecks[n - 1]) - 5)} fontSize={9} fill={MUTED} textAnchor={xOf(n - 1) + 60 > width ? "end" : "start"} dx={xOf(n - 1) + 60 > width ? -8 : 0} style={{ fontVariantNumeric: "tabular-nums" }}>
-            {pct(result.noChecks * 100)} % without checks
-          </text>
-        )}
-        <rect x={12} y={chartTop - 16} width={width - 24} height={chartBottom - chartTop + 24} fill="transparent" onMouseMove={onChartMove} style={{ cursor: "crosshair" }} />
+        <rect x={0} y={chartTop - 26} width={width} height={chartBottom - chartTop + 40} fill="transparent" onMouseMove={onChartMove} style={{ cursor: "crosshair" }} />
       </svg>
       <div className="flex flex-wrap gap-x-5 gap-y-2 mt-2 text-xs" style={{ color: MUTED }}>
         <span className="flex items-center gap-2"><span style={{ width: 12, height: 12, borderRadius: 6, background: SLATE, display: "inline-block" }} /> probabilistic step, sized by error</span>
