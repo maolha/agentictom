@@ -21,7 +21,7 @@ const DEFAULT_STEPS: Step[] = [
   { name: "Check the policy (rule engine)", p: 0, check: "none", c: 0, scope: "step" },
   { name: "Calculate the amounts (code)", p: 0, check: "none", c: 0, scope: "step" },
   { name: "Decide and route", p: 5, check: "human", c: 85, scope: "case" },
-  { name: "Post the booking (API)", p: 0.1, check: "auto", c: 95, scope: "case" },
+  { name: "Post the booking (API)", p: 0.1, check: "auto", c: 95, scope: "step" },
 ];
 
 const DEFAULT_SCOPE: Record<Check, Scope> = { none: "step", auto: "step", human: "case" };
