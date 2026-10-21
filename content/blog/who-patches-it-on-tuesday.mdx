@@ -3,7 +3,7 @@ title: "Who Patches It on Tuesday?"
 date: "2026-10-21"
 theme: "in-practice"
 excerpt: "An agent wrote a Photoshop in a week. Microsoft fixed 1'411 flaws in one Patch Tuesday. Build versus buy in 2026 turns on the years after the first version."
-standfirst: "Coding agents made the first version of anything cheap. The tenth year has not moved: maintenance was 40 to 80 percent of software cost before AI, and the share is rising. Build the two layers that hold your own knowledge, buy the six that hold everyone's plumbing, and promote nothing without a name on the pager."
+standfirst: "Coding agents made the first version of anything cheap. The tenth year has not moved: maintenance was 40 to 80 percent of software cost before AI, and the share is rising. Build the layer that holds your own knowledge, buy the three that hold everyone's plumbing, and promote nothing without a name on the pager."
 disclosure: true
 card:
   - "Build what differentiates and changes weekly. Buy what everyone needs and changes yearly."
@@ -67,11 +67,11 @@ FINMA Circular 2018/3 states that a bank remains accountable "in the same way as
 
 ## What to build and what to buy
 
-Build the two layers that hold your own knowledge. Buy the six that hold everyone's plumbing. An automation has eight layers, and the line between build and buy runs between the second and the third.
+Build the layer that holds your own knowledge. Buy the three that hold everyone's plumbing. An automation stacks four tiers, and the line between build and buy runs under the first.
 
 <!-- viz:automation-layers -->
 
-The top two layers are the institution's own: what it decides, in which order, with which exceptions. They change every time a policy changes, and an agent writes them well because the institution can describe them. The six below are the same for every bank and every public body, and they change every time a vendor, a model or a regulator does. They are also where the volume lives. At five automations a team keeps the handoffs in its head. At 50, there are 1'225 possible handoffs between them, each needing a queue, a restart and a log.
+The top tier is the institution's own: what it decides, in which order, with which exceptions. It changes every time a policy changes, and an agent writes it well because the institution can describe it. The three tiers below are the same for every bank and every public body, and they change every time a vendor, a model or a regulator does. They are also where the volume lives. At five automations a team keeps the handoffs in its head. At 50, there are 1'225 possible handoffs between them, each needing a queue, a restart and a log.
 
 | Automations in operation | Possible handoffs between them |
 |---|---|
@@ -85,18 +85,11 @@ The Swiss Confederation has drawn the line this way in public. Its tender for pr
 
 ## The promotion gate: eight questions
 
-A prototype may cross into production when someone can name a person for each of these, and a second person who takes over when the first one leaves.
+A prototype may cross into production when someone can write two names on every line below: an owner, and the person who takes over when the owner leaves. The questions follow the life of the system, from the build through the daily run and the first failure to the day someone has to answer for a result.
 
-1. Who builds it?
-2. Who changes it?
-3. Who approves the change?
-4. Who brings it into operation?
-5. Who runs it day to day?
-6. Who brings it back after a failure?
-7. Who checks what happened?
-8. Who answers for the result?
+<!-- viz:promotion-gate -->
 
-If the answer to all eight is the person who built it, you have a prototype with an owner, which is fine for a prototype. If the answer to any of them is "the team that built it" and that team has moved on, you have a liability holding critical data. The second name is the one that matters: a system with one owner has a bus factor of one, and the Linux Foundation's figure says that owner has a 38 percent chance of being gone within six months of being hired. The gate costs an hour to run and saves the fourth quarter.
+If the answer on every line is the person who built it, you have a prototype with an owner, which is fine for a prototype. If the answer on any line is "the team that built it" and that team has moved on, you have a liability holding critical data. The second name is the one that matters: a system with one owner has a bus factor of one, and the Linux Foundation's figure says that owner has a 38 percent chance of being gone within six months of being hired. The gate costs an hour to run and saves the fourth quarter.
 
 ## Seven rules
 
@@ -111,7 +104,7 @@ The rules bend with scale, because the answer depends on whether a permanent tea
 | | Build | Buy | The trap |
 |---|---|---|---|
 | Startup | The product and whatever makes it fast. Monzo, Starling and Nubank built their own cores because the core was the product. | Everything that is not the product. Payroll, CRM, support. | Building the context because the agent makes it easy. Context does not pay the bills. |
-| Mid sized regulated firm | The top two layers: rules, flows, the checks around the core. One named owner per built system. | The core, the record and the six lower layers. Anything an auditor tests against a market standard. | A prototype that quietly went live, with no owner, no budget and no patch cadence, holding critical data. |
+| Mid sized regulated firm | The top tier: rules, flows, the checks around the core. One named owner per built system. | The core, the record and the three lower tiers. Anything an auditor tests against a market standard. | A prototype that quietly went live, with no owner, no budget and no patch cadence, holding critical data. |
 | Global bank | Platforms where scale pays for a permanent team. Goldman has run SecDB since 1992. JPMorgan spends USD 18 billion a year on technology with more than 40'000 engineers. | Commodity infrastructure, and anything the bank cannot staff for a decade. | The 70 percent of the budget McKinsey finds tied up in running legacy, most of it once a build somebody promoted. |
 | Public body | The business logic, published. Under EMBAG Article 9 the Swiss federal administration must release the source of software it develops, so a build is also a public promise to maintain it. | The platform, as the Confederation did in October 2025, and open source with a paid maintenance contract. | Migrating for sovereignty without the staff to run it: Schleswig-Holstein claims EUR 15 million a year in savings and had mail outages; Denmark dropped its pilot this month. |
 
@@ -119,4 +112,4 @@ The rules bend with scale, because the answer depends on whether a permanent tea
 
 Zero to one is a weekend now. One to ten years is a team, a budget, a contract or all three, and the agent cannot sign any of them. The age of software is not over. The age of the demo is. Before the next build decision, skip the question of whether the agent can write it. It can. Ask who patches it on Tuesday.
 
-**Notes.** ArtCraft and the Photoshop and Office clones: Ars Technica, 7 October 2026, and The Register, 8 October 2026. Patch Tuesday: Tenable's 2025 year in review and BleepingComputer, 13 October 2026. Token prices: a16z, LLMflation, November 2024. Maintenance cost: Robert Glass, Facts and Fallacies of Software Engineering, 2002; Stripe, The Developer Coefficient, 2018; ISBSG, June 2024. DORA reports: Google, October 2024 and September 2025. GitClear, AI Copilot Code Quality, February 2025, and The Maintainability Gap, June 2026. Veracode, GenAI Code Security Report, July 2025. METR, July 2025 and February 2026. Chrome and npm figures: Google Security Blog, August 2023; BleepingComputer; CISA, September 2025; JFrog, May 2026. Vogels: ACM Queue, 2006. Avelino et al., ICPC 2016. Linux Foundation Tech Talent Report, 2024. Curative, Ohalo and Factory: Business Insider, Benzinga, diginomica and CIO, 2026. Amazon Kiro outage: Amazon and the Financial Times, February 2026. Klarna: Fortune, May 2025, and Reuters, September 2025. CrowdStrike: Microsoft, 20 July 2024. VMware pricing: Ars Technica, October 2024. Vertice SaaS Inflation Index, 2025. FINMA Circulars 2018/3 and 2023/1; Commission Delegated Regulation (EU) 2024/1774; BaFin guidance, 23 January 2026. Federal tender: simap 16303 and 16305, award 17 October 2025. Canton of Zug: Digital Strategy 2020 to 2026, chapter 3.2; inside-it, 26 February 2025. IFZ, Zukunft der Kernbankensysteme, 2023. Co-operative Bank: PRA Final Notice, 2015. TSB: FCA, December 2022. Forrester, July 2026. McKinsey, State of AI, August 2026, and Unlocking value from technology in banking, October 2024. EMBAG, SR 172.019. Schleswig-Holstein and Denmark: heise, December 2025, and Ingeniøren, October 2026. The eight layers and the eight questions are the author's own.
+**Notes.** ArtCraft and the Photoshop and Office clones: Ars Technica, 7 October 2026, and The Register, 8 October 2026. Patch Tuesday: Tenable's 2025 year in review and BleepingComputer, 13 October 2026. Token prices: a16z, LLMflation, November 2024. Maintenance cost: Robert Glass, Facts and Fallacies of Software Engineering, 2002; Stripe, The Developer Coefficient, 2018; ISBSG, June 2024. DORA reports: Google, October 2024 and September 2025. GitClear, AI Copilot Code Quality, February 2025, and The Maintainability Gap, June 2026. Veracode, GenAI Code Security Report, July 2025. METR, July 2025 and February 2026. Chrome and npm figures: Google Security Blog, August 2023; BleepingComputer; CISA, September 2025; JFrog, May 2026. Vogels: ACM Queue, 2006. Avelino et al., ICPC 2016. Linux Foundation Tech Talent Report, 2024. Curative, Ohalo and Factory: Business Insider, Benzinga, diginomica and CIO, 2026. Amazon Kiro outage: Amazon and the Financial Times, February 2026. Klarna: Fortune, May 2025, and Reuters, September 2025. CrowdStrike: Microsoft, 20 July 2024. VMware pricing: Ars Technica, October 2024. Vertice SaaS Inflation Index, 2025. FINMA Circulars 2018/3 and 2023/1; Commission Delegated Regulation (EU) 2024/1774; BaFin guidance, 23 January 2026. Federal tender: simap 16303 and 16305, award 17 October 2025. Canton of Zug: Digital Strategy 2020 to 2026, chapter 3.2; inside-it, 26 February 2025. IFZ, Zukunft der Kernbankensysteme, 2023. Co-operative Bank: PRA Final Notice, 2015. TSB: FCA, December 2022. Forrester, July 2026. McKinsey, State of AI, August 2026, and Unlocking value from technology in banking, October 2024. EMBAG, SR 172.019. Schleswig-Holstein and Denmark: heise, December 2025, and Ingeniøren, October 2026. The four tiers and the eight questions are the author's own.
