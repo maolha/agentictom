@@ -17,6 +17,9 @@ export default async function OGImage({
   if (!post) notFound();
   const title = post.title;
 
+  // Chat apps crop the image to a small centred square, so the title sits
+  // centred inside the middle 630 pixels, in type large enough to read small.
+  const fontSize = title.length > 60 ? 46 : title.length > 34 ? 56 : 68;
   return new ImageResponse(
     (
       <div
@@ -25,55 +28,39 @@ export default async function OGImage({
           height: "100%",
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
-          padding: "80px",
+          padding: "60px 300px",
           background: "#F7F4EF",
         }}
       >
         <div
           style={{
-            fontSize: 24,
+            display: "flex",
+            fontSize: 22,
             color: "#8B7355",
             letterSpacing: "0.15em",
             textTransform: "uppercase",
-            marginBottom: 24,
+            marginBottom: 28,
           }}
         >
           agenticTOM — Thoughts
         </div>
         <div
           style={{
-            fontSize: 56,
+            display: "flex",
+            fontSize,
             fontWeight: 300,
             color: "#1A1A1A",
-            lineHeight: 1.2,
-            marginBottom: 40,
-            maxWidth: 900,
+            lineHeight: 1.15,
+            textAlign: "center",
+            justifyContent: "center",
           }}
         >
           {title}
         </div>
-        <div
-          style={{
-            position: "absolute",
-            bottom: 80,
-            left: 80,
-            fontSize: 22,
-            color: "#2B3A52",
-          }}
-        >
-          Marc Hauser
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: 8,
-            height: "100%",
-            background: "#2B3A52",
-          }}
-        />
+        <div style={{ position: "absolute", bottom: 56, display: "flex", fontSize: 22, color: "#2B3A52" }}>Marc Hauser</div>
+        <div style={{ position: "absolute", top: 0, right: 0, width: 8, height: "100%", background: "#2B3A52" }} />
       </div>
     ),
     { ...size }
