@@ -25,7 +25,7 @@ function Graph({ n }: { n: number }) {
   const dot = n <= 5 ? 6 : n <= 20 ? 4 : 2.6;
   return (
     <figure className="flex flex-col items-center m-0">
-      <svg viewBox={`0 0 ${size} ${size}`} width="100%" style={{ maxWidth: 240 }} role="img" aria-label={`${n} automations, ${fmt(handoffs)} possible handoffs between them`}>
+      <svg viewBox={`0 0 ${size} ${size}`} width="100%" style={{ maxWidth: 240 }} role="img" aria-label={`${n} systems, ${fmt(handoffs)} possible handoffs between them`}>
         <path d={edges.join("")} fill="none" stroke={SLATE} strokeWidth={n <= 5 ? 1.2 : 0.6} strokeOpacity={edgeOpacity} />
         {pts.map(([x, y], i) => (
           <circle key={i} cx={x} cy={y} r={dot} fill={BROWN} />
@@ -39,7 +39,7 @@ function Graph({ n }: { n: number }) {
           possible handoffs
         </p>
         <p className="text-xs" style={{ color: MUTED }}>
-          between {n} automations
+          between {n} systems
         </p>
       </figcaption>
     </figure>
@@ -58,7 +58,7 @@ export default function HandoffGraph() {
         ))}
       </div>
       <p className="text-xs mt-5" style={{ color: MUTED, lineHeight: 1.6 }}>
-        Each dot is an automation in operation, each line a handoff that may need a queue, a restart and a log. Illustrative calculation: n times n minus one, divided by two. A platform settles the queue, the restart and the log once for all of them. A build settles them again for each one.
+        Each dot is a system, tool or automation that may need to hand work to another, each line a handoff that may need a queue, a restart and a log. Not every pair does. Even if only one in ten ever does, 50 systems leave about 123 interfaces to run, twelve times the full count at five. Illustrative calculation: n times n minus one, divided by two. A platform settles the queue, the restart and the log once for all of them. A build settles them again for each one.
       </p>
     </div>
   );
