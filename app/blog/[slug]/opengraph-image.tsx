@@ -17,10 +17,6 @@ export default async function OGImage({
   if (!post) notFound();
   const title = post.title;
 
-  // Chat apps crop the image to a small centred square, so everything that matters
-  // sits inside the middle 630 pixels, in large type, on a dark ground.
-  const line = post.shareLine;
-  const long = title.length > 34;
   return new ImageResponse(
     (
       <div
@@ -29,37 +25,55 @@ export default async function OGImage({
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
           justifyContent: "center",
-          padding: "48px 300px",
-          background: "#2B3A52",
+          padding: "80px",
+          background: "#F7F4EF",
         }}
       >
-        <div style={{ display: "flex", fontSize: 22, color: "#B9A57E", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 28 }}>
-          agenticTOM
+        <div
+          style={{
+            fontSize: 24,
+            color: "#8B7355",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            marginBottom: 24,
+          }}
+        >
+          agenticTOM — Thoughts
         </div>
         <div
           style={{
-            display: "flex",
-            fontSize: long ? 60 : 76,
+            fontSize: 56,
             fontWeight: 300,
-            color: "#F7F4EF",
-            lineHeight: 1.1,
-            textAlign: "center",
-            justifyContent: "center",
+            color: "#1A1A1A",
+            lineHeight: 1.2,
+            marginBottom: 40,
+            maxWidth: 900,
           }}
         >
           {title}
         </div>
-        {line ? (
-          <div style={{ display: "flex", width: 72, height: 2, background: "#B9A57E", marginTop: 30, marginBottom: 26 }} />
-        ) : null}
-        {line ? (
-          <div style={{ display: "flex", fontSize: 28, color: "#F7F4EF", opacity: 0.85, lineHeight: 1.3, textAlign: "center", justifyContent: "center" }}>
-            {line}
-          </div>
-        ) : null}
-        <div style={{ position: "absolute", bottom: 40, display: "flex", fontSize: 22, color: "#B9A57E" }}>Marc Hauser</div>
+        <div
+          style={{
+            position: "absolute",
+            bottom: 80,
+            left: 80,
+            fontSize: 22,
+            color: "#2B3A52",
+          }}
+        >
+          Marc Hauser
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            width: 8,
+            height: "100%",
+            background: "#2B3A52",
+          }}
+        />
       </div>
     ),
     { ...size }
