@@ -17,30 +17,10 @@ export default async function OGImage({
   if (!post) notFound();
   const title = post.title;
 
-  if (post.card && post.card.length > 0) {
-    return new ImageResponse(
-      (
-        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", padding: "56px 72px", background: "#F7F4EF" }}>
-          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 18 }}>
-            <div style={{ display: "flex", fontSize: 20, color: "#8B7355", letterSpacing: "0.15em", textTransform: "uppercase" }}>agenticTOM — Thoughts</div>
-            <div style={{ display: "flex", fontSize: 20, color: "#6B6B6B" }}>Marc Hauser</div>
-          </div>
-          <div style={{ display: "flex", fontSize: 44, fontWeight: 300, color: "#1A1A1A", lineHeight: 1.15, marginBottom: 26 }}>{title}</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {post.card.map((line, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 18 }}>
-                <div style={{ display: "flex", justifyContent: "flex-end", width: 34, fontSize: 27, lineHeight: 1.3, color: "#2B3A52", fontWeight: 300 }}>{String(i + 1)}</div>
-                <div style={{ display: "flex", fontSize: 27, color: "#1A1A1A", lineHeight: 1.3 }}>{line}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{ position: "absolute", top: 0, right: 0, width: 8, height: "100%", background: "#2B3A52" }} />
-        </div>
-      ),
-      { ...size }
-    );
-  }
-
+  // Chat apps crop the image to a small centred square, so everything that matters
+  // sits inside the middle 630 pixels, in large type, on a dark ground.
+  const line = post.shareLine;
+  const long = title.length > 34;
   return new ImageResponse(
     (
       <div
@@ -49,55 +29,37 @@ export default async function OGImage({
           height: "100%",
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
-          padding: "80px",
-          background: "#F7F4EF",
+          padding: "48px 300px",
+          background: "#2B3A52",
         }}
       >
-        <div
-          style={{
-            fontSize: 24,
-            color: "#8B7355",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            marginBottom: 24,
-          }}
-        >
-          agenticTOM — Thoughts
+        <div style={{ display: "flex", fontSize: 22, color: "#B9A57E", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 28 }}>
+          agenticTOM
         </div>
         <div
           style={{
-            fontSize: 56,
+            display: "flex",
+            fontSize: long ? 60 : 76,
             fontWeight: 300,
-            color: "#1A1A1A",
-            lineHeight: 1.2,
-            marginBottom: 40,
-            maxWidth: 900,
+            color: "#F7F4EF",
+            lineHeight: 1.1,
+            textAlign: "center",
+            justifyContent: "center",
           }}
         >
           {title}
         </div>
-        <div
-          style={{
-            position: "absolute",
-            bottom: 80,
-            left: 80,
-            fontSize: 22,
-            color: "#2B3A52",
-          }}
-        >
-          Marc Hauser
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: 8,
-            height: "100%",
-            background: "#2B3A52",
-          }}
-        />
+        {line ? (
+          <div style={{ display: "flex", width: 72, height: 2, background: "#B9A57E", marginTop: 30, marginBottom: 26 }} />
+        ) : null}
+        {line ? (
+          <div style={{ display: "flex", fontSize: 28, color: "#F7F4EF", opacity: 0.85, lineHeight: 1.3, textAlign: "center", justifyContent: "center" }}>
+            {line}
+          </div>
+        ) : null}
+        <div style={{ position: "absolute", bottom: 40, display: "flex", fontSize: 22, color: "#B9A57E" }}>Marc Hauser</div>
       </div>
     ),
     { ...size }
