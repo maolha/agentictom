@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { notFound } from "next/navigation";
 import { getPost } from "@/lib/blog";
 
-export const alt = "Agentic TOM";
+export const alt = "Agentic TOM, by Marc Hauser";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
