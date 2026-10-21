@@ -28,7 +28,7 @@ export default function PromotionGate() {
             agentictom.com
           </p>
         </div>
-        <div className="grid grid-cols-[1fr_5.5rem_5.5rem] md:grid-cols-[1fr_9rem_9rem] gap-x-3 pb-2" style={{ borderBottom: `1px solid ${SLATE}` }}>
+        <div className="grid grid-cols-[1fr_5.5rem_6.5rem] md:grid-cols-[1fr_9rem_10rem] gap-x-3 pb-2" style={{ borderBottom: `1px solid ${SLATE}` }}>
           <p className="text-[10px] uppercase tracking-widest" style={{ color: MUTED }}>
             Question
           </p>
@@ -36,7 +36,7 @@ export default function PromotionGate() {
             Owner
           </p>
           <p className="text-[10px] uppercase tracking-widest" style={{ color: SLATE, fontWeight: 700 }}>
-            Second name
+            If the owner leaves
           </p>
         </div>
         {STAGES.map((s) => (
@@ -45,7 +45,7 @@ export default function PromotionGate() {
               {s.stage}
             </p>
             {s.questions.map((q) => (
-              <div key={q} className="grid grid-cols-[1fr_5.5rem_5.5rem] md:grid-cols-[1fr_9rem_9rem] gap-x-3 items-end py-1.5">
+              <div key={q} className="grid grid-cols-[1fr_5.5rem_6.5rem] md:grid-cols-[1fr_9rem_10rem] gap-x-3 items-end py-1.5">
                 <p className="text-sm" style={{ color: INK, lineHeight: 1.4 }}>
                   {q}
                 </p>
