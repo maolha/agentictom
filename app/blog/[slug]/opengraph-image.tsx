@@ -17,6 +17,30 @@ export default async function OGImage({
   if (!post) notFound();
   const title = post.title;
 
+  if (post.card && post.card.length > 0) {
+    return new ImageResponse(
+      (
+        <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", padding: "56px 72px", background: "#F7F4EF" }}>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 18 }}>
+            <div style={{ display: "flex", fontSize: 20, color: "#8B7355", letterSpacing: "0.15em", textTransform: "uppercase" }}>agenticTOM — Thoughts</div>
+            <div style={{ display: "flex", fontSize: 20, color: "#6B6B6B" }}>Marc Hauser</div>
+          </div>
+          <div style={{ display: "flex", fontSize: 44, fontWeight: 300, color: "#1A1A1A", lineHeight: 1.15, marginBottom: 26 }}>{title}</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {post.card.map((line, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 18 }}>
+                <div style={{ display: "flex", justifyContent: "flex-end", width: 34, fontSize: 27, lineHeight: 1.3, color: "#2B3A52", fontWeight: 300 }}>{String(i + 1)}</div>
+                <div style={{ display: "flex", fontSize: 27, color: "#1A1A1A", lineHeight: 1.3 }}>{line}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ position: "absolute", top: 0, right: 0, width: 8, height: "100%", background: "#2B3A52" }} />
+        </div>
+      ),
+      { ...size }
+    );
+  }
+
   return new ImageResponse(
     (
       <div
