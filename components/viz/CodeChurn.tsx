@@ -34,16 +34,21 @@ export default function CodeChurn() {
 
   return (
     <div className="my-10 py-8" style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}>
-      <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>
-        Figure · The lines crossed in 2024
-      </p>
-      <div className="mb-3" style={{ minHeight: "3.2em" }} aria-live="polite">
-        <p className="text-sm" style={{ color: INK, lineHeight: 1.5, fontVariantNumeric: "tabular-nums" }}>
+      <div className="flex items-baseline justify-between gap-4 mb-3">
+        <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+          Figure · The lines crossed in 2024
+        </p>
+        <p className="text-[10px] uppercase tracking-widest shrink-0" style={{ color: FAINT }}>
+          Hover or tap a year
+        </p>
+      </div>
+      <div className="mb-3" style={{ height: "4.6em", overflow: "hidden" }} aria-live="polite">
+        <p className="text-sm" style={{ color: INK, lineHeight: 1.5, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           <strong style={{ fontWeight: 700 }}>{YEARS[i]}</strong>
           <span style={{ color: SLATE }}> · {MOVED[i]} % of changed lines refactored</span>
           <span style={{ color: BRICK }}> · {COPIED[i]} % copied and pasted</span>
         </p>
-        <p className="text-xs" style={{ color: MUTED, lineHeight: 1.5 }}>{NOTES[i]}</p>
+        <p className="text-xs" style={{ color: MUTED, lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{NOTES[i]}</p>
       </div>
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -83,7 +88,7 @@ export default function CodeChurn() {
         </text>
         {/* hit areas, one per year */}
         {YEARS.map((y, k) => (
-          <rect key={`hit-${y}`} x={x(y) - (P.x1 - P.x0) / 6} y={P.y0 - 10} width={(P.x1 - P.x0) / 3} height={P.y1 - P.y0 + 34} fill="transparent" onMouseEnter={() => setHover(k)} />
+          <rect key={`hit-${y}`} x={x(y) - (P.x1 - P.x0) / 6} y={P.y0 - 10} width={(P.x1 - P.x0) / 3} height={P.y1 - P.y0 + 34} fill="transparent" style={{ cursor: "pointer" }} onMouseEnter={() => setHover(k)} />
         ))}
       </svg>
       <div className="flex flex-wrap gap-x-5 gap-y-2 mt-3 text-xs" style={{ color: MUTED }}>

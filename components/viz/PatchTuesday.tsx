@@ -39,17 +39,22 @@ export default function PatchTuesday() {
 
   return (
     <div className="my-10 py-8" style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}>
-      <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>
-        Figure · Microsoft Patch Tuesday, flaws fixed per month
-      </p>
-      <div className="mb-3" style={{ minHeight: "3.2em" }} aria-live="polite">
-        <p className="text-sm" style={{ color: INK, lineHeight: 1.5 }}>
+      <div className="flex items-baseline justify-between gap-4 mb-3">
+        <p className="text-xs uppercase tracking-widest" style={{ color: "#8B7355" }}>
+          Figure · Microsoft Patch Tuesday, flaws fixed per month
+        </p>
+        <p className="text-[10px] uppercase tracking-widest shrink-0" style={{ color: FAINT }}>
+          Hover or tap a bar
+        </p>
+      </div>
+      <div className="mb-3" style={{ height: "4.6em", overflow: "hidden" }} aria-live="polite">
+        <p className="text-sm" style={{ color: INK, lineHeight: 1.5, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
           <strong style={{ fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>
             {b.lo === b.hi ? `${swiss(b.lo)} a month` : `${swiss(b.lo)} to ${swiss(b.hi)} a month`}
           </strong>
           {b.lo > 94 && <span style={{ color: MUTED }}> · {multiple} times the 2025 average</span>}
         </p>
-        <p className="text-xs" style={{ color: MUTED, lineHeight: 1.5 }}>{b.note}</p>
+        <p className="text-xs" style={{ color: MUTED, lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{b.note}</p>
       </div>
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -76,7 +81,7 @@ export default function PatchTuesday() {
           const on = i === k;
           const dim = hover !== null && !on;
           return (
-            <g key={bar.label} onMouseEnter={() => setHover(k)} style={{ cursor: "default", opacity: dim ? 0.5 : 1, transition: "opacity 0.15s" }}>
+            <g key={bar.label} onMouseEnter={() => setHover(k)} style={{ cursor: "pointer", opacity: dim ? 0.5 : 1, transition: "opacity 0.15s" }}>
               <rect x={cx - slot / 2} y={P.y0 - 10} width={slot} height={P.y1 - P.y0 + 30} fill="transparent" />
               {point ? (
                 <rect x={cx - w / 2} y={top - 1.5} width={w} height={3} fill={INK} />

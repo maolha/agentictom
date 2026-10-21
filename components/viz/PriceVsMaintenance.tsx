@@ -50,12 +50,17 @@ export default function PriceVsMaintenance() {
 
   return (
     <div className="my-10 py-8" style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}>
-      <p className="text-xs uppercase tracking-widest mb-3" style={{ color: BROWN }}>
-        Figure · The first version got cheap. The years after did not.
-      </p>
-      <div className="mb-3" style={{ minHeight: "3.2em" }} aria-live="polite">
-        <p className="text-sm" style={{ color: readout.color, lineHeight: 1.5, fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{readout.head}</p>
-        <p className="text-xs" style={{ color: MUTED, lineHeight: 1.5 }}>{readout.note}</p>
+      <div className="flex items-baseline justify-between gap-4 mb-3">
+        <p className="text-xs uppercase tracking-widest" style={{ color: BROWN }}>
+          Figure · The first version got cheap. The years after did not.
+        </p>
+        <p className="text-[10px] uppercase tracking-widest shrink-0" style={{ color: FAINT }}>
+          Hover or tap a point
+        </p>
+      </div>
+      <div className="mb-3" style={{ height: "4.6em", overflow: "hidden" }} aria-live="polite">
+        <p className="text-sm" style={{ color: readout.color, lineHeight: 1.5, fontWeight: 700, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{readout.head}</p>
+        <p className="text-xs" style={{ color: MUTED, lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{readout.note}</p>
       </div>
       <svg
         viewBox={`0 0 ${W} ${H}`}
@@ -83,7 +88,7 @@ export default function PriceVsMaintenance() {
         ))}
         <line x1={lx(PRICE[0].year)} y1={ly(PRICE[0].usd)} x2={lx(PRICE[1].year)} y2={ly(PRICE[1].usd)} stroke={SLATE} strokeWidth={2.4} strokeLinecap="round" />
         {PRICE.map((p, i) => (
-          <g key={i} onMouseEnter={() => setHover({ panel: "price", i })} style={{ cursor: "default" }}>
+          <g key={i} onMouseEnter={() => setHover({ panel: "price", i })} style={{ cursor: "pointer" }}>
             <rect x={lx(p.year) - 60} y={L.y0 - 10} width={120} height={L.y1 - L.y0 + 20} fill="transparent" />
             <circle cx={lx(p.year)} cy={ly(p.usd)} r={focus.panel === "price" && focus.i === i ? 6 : 4} fill={SLATE} stroke="#F7F4EF" strokeWidth={1.5} />
             <text x={lx(p.year) + (i === 0 ? 10 : -10)} y={ly(p.usd) + (i === 0 ? 4 : -11)} textAnchor={i === 0 ? "start" : "end"} fontSize={10} fontWeight={700} fill={SLATE} style={{ fontVariantNumeric: "tabular-nums" }}>
@@ -115,7 +120,7 @@ export default function PriceVsMaintenance() {
           const point = s.lo === s.hi;
           const on = focus.panel === "share" && focus.i === i;
           return (
-            <g key={s.year} onMouseEnter={() => setHover({ panel: "share", i })} style={{ cursor: "default", opacity: hover && !on && hover.panel === "share" ? 0.5 : 1, transition: "opacity 0.15s" }}>
+            <g key={s.year} onMouseEnter={() => setHover({ panel: "share", i })} style={{ cursor: "pointer", opacity: hover && !on && hover.panel === "share" ? 0.5 : 1, transition: "opacity 0.15s" }}>
               <rect x={cx - slot / 2} y={R.y0 - 10} width={slot} height={R.y1 - R.y0 + 40} fill="transparent" />
               {point ? (
                 <circle cx={cx} cy={ry(s.lo)} r={5} fill={BROWN} stroke="#F7F4EF" strokeWidth={1.5} />

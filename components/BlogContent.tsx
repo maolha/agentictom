@@ -15,6 +15,7 @@ const PriceVsMaintenance = dynamic(() => import("@/components/viz/PriceVsMainten
 const CodeChurn = dynamic(() => import("@/components/viz/CodeChurn"));
 const PatchTuesday = dynamic(() => import("@/components/viz/PatchTuesday"));
 const AutomationLayers = dynamic(() => import("@/components/viz/AutomationLayers"));
+const SevenRules = dynamic(() => import("@/components/viz/SevenRules"));
 
 /** A post embeds a figure with a comment on its own line: `<!-- viz:j-curve -->`. */
 const EMBEDS: Record<string, React.ComponentType> = {
@@ -28,6 +29,7 @@ const EMBEDS: Record<string, React.ComponentType> = {
   "viz:code-churn": CodeChurn,
   "viz:patch-tuesday": PatchTuesday,
   "viz:automation-layers": AutomationLayers,
+  "viz:seven-rules": SevenRules,
 };
 
 const EMBED_LINE = /^[ \t]*<!-- ([a-z:-]+) -->[ \t]*$/gm;
