@@ -43,7 +43,6 @@ export type Post = PostMeta & {
   /** Show the standing employer disclosure at the end of the post. */
   disclosure?: boolean;
   /** Short lines for the share preview image, when the post's takeaway is a list. */
-  shareLine?: string;
 };
 
 function estimateReadingTime(text: string): number {
@@ -105,7 +104,6 @@ export function getPost(slug: string): Post | null {
     standfirst: typeof data.standfirst === "string" ? data.standfirst : undefined,
     dateline: typeof data.dateline === "string" ? data.dateline : undefined,
     disclosure: data.disclosure === true,
-    shareLine: typeof data.shareLine === "string" ? data.shareLine.trim().slice(0, 90) : undefined,
   };
 }
 
