@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 const SLATE = "#2B3A52";
 const BROWN = "#8B7355";
 const INK = "#1A1A1A";
@@ -17,12 +19,26 @@ const PRICE = [
 ];
 // Right panel: share of lifetime software cost or developer time that is maintenance.
 const SHARE = [
-  { year: "2002", lo: 40, hi: 80, src: "Glass" },
-  { year: "2018", lo: 42, hi: 42, src: "Stripe" },
-  { year: "2024", lo: 65, hi: 85, src: "ISBSG" },
+  { year: "2002", lo: 40, hi: 80, src: "Glass", note: "Robert Glass, Facts and Fallacies of Software Engineering: maintenance consumes 40 to 80 percent of software cost, 60 on average, and about 60 percent of that is enhancement rather than repair." },
+  { year: "2018", lo: 42, hi: 42, src: "Stripe", note: "Stripe, The Developer Coefficient, more than 1'000 developers: 17.3 hours of a 41 hour week on maintenance and technical debt. Measured as time, not cost." },
+  { year: "2024", lo: 65, hi: 85, src: "ISBSG", note: "ISBSG benchmark from about 1'900 maintenance and support projects: 65 to 85 percent of an application's total ownership cost." },
+];
+const PRICE_NOTES = [
+  "Late 2021: GPT-3 class capability at USD 60 per million tokens. a16z, LLMflation, November 2024.",
+  "Late 2024: the same capability at six cents. A thousandfold in three years, about 10x a year.",
 ];
 
 export default function PriceVsMaintenance() {
+  const [hover, setHover] = useState<{ panel: "price" | "share"; i: number } | null>(null);
+  const focus = hover ?? { panel: "share" as const, i: 2 };
+  const readout =
+    focus.panel === "price"
+      ? { head: PRICE[focus.i].label + " per million tokens", note: PRICE_NOTES[focus.i], color: SLATE }
+      : {
+          head: `${SHARE[focus.i].year}, ${SHARE[focus.i].src}: ${SHARE[focus.i].lo === SHARE[focus.i].hi ? `${SHARE[focus.i].lo} percent` : `${SHARE[focus.i].lo} to ${SHARE[focus.i].hi} percent`}`,
+          note: SHARE[focus.i].note,
+          color: BROWN,
+        };
   // Left panel geometry
   const L = { x0: 46, x1: 300, y0: 30, y1: 200 };
   const lx = (y: number) => L.x0 + ((y - 2021.5) / (2025.2 - 2021.5)) * (L.x1 - L.x0);
@@ -34,14 +50,19 @@ export default function PriceVsMaintenance() {
 
   return (
     <div className="my-10 py-8" style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}>
-      <p className="text-xs uppercase tracking-widest mb-4" style={{ color: BROWN }}>
+      <p className="text-xs uppercase tracking-widest mb-3" style={{ color: BROWN }}>
         Figure · The first version got cheap. The years after did not.
       </p>
+      <div className="mb-3" style={{ minHeight: "3.2em" }} aria-live="polite">
+        <p className="text-sm" style={{ color: readout.color, lineHeight: 1.5, fontWeight: 700, fontVariantNumeric: "tabular-nums" }}>{readout.head}</p>
+        <p className="text-xs" style={{ color: MUTED, lineHeight: 1.5 }}>{readout.note}</p>
+      </div>
       <svg
         viewBox={`0 0 ${W} ${H}`}
         role="img"
         aria-label="Two panels. Left: the price of a million tokens for a GPT-3 class capability fell from 60 dollars in late 2021 to 6 cents in late 2024, a thousandfold. Right: the share of software cost that is maintenance stayed between 40 and 85 percent across studies from 2002, 2018 and 2024."
         style={{ width: "100%", height: "auto", display: "block" }}
+        onMouseLeave={() => setHover(null)}
       >
         {/* Left panel */}
         <text x={L.x0} y={18} fontSize={10} fill={MUTED} letterSpacing="0.1em" style={{ textTransform: "uppercase" }}>
@@ -62,8 +83,9 @@ export default function PriceVsMaintenance() {
         ))}
         <line x1={lx(PRICE[0].year)} y1={ly(PRICE[0].usd)} x2={lx(PRICE[1].year)} y2={ly(PRICE[1].usd)} stroke={SLATE} strokeWidth={2.4} strokeLinecap="round" />
         {PRICE.map((p, i) => (
-          <g key={i}>
-            <circle cx={lx(p.year)} cy={ly(p.usd)} r={4} fill={SLATE} stroke="#F7F4EF" strokeWidth={1.5} />
+          <g key={i} onMouseEnter={() => setHover({ panel: "price", i })} style={{ cursor: "default" }}>
+            <rect x={lx(p.year) - 60} y={L.y0 - 10} width={120} height={L.y1 - L.y0 + 20} fill="transparent" />
+            <circle cx={lx(p.year)} cy={ly(p.usd)} r={focus.panel === "price" && focus.i === i ? 6 : 4} fill={SLATE} stroke="#F7F4EF" strokeWidth={1.5} />
             <text x={lx(p.year) + (i === 0 ? 10 : -10)} y={ly(p.usd) + (i === 0 ? 4 : -11)} textAnchor={i === 0 ? "start" : "end"} fontSize={10} fontWeight={700} fill={SLATE} style={{ fontVariantNumeric: "tabular-nums" }}>
               {p.label}
             </text>
@@ -91,8 +113,10 @@ export default function PriceVsMaintenance() {
         {SHARE.map((s, i) => {
           const cx = R.x0 + slot * i + slot / 2;
           const point = s.lo === s.hi;
+          const on = focus.panel === "share" && focus.i === i;
           return (
-            <g key={s.year}>
+            <g key={s.year} onMouseEnter={() => setHover({ panel: "share", i })} style={{ cursor: "default", opacity: hover && !on && hover.panel === "share" ? 0.5 : 1, transition: "opacity 0.15s" }}>
+              <rect x={cx - slot / 2} y={R.y0 - 10} width={slot} height={R.y1 - R.y0 + 40} fill="transparent" />
               {point ? (
                 <circle cx={cx} cy={ry(s.lo)} r={5} fill={BROWN} stroke="#F7F4EF" strokeWidth={1.5} />
               ) : (
@@ -116,7 +140,7 @@ export default function PriceVsMaintenance() {
         </text>
       </svg>
       <p className="text-xs mt-4" style={{ color: MUTED, lineHeight: 1.6 }}>
-        Left: a16z, LLMflation, November 2024, price for a constant GPT-3 class capability. Right: Robert Glass, Facts and Fallacies of Software Engineering, 2002 (40 to 80 percent of cost); Stripe, The Developer Coefficient, 2018 (42 percent of developer time); ISBSG, June 2024 (65 to 85 percent of ownership cost). The three studies measure maintenance differently and point the same way.
+        Left: a16z, LLMflation, November 2024, price for a constant GPT-3 class capability. Right: three studies that measure maintenance differently, as a share of cost, of developer time, and of ownership cost, and point the same way. Hover a point or a bar for the source.
       </p>
     </div>
   );
