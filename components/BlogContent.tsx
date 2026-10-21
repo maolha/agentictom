@@ -11,6 +11,10 @@ const JCurve = dynamic(() => import("@/components/viz/JCurve"));
 const ExploitWindow = dynamic(() => import("@/components/viz/ExploitWindow"));
 const MrosChart = dynamic(() => import("@/components/viz/MrosChart"));
 const ReliabilityMatrix = dynamic(() => import("@/components/viz/ReliabilityMatrix"));
+const PriceVsMaintenance = dynamic(() => import("@/components/viz/PriceVsMaintenance"));
+const CodeChurn = dynamic(() => import("@/components/viz/CodeChurn"));
+const PatchTuesday = dynamic(() => import("@/components/viz/PatchTuesday"));
+const AutomationLayers = dynamic(() => import("@/components/viz/AutomationLayers"));
 
 /** A post embeds a figure with a comment on its own line: `<!-- viz:j-curve -->`. */
 const EMBEDS: Record<string, React.ComponentType> = {
@@ -20,6 +24,10 @@ const EMBEDS: Record<string, React.ComponentType> = {
   "viz:exploit-window": ExploitWindow,
   "viz:mros-series": MrosChart,
   "viz:reliability-matrix": ReliabilityMatrix,
+  "viz:price-vs-maintenance": PriceVsMaintenance,
+  "viz:code-churn": CodeChurn,
+  "viz:patch-tuesday": PatchTuesday,
+  "viz:automation-layers": AutomationLayers,
 };
 
 const EMBED_LINE = /^[ \t]*<!-- ([a-z:-]+) -->[ \t]*$/gm;
