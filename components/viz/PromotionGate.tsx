@@ -58,9 +58,6 @@ export default function PromotionGate() {
         <p className="text-xs mt-4" style={{ color: MUTED, lineHeight: 1.6 }}>
           Two names per line: the owner, and the person who takes over when the owner leaves. An empty line is a reason not to promote. If every line carries the same name, you have a prototype with an owner, which is fine for a prototype.
         </p>
-        <p className="text-xs mt-3 pt-3" style={{ color: MUTED, borderTop: `1px solid ${LINE2}` }}>
-          From Who Patches It on Tuesday? Marc Hauser, October 2026.
-        </p>
       </div>
     </div>
   );

@@ -65,9 +65,6 @@ export default function SevenRules() {
             </li>
           ))}
         </ol>
-        <p className="text-xs mt-5 pt-4" style={{ color: MUTED, borderTop: `1px solid ${LINE2}` }}>
-          From Who Patches It on Tuesday? Marc Hauser, October 2026.
-        </p>
       </div>
     </div>
   );
