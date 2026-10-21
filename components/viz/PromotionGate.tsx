@@ -25,19 +25,10 @@ type Setup = {
   second: string[];
   verdict: string;
   detail: string;
-  tone: "neutral" | "warn" | "ok";
+  tone: "warn" | "ok";
 };
 
 const SETUPS: Setup[] = [
-  {
-    key: "blank",
-    label: "Fill it in yourself",
-    owner: Array(8).fill(""),
-    second: Array(8).fill(""),
-    verdict: "Two names per line.",
-    detail: "The owner, and the person who takes over when the owner leaves. An empty line is a reason not to promote.",
-    tone: "neutral",
-  },
   {
     key: "one",
     label: "One person built it",
@@ -88,9 +79,9 @@ function Cell({ value }: { value: string }) {
 }
 
 export default function PromotionGate() {
-  const [key, setKey] = useState("blank");
+  const [key, setKey] = useState("one");
   const setup = SETUPS.find((s) => s.key === key) ?? SETUPS[0];
-  const tone = setup.tone === "warn" ? BRICK : setup.tone === "ok" ? SLATE : MUTED;
+  const tone = setup.tone === "warn" ? BRICK : SLATE;
   let row = 0;
   const grid = "grid grid-cols-[1fr_5.5rem_6.5rem] md:grid-cols-[1fr_9rem_10rem] gap-x-3";
 
