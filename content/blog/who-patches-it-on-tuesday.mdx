@@ -1,0 +1,79 @@
+---
+title: "Who Patches It on Tuesday?"
+date: "2026-10-21"
+theme: "in-practice"
+excerpt: "An agent wrote a Photoshop in a week. Microsoft fixed 1'411 flaws in one Patch Tuesday. Build versus buy in 2026 turns on the years after the first version."
+standfirst: "Coding agents have made the first version of almost anything cheap. The tenth year has not moved: maintenance was 40 to 80 percent of software cost before AI, and the share is rising. Seven rules for build versus buy, and what they mean for a startup, a mid sized regulated firm, a global bank and a public body."
+disclosure: true
+---
+
+# Who Patches It on Tuesday?
+
+On 1 October 2026 a developer in Atlanta told Hacker News he had "one-shotted Photoshop". Ten days later his project had published seven Adobe look alikes and three Office look alikes, all in Rust, all open source, with 77 percent of the commits co-authored by Claude Opus 5.5. The Photoshop clone grew from 42'000 lines to 378'000 in those ten days and collected 55'000 GitHub stars. His verdict, quoted by Ars Technica on 7 October: "Software is over."
+
+Twelve days after that post, Microsoft fixed 1'411 security flaws in a single Patch Tuesday. A record, after an average of 94 a month through 2025.
+
+The two facts belong in one paragraph, because together they are the build versus buy question of 2026. **The first version of almost anything has become cheap. Owning it has not.**
+
+## Zero to one is a weekend
+
+Nobody should argue with the first fact. A prototype that took a team a quarter now takes an afternoon. I build this way myself: this site, its assessment and its reliability calculator were written with Claude Code, and the proof of concept is the right place for an agent. McKinsey's State of AI survey (August 2026, 1'719 respondents) found that 32 percent of organisations had decided against buying at least one software product because they could build it with agentic coding tools. Among financial institutions the figure was 36 percent. Anthropic reports that more than 80 percent of the code merged into its own codebase in May 2026 was written by Claude. Satya Nadella said in December 2024 that business applications would "collapse" in the agent era, and the software index lost close to a trillion dollars in six days this February after Anthropic shipped agent plugins for office work.
+
+So the age of buying software is over, and every institution should write its own. That is the conclusion a lot of people drew this autumn. It skips the day after.
+
+## The day after
+
+Robert Glass put the number in Facts and Fallacies of Software Engineering in 2002: maintenance consumes 40 to 80 percent of software cost, 60 on average. Stripe's Developer Coefficient (2018, more than 1'000 developers) measured 17.3 hours of a 41 hour week spent on maintenance and technical debt, 42 percent. The ISBSG benchmark (June 2024) puts maintenance and support at 65 to 85 percent of total ownership cost. These figures predate AI. They describe what software is: a liability with a maintenance schedule, which happens to produce value while someone keeps it alive.
+
+Agents change the schedule, and so far in the wrong direction. Google's DORA report (October 2024, about 39'000 respondents over the decade) found that every 25 percent increase in AI adoption came with a 7.2 percent drop in delivery stability. The 2025 edition found throughput up at last, instability still up. GitClear's analysis of 623 million changed lines (June 2026) measured refactoring down 70 percent since 2022, duplicated blocks up 81 percent, and work on code older than twelve months down 74 percent. The agents write. Nobody reads the old code any more. Veracode (July 2025, 100 models, 80 tasks) found that in 45 percent of tasks the model introduced a known security flaw, and that the rate had not improved with model size.
+
+**An agent lowers the cost of the first version and raises the volume of what must be maintained.** That is the trade, and it is invisible in the demo.
+
+## The treadmill you inherit
+
+Every built system subscribes to the patch streams of everything it contains. Chrome has shipped weekly security updates since August 2023. By September 2026 it had patched its seventh zero day exploited in the wild that year. Edge shipped eight security releases in the three weeks between 24 September and 16 October 2026. In September 2025 attackers hijacked npm packages with 2.6 billion weekly downloads, and the Shai-Hulud worm compromised more than 500 packages; a May 2026 successor hit 170 more, this time with valid build provenance. Log4Shell, from December 2021, was called "endemic" by the US Cyber Safety Review Board, which expects vulnerable instances to persist for a decade.
+
+A system with 500 dependencies has 500 of these streams. A bought product bundles them into one vendor's release notes and one support contract. The streams do not disappear when you build. They become yours, and someone on your payroll has to read them on Tuesday morning.
+
+## The team that builds is rarely the team that runs
+
+This is the part the zero to one story leaves out, and it is organisational before it is technical. The people who take a system from nothing to working are rarely the people who keep it working. Amazon's answer, from Werner Vogels in 2006, is famous because it is rare: "You build it, you run it." It works at Amazon because the builders stay on call. Most institutions cannot promise that. Avelino and colleagues (2016) found that 65 percent of 133 open source projects would stall if two people left. The Linux Foundation's 2024 talent report found that 38 percent of new technical hires leave within six months.
+
+The 2026 cases line up behind the same lesson. Curative, a health insurer, cancelled a USD 600'000 a year Salesforce contract and built its own CRM in two months. Salesforce's reply, in August, served its own interest and was still right: "Running that software inside a business, securely, compliantly, and under real governance is work that few organizations can sustain on their own." David Friedberg of Ohalo built a CRM over a weekend and then returned to Salesforce: "You quickly realize just how much it takes to do maintenance, to do accounts, to do security." The chief technology officer of Factory, a company that sells coding agents, put it plainly in March: when the agent is finished, "you still don't have a team of hundreds of people maintaining the system."
+
+Amazon itself supplied the incident. In December 2025 its Kiro coding agent decided to delete and recreate an environment and took AWS Cost Explorer offline for 13 hours in two regions. Amazon called it user error, and made peer review of agent changes mandatory. Klarna, the loudest builder of all, shut down about 1'200 SaaS tools and Salesforce with them, then told Bloomberg in May 2025 that cost had been "a too predominant evaluation factor" and that it had "over indexed" on replacing people. It still runs its own stack. It also hired the people back.
+
+**A prototype becomes a system the day a name goes on the pager.** Until then it is a demo, whatever it can do.
+
+## Buying moves the risk
+
+None of this makes buying the safe choice. It moves the risk and changes its shape. A CrowdStrike content update took down 8.5 million Windows devices on 19 July 2024. Broadcom raised VMware prices by two to three times according to Gartner, and by up to 1'050 percent according to AT&T. Vertice measured SaaS price inflation at 11.4 percent in January 2025 against 2.7 percent consumer inflation. Atlassian ended its server products in February 2024 and moved every customer to the cloud or to a licence that itself ends in 2029. SAP won GBP 54.5 million from Diageo in 2017 because Salesforce users had touched SAP data indirectly.
+
+The regulator's position is the same for both paths. FINMA Circular 2018/3 states that a bank remains accountable "in the same way as it would if it performed the outsourced function itself" (margin number 23), and requires an exit that works (18.1). FINMA Circular 2023/1 defines change management "for all phases in the development or procurement of ICT" in one sentence (margin number 50), demands the same requirements and tests for both (52), and asks for a procedure for software at the end of its life (57). The EU's DORA technical standard of June 2024 requires source code review of in house, third party and open source code before production (Article 16). BaFin wrote in January 2026 that "the same rules apply to all types of source code creation, whether by humans or machines." **The regulator asks the same question of both paths: who owns it.**
+
+## Seven rules
+
+1. **Build what differentiates and changes weekly. Buy what everyone needs and changes yearly.** Joel Spolsky's 2001 rule still holds: if it is a core business function, do it yourself. Geoffrey Moore's version is the same thought from the other side: everything else is context, even when it is mission critical.
+2. **Prototype freely. Promote only with an owner, a budget and a patch cadence.** The agent writes the first version for nothing. The promotion gate is a named person who answers for the system in year three, a line in next year's budget, and a documented answer to the question in the title.
+3. **Count dependencies, not lines.** Lines are cheap. Every library is a patch stream you adopt, and every vendor behind it can be hijacked, sold or shut down.
+4. **If it touches critical data or a critical function, the build carries the same controls as the purchase.** FINMA 2023/1 margin numbers 7 and 101 define both. Price the controls into the build before comparing it with the licence.
+5. **Never build what the market has standardised and the auditor will test against the standard.** 67 percent of Swiss banks run Finnova and 17 percent Avaloq (IFZ, 2023). The exceptions are the big banks, ZKB and BCV. Raiffeisen's own core project ran 10 to 15 percent over a CHF 500 million budget. The Co-operative Bank wrote off GBP 300 million in 2013. TSB paid GBP 48.65 million in fines after its 2018 migration.
+6. **Buy with an exit.** The audit right, the data export and the transition plan belong in the contract on day one, which is where FINMA and DORA both put them.
+7. **Generate the glue, buy the record.** Forrester's July 2026 framing is customise, compose or generate. Agents are at their best writing the integration, the workflow and the check around a system of record. They are at their worst being the system of record.
+
+## By type of institution
+
+The rules bend with scale, because the right answer depends on whether a permanent team is affordable and whether the regulator will look.
+
+| | Build | Buy | The trap |
+|---|---|---|---|
+| Startup | The product and whatever makes it fast. Monzo, Starling and Nubank built their own cores because the core was the product. | Everything that is not the product. Payroll, CRM, support. | Building the context because it is fun and the agent makes it easy. Context does not pay the bills. |
+| Mid sized regulated firm | The edge: workflows, agents, integrations, the checks around the core. One named owner per built system. | The core, the record and anything an auditor tests against a market standard. | A prototype that quietly went live, with no owner, no budget and no patch cadence, holding critical data. |
+| Global bank | Platforms where scale pays for a permanent team. Goldman has run SecDB since 1992. JPMorgan spends USD 18 billion a year on technology with more than 40'000 engineers. | Commodity infrastructure, and anything the bank cannot staff for a decade. | The 70 percent of the budget McKinsey finds tied up in running legacy, most of it once a build somebody promoted. |
+| Public body | What the law already asks for. Under EMBAG Article 9 the Swiss federal administration must publish the source of software it develops, so a build is also a public promise to maintain it. | Licences, and open source with a paid maintenance contract. | Migrating for sovereignty without the staff to run it: Schleswig-Holstein claims EUR 15 million a year in savings and had mail outages; Denmark dropped its pilot this month. |
+
+## The question
+
+Zero to one is a weekend now. One to ten years is a team, a budget, a contract or all three, and the agent cannot sign any of them. The age of software is not over. The age of the demo is. Before the next build decision, skip the question of whether the agent can write it. It can. Ask who patches it on Tuesday.
+
+**Notes.** ArtCraft and the Photoshop and Office clones: Ars Technica, 7 October 2026, and The Register, 8 October 2026. Patch Tuesday: Tenable's 2025 year in review and BleepingComputer, 13 October 2026. Maintenance cost: Robert Glass, Facts and Fallacies of Software Engineering, 2002; Stripe, The Developer Coefficient, 2018; ISBSG, June 2024. DORA reports: Google, October 2024 and September 2025. GitClear, The Maintainability Gap, June 2026. Veracode, GenAI Code Security Report, July 2025. Chrome and npm figures: Google Security Blog, August 2023; BleepingComputer; CISA, September 2025; JFrog, May 2026. Vogels: ACM Queue, 2006. Avelino et al., ICPC 2016. Linux Foundation Tech Talent Report, 2024. Curative, Ohalo and Factory: Business Insider, Benzinga, diginomica and CIO, 2026. Amazon Kiro outage: Amazon and the Financial Times, February 2026. Klarna: Fortune, May 2025, and Reuters, September 2025. CrowdStrike: Microsoft, 20 July 2024. VMware pricing: Ars Technica, October 2024. Vertice SaaS Inflation Index, 2025. FINMA Circulars 2018/3 and 2023/1; Commission Delegated Regulation (EU) 2024/1774; BaFin guidance, 23 January 2026. IFZ, Zukunft der Kernbankensysteme, 2023. Co-operative Bank: PRA Final Notice, 2015. TSB: FCA, December 2022. Forrester, July 2026. McKinsey, State of AI, August 2026, and Unlocking value from technology in banking, October 2024. EMBAG, SR 172.019. Schleswig-Holstein and Denmark: heise, December 2025, and Ingeniøren, October 2026.
