@@ -57,7 +57,7 @@ Embed an interactive figure with a comment on its own line:
 <!-- viz:j-curve -->
 ```
 
-Available: `viz:exponential-steps`, `viz:j-curve`, `viz:exploit-window`, `viz:mros-series`, `viz:reliability-matrix`, `funnel:mortgage`. To add one, create a client component under `components/viz/` and register it in `components/BlogContent.tsx`.
+Available: `viz:exponential-steps`, `viz:j-curve`, `viz:exploit-window`, `viz:mros-series`, `viz:reliability-matrix`, `viz:journey-map`, `funnel:mortgage`. To add one, create a client component under `components/viz/` and register it in `components/BlogContent.tsx`.
 
 ### Publishing and scheduling
 
