@@ -21,6 +21,7 @@ const SevenRules = dynamic(() => import("@/components/viz/SevenRules"));
 const PromotionGate = dynamic(() => import("@/components/viz/PromotionGate"));
 const HandoffGraph = dynamic(() => import("@/components/viz/HandoffGraph"));
 const JourneyMap = dynamic(() => import("@/components/viz/JourneyMap"));
+const ThreeAssumptions = dynamic(() => import("@/components/viz/ThreeAssumptions"));
 
 /** The narrated film that goes with "The Staff of Fifteen Buys a House". */
 function StaffOfFifteenHouseVideo() {
@@ -55,6 +56,7 @@ const EMBEDS: Record<string, React.ComponentType> = {
   "viz:promotion-gate": PromotionGate,
   "viz:handoff-graph": HandoffGraph,
   "viz:journey-map": JourneyMap,
+  "viz:three-assumptions": ThreeAssumptions,
   "video:staff-of-fifteen-house": StaffOfFifteenHouseVideo,
   "cta:house-example-top": HouseExampleTop,
   "cta:house-example": HouseExampleEnd,
@@ -63,6 +65,25 @@ const EMBEDS: Record<string, React.ComponentType> = {
 const EMBED_LINE = /^[ \t]*<!-- ([a-z:-]+) -->[ \t]*$/gm;
 
 const serif = "font-[family-name:var(--font-cormorant)] font-light";
+
+/**
+ * A blockquote that opens with a marker on its own line is a special block:
+ * `> [!CLOSING]` sets the last words of an essay as a closing card. Returns the
+ * content without the marker, or null when the marker is absent.
+ */
+function withoutMarker(children: React.ReactNode, marker: string): React.ReactNode[] | null {
+  const nodes = React.Children.toArray(children);
+  const at = nodes.findIndex((n) => React.isValidElement(n));
+  if (at < 0) return null;
+  const first = nodes[at] as React.ReactElement<{ children?: React.ReactNode }>;
+  const inner = React.Children.toArray(first.props.children);
+  if (typeof inner[0] !== "string" || !inner[0].startsWith(marker)) return null;
+  const rest = [inner[0].slice(marker.length).replace(/^\s+/, ""), ...inner.slice(1)].filter((n) => n !== "");
+  const out = [...nodes];
+  if (rest.length) out[at] = React.cloneElement(first, undefined, ...rest);
+  else out.splice(at, 1);
+  return out;
+}
 
 const components: Components = {
   // The page renders the title from frontmatter; the h1 in the body is skipped.
@@ -109,14 +130,18 @@ const components: Components = {
   li: ({ children }) => (
     <li style={{ fontSize: "0.95rem", lineHeight: 1.7, color: "#1A1A1A" }}>{children}</li>
   ),
-  blockquote: ({ children }) => (
+  blockquote: ({ children }) => {
+    const closing = withoutMarker(children, "[!CLOSING]");
+    if (closing) return <div className="post-closing my-12">{closing}</div>;
+    return (
     <blockquote
       className={`${serif} my-8 pl-5`}
       style={{ borderLeft: "3px solid #8B7355", fontSize: "1.25rem", lineHeight: 1.5, color: "#2B3A52" }}
     >
       {children}
     </blockquote>
-  ),
+    );
+  },
   code: ({ children }) => (
     <code style={{ fontSize: "0.9em", background: "#F0ECE3", padding: "0.1em 0.35em" }}>{children}</code>
   ),

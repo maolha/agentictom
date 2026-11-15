@@ -49,7 +49,7 @@ disclosure: true            # optional, adds the employer disclosure at the end
 Body in markdown. Bold the takeaway, not the setup.
 ```
 
-Supported in the body: headings from `##` down, paragraphs, bold, links, bullet and numbered lists, tables, horizontal rules, blockquotes, inline code and footnotes (`[^1]`, rendered as Notes at the end). The `# Title` line is kept for plain-text readers and skipped by the renderer.
+Supported in the body: headings from `##` down, paragraphs, bold, links, bullet and numbered lists, tables, horizontal rules, blockquotes, inline code and footnotes (`[^1]`, rendered as Notes at the end). A blockquote that opens with `> [!CLOSING]` on its own line is set as a closing card: use it once, for the last words of an essay. The `# Title` line is kept for plain-text readers and skipped by the renderer.
 
 Embed an interactive figure with a comment on its own line:
 
@@ -57,7 +57,7 @@ Embed an interactive figure with a comment on its own line:
 <!-- viz:j-curve -->
 ```
 
-Available: `viz:exponential-steps`, `viz:j-curve`, `viz:exploit-window`, `viz:mros-series`, `viz:reliability-matrix`, `viz:journey-map`, `funnel:mortgage`, and the film `video:staff-of-fifteen-house` (files in `public/videos/`). To add one, create a client component under `components/viz/` and register it in `components/BlogContent.tsx`.
+Available: `viz:exponential-steps`, `viz:j-curve`, `viz:exploit-window`, `viz:mros-series`, `viz:reliability-matrix`, `viz:journey-map`, `viz:three-assumptions`, `funnel:mortgage`, and the film `video:staff-of-fifteen-house` (files in `public/videos/`). To add one, create a client component under `components/viz/` and register it in `components/BlogContent.tsx`.
 
 ### Publishing and scheduling
 
