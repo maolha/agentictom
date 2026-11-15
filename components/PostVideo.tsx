@@ -10,13 +10,15 @@ type Props = {
   /** Read by screen readers as the name of the player. */
   label: string;
   caption: string;
+  /** True when English subtitles exist next to the film as <file>.en.vtt. */
+  subtitles?: boolean;
 };
 
 /**
  * A video inside an essay, framed like the figures. Nothing is downloaded
  * until the reader presses play: the poster is a still from the film.
  */
-export default function PostVideo({ file, kicker, label, caption }: Props) {
+export default function PostVideo({ file, kicker, label, caption, subtitles = false }: Props) {
   return (
     <figure className="my-10">
       <div className="p-4 md:p-8" style={{ background: SUNK, border: `1px solid ${LINE2}` }}>
@@ -37,6 +39,7 @@ export default function PostVideo({ file, kicker, label, caption }: Props) {
           style={{ display: "block", width: "100%", aspectRatio: "16 / 9", background: "#2B3A52", border: `1px solid ${LINE2}` }}
         >
           <source src={`${file}.mp4`} type="video/mp4" />
+          {subtitles && <track kind="captions" src={`${file}.en.vtt`} srcLang="en" label="English" />}
           <a href={`${file}.mp4`}>Download the video</a>
         </video>
         <figcaption className="text-xs mt-3" style={{ color: MUTED, lineHeight: 1.6 }}>

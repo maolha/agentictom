@@ -28,7 +28,8 @@ function StaffOfFifteenHouseVideo() {
       file="/videos/staff-of-fifteen-buys-a-house"
       kicker="Film · 3 minutes, narrated"
       label="The Staff of Fifteen Buys a House, a narrated film of three minutes"
-      caption="The argument of this essay as a short film, with sound. The figures in it are the illustrative ones used in the text."
+      caption="The argument of this essay as a short film, with sound. English subtitles can be switched on in the player. The figures are the illustrative ones used in the text."
+      subtitles
     />
   );
 }
