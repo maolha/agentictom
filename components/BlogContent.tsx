@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PostVideo from "@/components/PostVideo";
+import ExampleCta from "@/components/ExampleCta";
 
 // Interactive figures are client components, loaded only on the posts that embed them.
 const MortgageFunnel = dynamic(() => import("@/components/MortgageFunnel"));
@@ -34,6 +35,10 @@ function StaffOfFifteenHouseVideo() {
   );
 }
 
+/** The two buttons in "A Staff of Fifteen" that lead to the worked example. */
+const HouseExampleTop = () => <ExampleCta variant="top" />;
+const HouseExampleEnd = () => <ExampleCta variant="end" />;
+
 /** A post embeds a figure with a comment on its own line: `<!-- viz:j-curve -->`. */
 const EMBEDS: Record<string, React.ComponentType> = {
   "funnel:mortgage": MortgageFunnel,
@@ -51,6 +56,8 @@ const EMBEDS: Record<string, React.ComponentType> = {
   "viz:handoff-graph": HandoffGraph,
   "viz:journey-map": JourneyMap,
   "video:staff-of-fifteen-house": StaffOfFifteenHouseVideo,
+  "cta:house-example-top": HouseExampleTop,
+  "cta:house-example": HouseExampleEnd,
 };
 
 const EMBED_LINE = /^[ \t]*<!-- ([a-z:-]+) -->[ \t]*$/gm;

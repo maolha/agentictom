@@ -66,6 +66,31 @@ h1, h2, h3, h4 {
   outline-offset: 3px;
 }
 
+/* The filled counterpart: the one action a block wants the reader to take. */
+.btn-slate {
+  display: inline-block;
+  background: #2B3A52;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 12px 24px;
+  border: 1px solid #2B3A52;
+  color: #F7F4EF;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  transition: background 0.3s, color 0.3s;
+  text-decoration: none;
+}
+.btn-slate:hover {
+  background: transparent;
+  color: #2B3A52;
+}
+.btn-slate:focus-visible {
+  outline: 2px solid #2B3A52;
+  outline-offset: 3px;
+}
+
 :focus-visible {
   outline: 2px solid #2B3A52;
   outline-offset: 2px;
