@@ -51,7 +51,7 @@ export default function SevenRules() {
         <ol className="flex flex-col" style={{ listStyle: "none", padding: 0, margin: 0 }}>
           {RULES.map((r, i) => (
             <li key={i} className="grid grid-cols-[2.2rem_1fr] gap-x-3 py-3" style={{ borderTop: i === 0 ? "none" : `1px solid ${LINE2}` }}>
-              <span className="font-[family-name:var(--font-cormorant)] font-light" style={{ fontSize: "1.9rem", lineHeight: 1, color: SLATE, fontVariantNumeric: "tabular-nums" }}>
+              <span aria-hidden="true" className="font-[family-name:var(--font-cormorant)] font-light" style={{ fontSize: "1.9rem", lineHeight: 1, color: SLATE, fontVariantNumeric: "tabular-nums" }}>
                 {i + 1}
               </span>
               <div>
