@@ -3,6 +3,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import PostVideo from "@/components/PostVideo";
 
 // Interactive figures are client components, loaded only on the posts that embed them.
 const MortgageFunnel = dynamic(() => import("@/components/MortgageFunnel"));
@@ -20,6 +21,19 @@ const PromotionGate = dynamic(() => import("@/components/viz/PromotionGate"));
 const HandoffGraph = dynamic(() => import("@/components/viz/HandoffGraph"));
 const JourneyMap = dynamic(() => import("@/components/viz/JourneyMap"));
 
+/** The narrated film that goes with "The Staff of Fifteen Buys a House". */
+function StaffOfFifteenHouseVideo() {
+  return (
+    <PostVideo
+      file="/videos/staff-of-fifteen-buys-a-house"
+      kicker="Film · 3 minutes, narrated"
+      label="The Staff of Fifteen Buys a House, a narrated film of three minutes"
+      caption="The argument of this essay as a short film, with sound. English subtitles can be switched on in the player. The figures are the illustrative ones used in the text."
+      subtitles
+    />
+  );
+}
+
 /** A post embeds a figure with a comment on its own line: `<!-- viz:j-curve -->`. */
 const EMBEDS: Record<string, React.ComponentType> = {
   "funnel:mortgage": MortgageFunnel,
@@ -36,6 +50,7 @@ const EMBEDS: Record<string, React.ComponentType> = {
   "viz:promotion-gate": PromotionGate,
   "viz:handoff-graph": HandoffGraph,
   "viz:journey-map": JourneyMap,
+  "video:staff-of-fifteen-house": StaffOfFifteenHouseVideo,
 };
 
 const EMBED_LINE = /^[ \t]*<!-- ([a-z:-]+) -->[ \t]*$/gm;
