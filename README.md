@@ -21,6 +21,7 @@ Node 20 or later. The contact form needs `GMAIL_USER`, `GMAIL_APP_PASSWORD` and 
 | `content/blog/*.mdx` | One file per essay. The file name is the URL slug. |
 | `lib/blog.ts` | Reads the essays: publication gating, themes, related posts, date formatting. |
 | `lib/site.ts` | Site constants and the per-page metadata helper. |
+| `app/fonts.css`, `public/fonts/` | The two site fonts, kept in the repo so the build downloads nothing. |
 | `components/BlogContent.tsx` | Renders an essay: GitHub-flavoured markdown via react-markdown, plus the interactive figures. |
 | `components/viz/*` | The interactive figures embedded in essays. |
 | `lib/assessment.ts` | Questions, scoring and result copy for the readiness assessment. |

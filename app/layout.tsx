@@ -1,22 +1,16 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { preload } from "react-dom";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL, SITE_NAME, RSS_ALTERNATE, X_HANDLE } from "@/lib/site";
+import "./fonts.css";
 import "./globals.css";
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  display: "swap",
-});
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-  display: "swap",
-});
+// The fonts are files in public/fonts, declared in app/fonts.css. Only the latin
+// files are preloaded: they cover every page, the other subsets load on demand.
+const PRELOADED_FONTS = [
+  "/fonts/cormorant-garamond-v21-latin.woff2",
+  "/fonts/dm-sans-v17-latin.woff2",
+];
 
 const description =
   "The operating model for banks where AI is a first-class participant. Framework, thinking, and speaking by Marc Hauser.";
@@ -48,9 +42,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  for (const href of PRELOADED_FONTS) {
+    preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+  }
+
   return (
     <html lang="en">
-      <body className={`${cormorant.variable} ${dmSans.variable}`}>
+      <body>
         {children}
         <Analytics />
       </body>
