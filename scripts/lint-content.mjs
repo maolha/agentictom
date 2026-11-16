@@ -71,6 +71,19 @@ for (const file of files) {
     if (typeof data[key] !== "string" || !data[key].trim()) problems.push(where(`missing frontmatter "${key}"`));
   }
   if (typeof data.date === "string" && !/^\d{4}-\d{2}-\d{2}$/.test(data.date)) problems.push(where(`date must be YYYY-MM-DD, got "${data.date}"`));
+  // A revised essay says when it was revised and what changed.
+  if (data.updated !== undefined) {
+    if (typeof data.updated !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(data.updated)) {
+      problems.push(where(`updated must be YYYY-MM-DD, got "${data.updated}"`));
+    } else if (typeof data.date === "string" && data.updated < data.date) {
+      problems.push(where(`updated (${data.updated}) is earlier than the publication date (${data.date})`));
+    }
+    if (typeof data.updateNote !== "string" || !data.updateNote.trim()) {
+      problems.push(where('an essay with "updated" needs an "updateNote" that says what changed'));
+    }
+  } else if (data.updateNote !== undefined) {
+    problems.push(where('"updateNote" needs an "updated" date'));
+  }
   if (typeof data.theme === "string" && !THEMES.includes(data.theme)) problems.push(where(`unknown theme "${data.theme}"`));
   if (typeof data.excerpt === "string" && data.excerpt.length > MAX_EXCERPT) {
     problems.push(where(`excerpt is ${data.excerpt.length} characters, maximum ${MAX_EXCERPT} (it doubles as the meta description)`));

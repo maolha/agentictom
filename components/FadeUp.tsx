@@ -16,22 +16,18 @@ export default function FadeUp({
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const reduced = useReducedMotion();
 
-  // With reduced motion the content is simply shown: no offset, no delay.
-  if (reduced) {
-    return (
-      <div ref={ref} className={className}>
-        {children}
-      </div>
-    );
-  }
+  // The server cannot know the reader's motion preference, so the markup is the
+  // same either way and only the animation differs. With reduced motion the
+  // content is shown at once: no offset, no delay, no waiting for the scroll.
+  const show = reduced || isInView;
 
   return (
     <motion.div
       ref={ref}
       className={className}
       initial={{ opacity: 0, y: 32 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-      transition={{ duration: 0.6, ease: "easeOut", delay }}
+      animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+      transition={reduced ? { duration: 0 } : { duration: 0.6, ease: "easeOut", delay }}
     >
       {children}
     </motion.div>

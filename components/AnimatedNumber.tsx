@@ -19,7 +19,10 @@ export default function AnimatedNumber({
   style?: React.CSSProperties;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  // The margin applies top and bottom only. Applied to all four sides it would
+  // also cut 80px off the left and right, and a number set against the edge of
+  // a phone screen would never count as visible and would stay at zero.
+  const isInView = useInView(ref, { once: true, margin: "-80px 0px" });
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {

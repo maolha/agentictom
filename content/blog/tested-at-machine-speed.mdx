@@ -2,13 +2,15 @@
 title: "Your Software Will Be Tested at Machine Speed"
 date: "2026-07-03"
 theme: "in-practice"
-excerpt: "Time from disclosure to exploitation fell from 2.3 years to three hours. Testing is the next function that must become agentic. In a bank, it is a control."
-standfirst: "The window from vulnerability disclosure to exploitation collapsed from 2.3 years to three hours, while AI floods delivery pipelines with change. Quality assurance becomes agentic or becomes the bottleneck. In a bank, it is also a governance control."
+excerpt: "Time from disclosure to exploitation fell from 2.3 years to under a day. Testing is the next function that must become agentic. In a bank, it is a control."
+standfirst: "The window from vulnerability disclosure to exploitation collapsed from 2.3 years to less than a day, while AI floods delivery pipelines with change. Quality assurance becomes agentic or becomes the bottleneck. In a bank, it is also a governance control."
+updated: "2026-11-16"
+updateNote: "The figures now run to October 2026: the exploit window, the industry count of severe vulnerabilities and Project Glasswing. Two statements by FINMA and one by the chief executive of Zürcher Kantonalbank are new. The version of 3 July 2026 gave the mean time to exploitation as about three hours, the reading at that point."
 ---
 
 # Your Software Will Be Tested at Machine Speed
 
-In 2018, a newly published software vulnerability took 2.3 years on average to be exploited in the wild. By mid-2026, the mean time from disclosure to first confirmed exploitation is around three hours, based on the Zero-Day Clock dataset of more than 3'500 confirmed exploited CVEs (CISA and VulnCheck KEV catalogues) and consistent with Mandiant M-Trends 2026. **A flaw that becomes public at 18:00 is being exploited before the apéro ends.** The same data shows 28 percent of new vulnerabilities exploited within 24 hours of disclosure, often before a patch exists.
+In 2018, a newly published software vulnerability took 2.3 years on average to be exploited in the wild. In 2025 it took three weeks. In 2026 it takes less than a day. The median sits at one day after disclosure, and the mean has moved between plus 20 and minus 23 hours over the year, where minus means the attack came before the flaw was published (Zero Day Clock, based on the CISA and VulnCheck KEV catalogues, as reported by StackHawk, 21 August 2026, and SIG, October 2026; J.P. Morgan, Eye on the Market, 22 July 2026). **Of the flaws that get exploited, around four in five are under attack before the day of disclosure is over**, often before a patch exists.
 
 For two decades, quality and security processes were built on an assumption nobody wrote down: the attacker needs weeks. That assumption has expired, and it took the rest of the operating model's timing with it.
 
@@ -18,7 +20,9 @@ For two decades, quality and security processes were built on an assumption nobo
 
 The collapse has a supply side. Frontier models have moved from assisting human researchers to independently finding vulnerabilities, triaging them, and building exploit chains. The clearest public evidence comes from defence. In April 2026, Mozilla fixed 423 security bugs in Firefox releases in a single month, roughly 20 times its 2025 monthly average. 271 of them were found with Claude Mythos Preview running inside Mozilla's agentic pipeline; 180 were rated sec-high, exploitable by a user simply visiting a malicious webpage (Mozilla Hacks, May 2026).
 
-The pattern is industry-wide. Epoch AI counted roughly 1'500 critical- and high-severity vulnerabilities disclosed in one month by 21 large technology organisations, from Microsoft to Mozilla: more than 3.5 times the previous record (Epoch AI Data Insight, July 2026, based on cve.org). The jump followed Anthropic's announcement that Claude Mythos finds vulnerabilities autonomously; its Project Glasswing reports more than 10'000 finds across open-source software.
+The pattern is industry-wide. Epoch AI counts the critical- and high-severity vulnerabilities disclosed each month by 21 large technology organisations, from Microsoft to Mozilla. The record until March 2026 was roughly 490. June brought roughly 1'550 and July roughly 2'500, about five times the old record in a single month (Epoch AI, 31 July 2026, based on cve.org). The jump followed Anthropic's announcement that Claude Mythos finds vulnerabilities autonomously. Through its Project Glasswing, partners reported 129'000 verified vulnerabilities between April and July, 33'000 of them rated critical or high (The Hacker News, 7 October 2026).
+
+Finding has outrun fixing. Of the 6'157 flaws Anthropic itself reported to 591 open-source projects, 8.4 percent were patched by 2 October (SIG, October 2026). **For a bank, that backlog means more library updates, and each one has to be tested.**
 
 The uncomfortable part: **the capability that hardens Firefox is the capability that probes your e-banking portal.** Public models ship with safeguards, and the baseline still shifts for everyone. Defence now has to assume opponents that work at machine speed, around the clock, at near-zero marginal cost.
 
@@ -28,7 +32,7 @@ Attackers are half the problem. The other half enters through your own delivery 
 
 - 210 percent more completed code tasks with an associated pull request, per team
 - 54 percent more bugs per developer entering the delivery pipeline
-- incidents per pull request tripled as velocity outran review
+- 3.4 times as many incidents per pull request, as velocity outran review
 - 31 percent more pull requests merged without any human review
 
 AI-generated code fails in a particular way: **syntactically perfect and logically wrong.** It compiles, passes the linter, and misapplies the rounding rule. Syntax filters catch none of it. In a bank, the damage sits in pricing logic, ledger sequencing, exception treatment, and regulatory calculations, where a wrong line of code is a liability measured in millions and discovered months later in reconciliation.
@@ -40,6 +44,8 @@ Put the two sides together. The exploit window is now measured in hours. The vol
 **You cannot defend machine-speed change with human-speed testing.**
 
 The constraint has moved. A model drafts a patch in minutes; proving the patch safe is what takes three weeks. An institution with a three-week validation cycle carries a three-week exposure window against attackers who work in hours, and the gap cannot be closed by hiring more testers. Closing it requires testing that runs autonomously, continuously, and on a risk basis.
+
+Swiss banks feel it already. A security patch used to wait a month or two, Urs Baumann, chief executive of Zürcher Kantonalbank, said in September 2026. Today the question is whether it goes in that evening or during the day (Vision Bank, 1 September 2026).
 
 ## From something you run to something that runs
 
@@ -57,6 +63,8 @@ Most institutions are in stage one. A few have reached stage two and concluded t
 ## In a bank, testing is a control
 
 For a regulated institution there is a second dimension. Testing is the mechanism that turns "the AI wrote it" into "the change is demonstrably safe": the independent audit of machine-generated logic against actual operating policy. FINMA Circular 2023/1 on operational risks and resilience makes ICT change management and resilience an explicit supervisory expectation. DORA (Regulation (EU) 2022/2554, Articles 24 to 27) requires EU financial entities, including the EU operations of Swiss institutions, to run a standing digital operational resilience testing programme.
+
+The supervisor has put the threat on the agenda. In April 2026 FINMA said that the uncontrolled and immediate availability of models such as Mythos would be a systemic risk, and that banks must actively include the new threat situation in their risk management. In August its chair, Marlene Amstad, reported that cyberattacks on supervised institutions had risen by about a third (both as reported by swissinfo, 24 April and 15 August 2026).
 
 An autonomous quality system therefore has to behave like a control function: an immutable audit trail, segregation of duties (the agent that writes the code is never the agent that certifies it), and control evidence a supervisor can inspect without archaeology. Humans do here what they do everywhere in an [agentic operating model](/blog/escalation-by-design): define intent, set the policy envelope, and take the escalations. The routine operating loop belongs to the system.
 

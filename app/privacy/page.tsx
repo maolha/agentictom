@@ -59,9 +59,18 @@ export default function PrivacyPage() {
           </p>
           <p className="mb-4" style={p}>
             <strong style={{ fontWeight: 700 }}>Usage statistics.</strong> The site uses Vercel Web Analytics to count page
-            views and a few anonymous interactions, such as a share button being used or the end of an essay being
+            views and a few anonymous interactions, such as a share button being used, a filter being chosen or the end of an essay being
             reached. It sets no cookies and does not identify visitors: the visitor hash it derives from the request is discarded
             within 24 hours and is never linked to a person.
+          </p>
+          <p className="mb-4" style={p}>
+            <strong style={{ fontWeight: 700 }}>Reading status.</strong> So that the site can mark the essays you have
+            read, offer to continue one you left unfinished, and show what was published since your last visit, your
+            browser keeps a small record in its local storage: how far you scrolled in each essay and when you last
+            visited. This record never leaves your device. It is not a cookie, it is not sent to the server, and it is
+            not linked to the usage statistics. You can delete it with the &ldquo;Forget it&rdquo; link below the essay
+            list, or by clearing the site data in your browser. Estimates you enter in the Lab and settings in the
+            calculator are likewise processed in your browser only.
           </p>
           <p className="mb-6" style={p}>
             <strong style={{ fontWeight: 700 }}>Hosting.</strong> The site is hosted by Vercel Inc., USA. Like any web
@@ -92,7 +101,7 @@ export default function PrivacyPage() {
           </p>
 
           <p className="text-xs mt-12" style={{ color: "#6B6B6B" }}>
-            Last updated 23 September 2026.
+            Last updated 15 November 2026.
           </p>
         </div>
       </article>

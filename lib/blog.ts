@@ -33,6 +33,12 @@ export type PostMeta = {
   excerpt: string;
   theme: ThemeKey | null;
   readingTime: number;
+  /** Interactive figures embedded in the essay. */
+  figures: number;
+  /** The essay carries a narrated film. */
+  film: boolean;
+  /** The day the figures or the text were last revised, when that happened after publication. */
+  updated?: string;
 };
 
 export type Post = PostMeta & {
@@ -40,6 +46,8 @@ export type Post = PostMeta & {
   standfirst?: string;
   /** Written on a specific day, in response to a specific event. Shown above the text. */
   dateline?: string;
+  /** What the revision of `updated` changed, and what the first version said. Shown above the text. */
+  updateNote?: string;
   /** Show the standing employer disclosure at the end of the post. */
   disclosure?: boolean;
   /** Short lines for the share preview image, when the post's takeaway is a list. */
@@ -67,6 +75,9 @@ function readMeta(file: string): PostMeta & { content: string; data: Record<stri
     excerpt: data.excerpt,
     theme,
     readingTime: estimateReadingTime(content),
+    figures: (content.match(/^[ \t]*<!-- (?:viz|funnel):[a-z-]+ -->[ \t]*$/gm) ?? []).length,
+    film: /^[ \t]*<!-- video:[a-z-]+ -->[ \t]*$/m.test(content),
+    updated: typeof data.updated === "string" && /^\d{4}-\d{2}-\d{2}$/.test(data.updated) ? data.updated : undefined,
     content,
     data,
   };
@@ -82,7 +93,7 @@ export function getAllPosts(): PostMeta[] {
       const diff = new Date(b.date).getTime() - new Date(a.date).getTime();
       return diff !== 0 ? diff : a.slug.localeCompare(b.slug);
     })
-    .map(({ slug, title, date, excerpt, theme, readingTime }) => ({ slug, title, date, excerpt, theme, readingTime }));
+    .map(({ slug, title, date, excerpt, theme, readingTime, figures, film, updated }) => ({ slug, title, date, excerpt, theme, readingTime, figures, film, updated }));
 }
 
 /** A single live post. Returns null for unknown slugs and for posts whose date has not arrived. */
@@ -100,6 +111,10 @@ export function getPost(slug: string): Post | null {
     excerpt: meta.excerpt,
     theme: meta.theme,
     readingTime: meta.readingTime,
+    figures: meta.figures,
+    film: meta.film,
+    updated: meta.updated,
+    updateNote: typeof data.updateNote === "string" ? data.updateNote : undefined,
     content: meta.content,
     standfirst: typeof data.standfirst === "string" ? data.standfirst : undefined,
     dateline: typeof data.dateline === "string" ? data.dateline : undefined,
