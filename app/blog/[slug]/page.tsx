@@ -41,6 +41,7 @@ export async function generateMetadata({
       locale: "en_GB",
       type: "article",
       publishedTime: post.date,
+      ...(post.updated ? { modifiedTime: post.updated } : {}),
       authors: [AUTHOR],
     },
     twitter: {
@@ -80,6 +81,7 @@ export default async function BlogPost({
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
+    ...(post.updated ? { dateModified: post.updated } : {}),
     image: `${url}/opengraph-image`,
     inLanguage: "en",
     author: {
@@ -128,6 +130,14 @@ export default async function BlogPost({
             <span style={{ color: "#1A1A1A" }}>{AUTHOR}</span>
             <span aria-hidden="true" style={{ color: "#D8D3CB" }}>&middot;</span>
             <time dateTime={post.date}>{formatDate(post.date)}</time>
+            {post.updated && (
+              <>
+                <span aria-hidden="true" style={{ color: "#D8D3CB" }}>&middot;</span>
+                <span style={{ color: "#2B3A52" }}>
+                  Updated <time dateTime={post.updated}>{formatDate(post.updated)}</time>
+                </span>
+              </>
+            )}
             <span aria-hidden="true" style={{ color: "#D8D3CB" }}>&middot;</span>
             <span>{post.readingTime} min read</span>
             {post.theme && (
@@ -155,6 +165,17 @@ export default async function BlogPost({
               </p>
               <p className="text-sm" style={{ color: "#1A1A1A", lineHeight: 1.75 }}>
                 {post.standfirst}
+              </p>
+            </aside>
+          )}
+          {/* Shown in print as well: a forwarded copy says which figures it carries. */}
+          {post.updated && post.updateNote && (
+            <aside className="mb-10 md:mb-12 p-5 md:p-6" style={{ border: "1px solid #2B3A52" }}>
+              <p className={`${label} mb-2`} style={{ color: "#2B3A52" }}>
+                Updated on <time dateTime={post.updated}>{formatDate(post.updated)}</time>
+              </p>
+              <p className="text-sm" style={{ color: "#1A1A1A", lineHeight: 1.75 }}>
+                {post.updateNote}
               </p>
             </aside>
           )}

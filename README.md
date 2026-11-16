@@ -49,6 +49,8 @@ excerpt: "One sentence for the index and search results. Under 160 characters."
 standfirst: "The argument in two or three sentences. Shown in the In brief box."
 dateline: "Written on 8 April 2026, the morning of ..."   # optional, for pieces tied to a day
 disclosure: true            # optional, adds the employer disclosure at the end
+updated: "2026-11-16"       # optional, the day figures or text were revised after publication
+updateNote: "What changed, and what the first version said."   # required with updated
 ---
 
 # The Six Percent Club
@@ -75,6 +77,10 @@ A new figure also belongs in the Lab: add it to `GROUPS` in `components/lab/Figu
 - `QUIZ`: the figures the reader estimates before seeing them. Each carries its source and the essay it comes from. A figure that is modelled says so in `source`. Headlines and buttons take the count from the list, so adding or removing a figure needs no other edit.
 - `SEATS`: one reading path per role, as three essay slugs in order, one tool and one question. Slugs that are not live are dropped from the path.
 - `questionOfTheWeek`: rotates through the assessment questions in `lib/assessment.ts`, changing every Monday (UTC).
+
+### Revising a published essay
+
+When figures in a published essay are replaced by newer ones, set `updated` to the day of the revision and say in `updateNote` what changed and what the first version said. The essay then shows "Updated on" with the note above the text and the date in its byline, the archive marks it, and the sitemap and the structured data carry the new date. The publication date and the place in the archive stay as they were.
 
 ### Publishing and scheduling
 

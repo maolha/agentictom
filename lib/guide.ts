@@ -84,7 +84,7 @@ export const QUIZ: QuizItem[] = [
     correct: 3,
     answerLabel: "< 1 day",
     reveal:
-      "The median in 2026 is one day after disclosure, and around 80 percent of exploitations fall on the day of disclosure or earlier. The mean has moved between plus 20 and minus 23 hours during the year, where minus means before the flaw was published. The essay, written in July, cites the mean at that point: about three hours.",
+      "The median in 2026 is one day after disclosure, and around 80 percent of exploitations fall on the day of disclosure or earlier. The mean has moved between plus 20 and minus 23 hours during the year, where minus means before the flaw was published.",
     source:
       "Zero Day Clock (CISA KEV and VulnCheck KEV), as reported by StackHawk, 21 August 2026, and SIG, October 2026; J.P. Morgan, Eye on the Market, 22 July 2026",
     essay: { slug: "tested-at-machine-speed", title: "Your Software Will Be Tested at Machine Speed" },

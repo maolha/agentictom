@@ -193,6 +193,12 @@ export default function EssayExplorer({ posts, themes }: { posts: PostMeta[]; th
                       <span style={{ background: "#8B7355", color: "#F7F4EF", padding: "2px 8px" }}>New</span>
                     )}
                     <time dateTime={post.date}>{formatDate(post.date)}</time>
+                    {post.updated && (
+                      <>
+                        <span aria-hidden="true" style={{ color: "#D8D3CB" }}>&middot;</span>
+                        <span style={{ color: "#2B3A52" }}>Updated {formatDate(post.updated)}</span>
+                      </>
+                    )}
                     <span aria-hidden="true" style={{ color: "#D8D3CB" }}>&middot;</span>
                     <span>{post.readingTime} min read</span>
                     {post.theme && (
