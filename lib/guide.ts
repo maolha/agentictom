@@ -1,12 +1,12 @@
 import { questions } from "@/lib/assessment";
 
 /**
- * The ways into the site that are not the essay list: five figures to estimate,
+ * The ways into the site that are not the essay list: a few figures to estimate,
  * a reading path per seat at the table, the working tools, and the question of
  * the week. Text here follows EDITOR.md like everything else on the site.
  */
 
-/* ── Five numbers ─────────────────────────────────────────────────────────── */
+/* ── The numbers ─────────────────────────────────────────────────────────── */
 
 type QuizBase = {
   id: string;
@@ -78,13 +78,15 @@ export const QUIZ: QuizItem[] = [
     id: "exploit",
     kind: "choice",
     short: "The window",
-    prompt: "In 2018 a newly published software vulnerability took 2.3 years on average to be exploited. How long by mid-2026?",
-    options: ["Three months", "Three weeks", "Three days", "Three hours"],
+    prompt:
+      "In 2018 a newly published software vulnerability took 2.3 years on average to be exploited. By 2025 it was three weeks. How long in 2026?",
+    options: ["About two weeks", "About one week", "About three days", "Less than a day"],
     correct: 3,
-    answerLabel: "3 hours",
+    answerLabel: "< 1 day",
     reveal:
-      "Around three hours from disclosure to first confirmed exploitation. 28 percent of new vulnerabilities are exploited within 24 hours, often before a patch exists.",
-    source: "Zero-Day Clock dataset (CISA and VulnCheck KEV catalogues), consistent with Mandiant M-Trends 2026",
+      "The median in 2026 is one day after disclosure, and around 80 percent of exploitations fall on the day of disclosure or earlier. The mean has moved between plus 20 and minus 23 hours during the year, where minus means before the flaw was published. The essay, written in July, cites the mean at that point: about three hours.",
+    source:
+      "Zero Day Clock (CISA KEV and VulnCheck KEV), as reported by StackHawk, 21 August 2026, and SIG, October 2026; J.P. Morgan, Eye on the Market, 22 July 2026",
     essay: { slug: "tested-at-machine-speed", title: "Your Software Will Be Tested at Machine Speed" },
   },
   {
@@ -104,6 +106,23 @@ export const QUIZ: QuizItem[] = [
     essay: { slug: "the-six-percent-club", title: "The Six Percent Club" },
   },
   {
+    id: "patch",
+    kind: "slider",
+    short: "The patches",
+    prompt:
+      "Through 2025 Microsoft fixed an average of 94 security flaws a month. How many did it fix on the single Patch Tuesday of October 2026?",
+    min: 0,
+    max: 2000,
+    start: 300,
+    answer: 1411,
+    unit: "flaws fixed",
+    answerLabel: "1'411",
+    reveal:
+      "A record, and 15 times the 2025 monthly average. 70 of the flaws were critical and one was already being exploited. Trackers differ slightly on the total because Microsoft now counts Azure Linux and Chromium components.",
+    source: "BleepingComputer, 13 October 2026; 2025 average from Tenable, 2025 year in review",
+    essay: { slug: "who-patches-it-on-tuesday", title: "Who Patches It on Tuesday?" },
+  },
+  {
     id: "mortgage",
     kind: "choice",
     short: "The application",
@@ -121,6 +140,13 @@ export const QUIZ: QuizItem[] = [
     },
   },
 ];
+
+const WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+
+/** How many numbers there are, spelled out as the site spells numbers up to ten: "six". */
+export const QUIZ_COUNT = WORDS[QUIZ.length] ?? String(QUIZ.length);
+/** The same with a capital, for the start of a headline: "Six". */
+export const QUIZ_COUNT_CAP = QUIZ_COUNT.charAt(0).toUpperCase() + QUIZ_COUNT.slice(1);
 
 /** A slider estimate counts as close within a tenth of the scale. */
 export function isClose(item: QuizItem, guess: number): boolean {

@@ -12,7 +12,7 @@ import SeatPaths from "@/components/home/SeatPaths";
 import ReaderStrip from "@/components/home/ReaderStrip";
 import WeeklyQuestion from "@/components/home/WeeklyQuestion";
 import ToolCards from "@/components/lab/ToolCards";
-import { questionOfTheWeek } from "@/lib/guide";
+import { questionOfTheWeek, QUIZ_COUNT, QUIZ_COUNT_CAP } from "@/lib/guide";
 
 // Re-render at most hourly: a scheduled essay appears on its day and the
 // question of the week changes on Monday, both without a redeploy.
@@ -100,7 +100,7 @@ export default function Home() {
             </div>
             <p className="mt-8 text-xs uppercase tracking-widest" style={{ color: "#6B6B6B" }}>
               New here?{" "}
-              <a href="#numbers" className="underline underline-offset-4" style={{ color: "#2B3A52" }}>Estimate five numbers</a>
+              <a href="#numbers" className="underline underline-offset-4" style={{ color: "#2B3A52" }}>Estimate {QUIZ_COUNT} numbers</a>
               {" "}or{" "}
               <a href="#start" className="underline underline-offset-4" style={{ color: "#2B3A52" }}>start from your seat</a>
             </p>
@@ -119,7 +119,7 @@ export default function Home() {
               className="font-[family-name:var(--font-cormorant)] font-light mb-8"
               style={{ fontSize: "clamp(26px, 4vw, 38px)", color: "#1A1A1A", maxWidth: 620 }}
             >
-              Five numbers. Estimate each one before you see it.
+              {QUIZ_COUNT_CAP} numbers. Estimate each one before you see it.
             </h2>
             <NumberQuiz place="home" />
           </FadeUp>

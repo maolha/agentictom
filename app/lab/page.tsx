@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/site";
-import { questionOfTheWeek } from "@/lib/guide";
+import { questionOfTheWeek, QUIZ_COUNT_CAP } from "@/lib/guide";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import FadeUp from "@/components/FadeUp";
@@ -15,7 +15,7 @@ export const revalidate = 3600;
 export const metadata = pageMetadata({
   title: "The Lab",
   description:
-    "Work with the numbers behind the Agentic TOM: five figures to estimate, a reliability calculator, a journey map, the readiness assessment and the charts from the essays.",
+    "Work with the numbers behind the Agentic TOM: figures to estimate before you see them, a reliability calculator, a journey map, the readiness assessment and the charts from the essays.",
   path: "/lab",
 });
 
@@ -48,20 +48,20 @@ export default function LabPage() {
             An argument about operating models should survive contact with your own figures. <strong style={{ fontWeight: 700 }}>Everything on this page can be operated</strong>: change an input, switch a view, enter your own process.
           </p>
           <div className={`flex flex-wrap gap-x-6 gap-y-2 mt-8 ${label}`}>
-            <a href="#numbers" className="underline underline-offset-4" style={{ color: "#2B3A52" }}>Five numbers</a>
+            <a href="#numbers" className="underline underline-offset-4" style={{ color: "#2B3A52" }}>{QUIZ_COUNT_CAP} numbers</a>
             <a href="#tools" className="underline underline-offset-4" style={{ color: "#2B3A52" }}>Four tools</a>
             <a href="#figures" className="underline underline-offset-4" style={{ color: "#2B3A52" }}>{FIGURE_COUNT} figures</a>
           </div>
         </div>
       </section>
 
-      {/* FIVE NUMBERS */}
+      {/* THE NUMBERS */}
       <section id="numbers" className="px-5 md:px-8 py-14 md:py-20" style={{ background: "#F0ECE3", borderTop: "1px solid #D8D3CB", borderBottom: "1px solid #D8D3CB", scrollMarginTop: 64 }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className={`${label} mb-3`} style={gold}>The numbers that set the agenda</p>
             <h2 className={`${serif} mb-8`} style={{ fontSize: "clamp(26px, 4vw, 38px)", color: "#1A1A1A", maxWidth: 620 }}>
-              Five numbers. Estimate each one before you see it.
+              {QUIZ_COUNT_CAP} numbers. Estimate each one before you see it.
             </h2>
             <NumberQuiz place="lab" />
           </FadeUp>

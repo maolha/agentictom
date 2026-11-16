@@ -25,7 +25,7 @@ Node 20 or later. The contact form needs `GMAIL_USER`, `GMAIL_APP_PASSWORD` and 
 | `components/BlogContent.tsx` | Renders an essay: GitHub-flavoured markdown via react-markdown, plus the interactive figures. |
 | `components/viz/*` | The interactive figures embedded in essays. |
 | `lib/assessment.ts` | Questions, scoring and result copy for the readiness assessment. |
-| `lib/guide.ts` | The ways in that are not the essay list: the five numbers to estimate, the reading path per seat, the question of the week. |
+| `lib/guide.ts` | The ways in that are not the essay list: the numbers to estimate, the reading path per seat, the question of the week. |
 | `lib/reading.ts` | What the browser remembers about its reader (essays read, progress, last visit). localStorage only, never sent. |
 | `components/home/*` | Homepage pieces: the estimate game, the seat paths, the returning reader strip, the weekly question. |
 | `components/lab/*` | The Lab: tool cards and the gallery that shows the essay figures one at a time. |
@@ -72,7 +72,7 @@ A new figure also belongs in the Lab: add it to `GROUPS` in `components/lab/Figu
 
 `lib/guide.ts` holds three lists that need an editor when the essays change:
 
-- `QUIZ`: five figures the reader estimates before seeing them. Each carries its source and the essay it comes from. A figure that is modelled says so in `source`.
+- `QUIZ`: the figures the reader estimates before seeing them. Each carries its source and the essay it comes from. A figure that is modelled says so in `source`. Headlines and buttons take the count from the list, so adding or removing a figure needs no other edit.
 - `SEATS`: one reading path per role, as three essay slugs in order, one tool and one question. Slugs that are not live are dropped from the path.
 - `questionOfTheWeek`: rotates through the assessment questions in `lib/assessment.ts`, changing every Monday (UTC).
 

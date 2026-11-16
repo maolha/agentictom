@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { track } from "@vercel/analytics";
-import { QUIZ, isClose, type QuizItem } from "@/lib/guide";
+import { QUIZ, QUIZ_COUNT, isClose, type QuizItem } from "@/lib/guide";
 
 const SLATE = "#2B3A52";
 const BROWN = "#8B7355";
@@ -51,6 +51,19 @@ function CountUp({ value }: { value: number }) {
   return <>{swiss(shown)}</>;
 }
 
+/**
+ * Marks a link that leaves the game in a new tab. The estimates live in this
+ * page only, so an essay opened in the same tab would throw them away.
+ */
+function NewTab() {
+  return (
+    <>
+      <span aria-hidden="true">&nbsp;↗</span>
+      <span className="sr-only"> (opens in a new tab)</span>
+    </>
+  );
+}
+
 function Bar({ title, value, max, colour, animate }: { title: string; value: number; max: number; colour: string; animate?: boolean }) {
   const pct = Math.max(1.5, (value / max) * 100);
   return (
@@ -78,7 +91,7 @@ function Verdict({ item, guess }: { item: QuizItem; guess: number }) {
 }
 
 /**
- * Five figures from the essays, each estimated before it is shown. An estimate
+ * A few figures from the essays, each estimated before it is shown. An estimate
  * that turns out wrong is remembered far longer than a statistic that was only
  * read, which is the reason this replaces a plain row of numbers.
  */
@@ -152,7 +165,7 @@ export default function NumberQuiz({ place }: { place: "home" | "lab" }) {
             className={`${label} underline underline-offset-4 hover:text-[#2B3A52]`}
             style={{ color: MUTED, background: "none", border: 0, padding: 0, cursor: "pointer" }}
           >
-            Skip the estimates, show all five
+            Skip the estimates, show all {QUIZ_COUNT}
           </button>
         )}
       </div>
@@ -234,14 +247,14 @@ export default function NumberQuiz({ place }: { place: "home" | "lab" }) {
                 </p>
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
                   <button type="button" className="btn-slate" onClick={next}>
-                    {index < QUIZ.length - 1 ? "Next number" : "See all five"}&nbsp;→
+                    {index < QUIZ.length - 1 ? "Next number" : `See all ${QUIZ_COUNT}`}&nbsp;→
                   </button>
-                  <Link href={`/blog/${item.essay.slug}`} className={`${label} underline underline-offset-4`} style={{ color: SLATE }}>
-                    Read the essay
+                  <Link href={`/blog/${item.essay.slug}`} target="_blank" rel="noopener" className={`${label} underline underline-offset-4`} style={{ color: SLATE }}>
+                    Read the essay<NewTab />
                   </Link>
                   {item.tool && (
-                    <Link href={item.tool.href} className={`${label} underline underline-offset-4`} style={{ color: SLATE }}>
-                      {item.tool.label}
+                    <Link href={item.tool.href} target="_blank" rel="noopener" className={`${label} underline underline-offset-4`} style={{ color: SLATE }}>
+                      {item.tool.label}<NewTab />
                     </Link>
                   )}
                 </div>
@@ -256,17 +269,17 @@ export default function NumberQuiz({ place }: { place: "home" | "lab" }) {
               <strong style={{ fontWeight: 700 }}>
                 {close} of your {answered} {answered === 1 ? "estimate was" : "estimates were"} close.
               </strong>{" "}
-              Each figure opens the essay that explains it.
+              Each figure opens the essay that explains it, in a new tab.
             </p>
           )}
-          <ul className="grid grid-cols-2 md:grid-cols-5" style={{ listStyle: "none", padding: 0, margin: 0, gap: 1, background: LINE, border: `1px solid ${LINE}` }}>
+          <ul className="grid grid-cols-2 md:grid-cols-3" style={{ listStyle: "none", padding: 0, margin: 0, gap: 1, background: LINE, border: `1px solid ${LINE}` }}>
             {QUIZ.map((q, i) => {
               const g = guesses[i];
               return (
-                <li key={q.id} className={i === QUIZ.length - 1 ? "col-span-2 md:col-span-1" : ""} style={{ background: PAPER }}>
-                  <Link href={`/blog/${q.essay.slug}`} className="group block h-full p-4 md:p-5">
+                <li key={q.id} style={{ background: PAPER }}>
+                  <Link href={`/blog/${q.essay.slug}`} target="_blank" rel="noopener" className="group block h-full p-4 md:p-5">
                     <span className={`${label} block mb-2`} style={{ color: BROWN }}>{q.short}</span>
-                    <span className={`${serif} block`} style={{ fontSize: "clamp(24px, 2.8vw, 29px)", lineHeight: 1.05, color: SLATE, whiteSpace: "nowrap" }}>
+                    <span className={`${serif} block`} style={{ fontSize: "clamp(26px, 3.2vw, 34px)", lineHeight: 1.05, color: SLATE, whiteSpace: "nowrap" }}>
                       {q.answerLabel}
                     </span>
                     <span className="block text-xs mt-2" style={{ color: MUTED, lineHeight: 1.5, minHeight: "1.5em" }}>
@@ -279,7 +292,7 @@ export default function NumberQuiz({ place }: { place: "home" | "lab" }) {
                             : `You said ${q.options[g].toLowerCase()}`}
                     </span>
                     <span className="block text-xs mt-2 group-hover:underline" style={{ color: INK, lineHeight: 1.5 }}>
-                      {q.essay.title}&nbsp;→
+                      {q.essay.title}<NewTab />
                     </span>
                   </Link>
                 </li>

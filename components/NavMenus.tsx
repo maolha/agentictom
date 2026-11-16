@@ -11,7 +11,7 @@ type IndexedPost = { slug: string; title: string; excerpt: string; theme: string
 /** Everything on the site that is not an essay. Essays are fetched on first use. */
 const PLACES: Entry[] = [
   { href: "/framework", title: "The agentic operating model", kind: "Framework", text: "Three layers, five principles, the autonomy ladder and one worked example." },
-  { href: "/lab", title: "The Lab", kind: "Tools", text: "Five numbers to estimate, the working tools and the figures from the essays." },
+  { href: "/lab", title: "The Lab", kind: "Tools", text: "Numbers to estimate, the working tools and the figures from the essays." },
   { href: "/calculator", title: "Where the Chain Breaks", kind: "Calculator", text: "Error propagation in a process chain: accuracy per step, chain length, checks, reliability." },
   { href: "/assessment", title: "Agentic readiness assessment", kind: "Assessment", text: "Fifteen questions across five dimensions, with a PDF export for the leadership team." },
   { href: "/blog/the-staff-of-fifteen-buys-a-house", title: "The journey map and film", kind: "Tool", text: "One household, one property, twelve stages. The bank's map and the client's map. Mortgage." },
