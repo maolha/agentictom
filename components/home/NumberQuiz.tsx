@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { track } from "@vercel/analytics";
-import AnimatedNumber from "@/components/AnimatedNumber";
 import { QUIZ, isClose, type QuizItem } from "@/lib/guide";
 
 const SLATE = "#2B3A52";
@@ -21,6 +20,37 @@ function swiss(n: number): string {
   return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "'");
 }
 
+/**
+ * Counts up to the figure as soon as it is revealed. It starts on mount and
+ * not on scroll position: the reader has just pressed the button, so the
+ * number is in front of them wherever it sits on the screen.
+ */
+function CountUp({ value }: { value: number }) {
+  const [shown, setShown] = useState(0);
+
+  useEffect(() => {
+    // With reduced motion the figure is simply shown: the first frame is the last.
+    const duration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 900;
+    let start: number | null = null;
+    let frame = 0;
+    function step(now: number) {
+      if (start === null) start = now;
+      const t = duration === 0 ? 1 : Math.min((now - start) / duration, 1);
+      setShown(Math.round((1 - Math.pow(1 - t, 3)) * value));
+      if (t < 1) frame = requestAnimationFrame(step);
+    }
+    frame = requestAnimationFrame(step);
+    // Whatever happens to the animation, the true figure is what stays on screen.
+    const settle = window.setTimeout(() => setShown(value), duration + 150);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(settle);
+    };
+  }, [value]);
+
+  return <>{swiss(shown)}</>;
+}
+
 function Bar({ title, value, max, colour, animate }: { title: string; value: number; max: number; colour: string; animate?: boolean }) {
   const pct = Math.max(1.5, (value / max) * 100);
   return (
@@ -28,7 +58,7 @@ function Bar({ title, value, max, colour, animate }: { title: string; value: num
       <div className="flex items-baseline justify-between gap-3 mb-1.5">
         <span className={label} style={{ color: MUTED }}>{title}</span>
         <span className={serif} style={{ fontSize: "1.6rem", lineHeight: 1, color: colour }}>
-          {animate ? <AnimatedNumber value={value} /> : swiss(value)}
+          {animate ? <CountUp value={value} /> : swiss(value)}
         </span>
       </div>
       <div style={{ height: 6, background: "rgba(43,58,82,0.1)" }}>
