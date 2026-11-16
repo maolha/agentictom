@@ -10,6 +10,8 @@ import ReadDepth from "@/components/ReadDepth";
 import TrackedLink from "@/components/TrackedLink";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import EssayProgress from "@/components/blog/EssayProgress";
+import { extractHeadings } from "@/lib/headings";
 
 // Posts are published by date. Re-render at most hourly so a scheduled post
 // appears on its day without a redeploy; unknown or not-yet-live slugs 404.
@@ -69,6 +71,7 @@ export default async function BlogPost({
 
   const { prev, next } = getAdjacentPosts(slug);
   const related = getRelatedPosts(slug, post.theme);
+  const headings = extractHeadings(post.content);
   const url = `${SITE_URL}/blog/${slug}`;
 
   const jsonLd = {
@@ -115,6 +118,7 @@ export default async function BlogPost({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
       <SiteNav />
+      <EssayProgress slug={slug} minutes={post.readingTime} headings={headings} />
 
       <article className="px-5 md:px-8 pt-28 md:pt-32 pb-16 md:pb-20">
         <div className="max-w-[680px] mx-auto lg:pl-8">
@@ -153,6 +157,23 @@ export default async function BlogPost({
                 {post.standfirst}
               </p>
             </aside>
+          )}
+          {headings.length >= 3 && (
+            <details className="essay-contents print-hide mb-10 md:mb-12">
+              <summary className={label} style={{ color: "#2B3A52", cursor: "pointer" }}>
+                In this essay &middot; {headings.length} sections
+              </summary>
+              <ol className="mt-4 flex flex-col gap-2" style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                {headings.map((h, i) => (
+                  <li key={h.id} className="flex gap-3 text-sm" style={{ lineHeight: 1.5 }}>
+                    <span aria-hidden="true" style={{ color: "#8B7355", minWidth: "1.2rem" }}>{i + 1}</span>
+                    <a href={`#${h.id}`} className="hover:underline" style={{ color: "#2B3A52" }}>
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </details>
           )}
           {post.dateline && (
             <p className="mb-8 text-sm" style={{ color: "#6B6B6B", lineHeight: 1.7 }}>
@@ -202,6 +223,22 @@ export default async function BlogPost({
                 Connect on LinkedIn
               </TrackedLink>
             </div>
+          </div>
+
+          {/* Where to go from here */}
+          <div className="print-hide mt-6 grid sm:grid-cols-2 gap-px" style={{ background: "#D8D3CB", border: "1px solid #D8D3CB" }}>
+            <Link href="/lab" className="group block p-5 md:p-6" style={{ background: "#F7F4EF" }}>
+              <p className={`${label} mb-1`} style={gold}>The Lab</p>
+              <p className="font-[family-name:var(--font-cormorant)] font-light group-hover:underline" style={{ fontSize: "1.2rem", lineHeight: 1.3, color: "#2B3A52" }}>
+                Work with the numbers yourself&nbsp;→
+              </p>
+            </Link>
+            <Link href="/assessment" className="group block p-5 md:p-6" style={{ background: "#F7F4EF" }}>
+              <p className={`${label} mb-1`} style={gold}>Assessment &middot; 5 minutes</p>
+              <p className="font-[family-name:var(--font-cormorant)] font-light group-hover:underline" style={{ fontSize: "1.2rem", lineHeight: 1.3, color: "#2B3A52" }}>
+                How ready is your bank?&nbsp;→
+              </p>
+            </Link>
           </div>
 
           {/* Related, by theme */}

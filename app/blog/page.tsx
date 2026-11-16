@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { getAllPosts, getPostsByTheme, formatDate, THEMES } from "@/lib/blog";
+import { getAllPosts, getPostsByTheme } from "@/lib/blog";
 import { pageMetadata, LINKEDIN_URL } from "@/lib/site";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import EssayExplorer from "@/components/blog/EssayExplorer";
 
 // Re-render at most hourly so a scheduled post appears on its day without a redeploy.
 export const revalidate = 3600;
@@ -50,7 +51,7 @@ export default function BlogIndex() {
 
       {/* HERO */}
       <section
-        className="px-5 md:px-8 pt-24 md:pt-36 pb-20 md:pb-28 overflow-hidden"
+        className="px-5 md:px-8 pt-24 md:pt-36 pb-14 md:pb-20 overflow-hidden"
         style={{ borderBottom: "1px solid #D8D3CB" }}
       >
         <div className="max-w-[900px] mx-auto">
@@ -115,84 +116,17 @@ export default function BlogIndex() {
         </div>
       </section>
 
-      {/* BY THEME */}
-      <section className="px-5 md:px-8 py-14 md:py-20" style={{ borderBottom: "1px solid #D8D3CB" }}>
-        <div className="max-w-[900px] mx-auto">
-          <p className={`${label} mb-3`} style={gold}>By theme</p>
+      {/* THE ARCHIVE */}
+      <div id="essays" className="px-5 md:px-8 py-16 md:py-24" style={{ scrollMarginTop: 64 }}>
+        <div className="max-w-[680px] mx-auto">
+          <p className={`${label} mb-3`} style={gold}>The archive</p>
           <h2
-            className="font-[family-name:var(--font-cormorant)] font-light mb-10"
+            className="font-[family-name:var(--font-cormorant)] font-light mb-8"
             style={{ fontSize: "clamp(24px, 3.5vw, 34px)", color: "#1A1A1A" }}
           >
-            Four threads run through the archive
+            Find the essay for the time you have
           </h2>
-          <div className="grid sm:grid-cols-2 gap-x-10 gap-y-10">
-            {themes.map((t) => (
-              <div key={t.key} id={t.key} style={{ scrollMarginTop: 96 }}>
-                <h3
-                  className="font-[family-name:var(--font-cormorant)] font-light mb-1"
-                  style={{ fontSize: "1.35rem", color: "#2B3A52" }}
-                >
-                  {t.label}
-                </h3>
-                <p className="text-sm mb-4" style={{ color: "#6B6B6B", lineHeight: 1.6 }}>{t.line}</p>
-                <ul className="flex flex-col gap-2">
-                  {t.posts.map((p) => (
-                    <li key={p.slug} className="text-sm" style={{ lineHeight: 1.5 }}>
-                      <Link href={`/blog/${p.slug}`} className="hover:underline" style={{ color: "#1A1A1A" }}>
-                        {p.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ALL POSTS */}
-      <div className="px-5 md:px-8 py-16 md:py-24">
-        <div className="max-w-[680px] mx-auto">
-          <p className={`${label} mb-2`} style={gold}>All essays, newest first</p>
-          <div className="flex flex-col">
-            {posts.map((post, i) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="block py-8 group"
-                style={i > 0 ? { borderTop: "1px solid #D8D3CB" } : {}}
-              >
-                <article>
-                  <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 mb-2 ${label}`} style={gold}>
-                    <time dateTime={post.date}>{formatDate(post.date)}</time>
-                    <span aria-hidden="true" style={{ color: "#D8D3CB" }}>&middot;</span>
-                    <span>{post.readingTime} min read</span>
-                    {post.theme && (
-                      <>
-                        <span aria-hidden="true" style={{ color: "#D8D3CB" }}>&middot;</span>
-                        <span>{THEMES[post.theme].label}</span>
-                      </>
-                    )}
-                  </div>
-                  <h2
-                    className="font-[family-name:var(--font-cormorant)] font-light mb-3 group-hover:text-[#2B3A52] transition-colors"
-                    style={{ fontSize: "clamp(22px, 3.5vw, 30px)", color: "#1A1A1A" }}
-                  >
-                    {post.title}
-                  </h2>
-                  <p className="mb-4" style={{ fontSize: "0.9rem", color: "#6B6B6B", lineHeight: 1.7 }}>
-                    {post.excerpt}
-                  </p>
-                  <span
-                    className="text-sm uppercase tracking-widest group-hover:underline"
-                    style={{ color: "#2B3A52" }}
-                  >
-                    Read
-                  </span>
-                </article>
-              </Link>
-            ))}
-          </div>
+          <EssayExplorer posts={posts} themes={themes.map(({ key, label, line }) => ({ key, label, line }))} />
 
           {/* Follow */}
           <div className="mt-10 p-6 md:p-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4" style={{ border: "1px solid #D8D3CB" }}>

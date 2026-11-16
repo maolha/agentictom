@@ -7,6 +7,16 @@ import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import { pageMetadata, SITE_URL, LINKEDIN_URL, X_URL, AUTHOR_TITLE } from "@/lib/site";
 import TextReveal from "@/components/TextReveal";
+import NumberQuiz from "@/components/home/NumberQuiz";
+import SeatPaths from "@/components/home/SeatPaths";
+import ReaderStrip from "@/components/home/ReaderStrip";
+import WeeklyQuestion from "@/components/home/WeeklyQuestion";
+import ToolCards from "@/components/lab/ToolCards";
+import { questionOfTheWeek } from "@/lib/guide";
+
+// Re-render at most hourly: a scheduled essay appears on its day and the
+// question of the week changes on Monday, both without a redeploy.
+export const revalidate = 3600;
 
 export const metadata = pageMetadata({
   title: "Agentic TOM",
@@ -27,6 +37,7 @@ const personJsonLd = {
 
 export default function Home() {
   const blogPosts = getAllPosts();
+  const weekly = questionOfTheWeek();
   return (
     <main
       id="top"
@@ -40,7 +51,7 @@ export default function Home() {
       <SiteNav home />
 
       {/* HERO */}
-      <section className="min-h-screen flex flex-col justify-center pt-20 pb-16 md:pb-24 px-5 md:px-8 overflow-hidden">
+      <section className="flex flex-col justify-center pt-24 md:pt-32 pb-14 md:pb-20 px-5 md:px-8 overflow-hidden" style={{ minHeight: "min(82vh, 760px)" }}>
         <div className="max-w-[900px] mx-auto w-full">
           <FadeUp delay={0}>
             <div
@@ -87,59 +98,55 @@ export default function Home() {
                 Take the assessment
               </Link>
             </div>
+            <p className="mt-8 text-xs uppercase tracking-widest" style={{ color: "#6B6B6B" }}>
+              New here?{" "}
+              <a href="#numbers" className="underline underline-offset-4" style={{ color: "#2B3A52" }}>Estimate five numbers</a>
+              {" "}or{" "}
+              <a href="#start" className="underline underline-offset-4" style={{ color: "#2B3A52" }}>start from your seat</a>
+            </p>
           </FadeUp>
         </div>
       </section>
 
-      {/* ── THE NUMBERS ── evidence strip */}
-      <section className="py-10 md:py-14 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB", background: "#F0ECE3" }}>
+      {/* ── THE NUMBERS ── estimated first, then shown */}
+      <section id="numbers" className="py-14 md:py-20 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB", background: "#F0ECE3", scrollMarginTop: 64 }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
-            <p className="text-xs uppercase tracking-widest mb-8" style={{ color: "#8B7355" }}>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>
               The numbers that set the agenda
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
-              {[
-                {
-                  value: "3 hours",
-                  label: "from vulnerability disclosure to first exploitation",
-                  link: "/blog/tested-at-machine-speed",
-                },
-                {
-                  value: "84",
-                  label: "suspicious activity reports to MROS, per working day",
-                  link: "/blog/eighty-four-reports-a-day",
-                },
-                {
-                  value: "6%",
-                  label: "of companies report a significant EBIT effect from AI",
-                  link: "/blog/the-six-percent-club",
-                },
-                {
-                  value: "CHF 1'500",
-                  label: "processing cost per mortgage application, industry estimate",
-                  link: "/blog/the-tsunami-is-not-coming-from-inside-the-bank",
-                },
-              ].map((n) => (
-                <Link key={n.value} href={n.link} className="group">
-                  <p
-                    className="font-[family-name:var(--font-cormorant)] font-light group-hover:text-[#2B3A52] transition-colors"
-                    style={{ fontSize: "clamp(28px, 4vw, 40px)", color: "#2B3A52", lineHeight: 1.1 }}
-                  >
-                    {n.value}
-                  </p>
-                  <p className="text-xs mt-2 group-hover:underline" style={{ color: "#6B6B6B", lineHeight: 1.6 }}>
-                    {n.label}
-                  </p>
-                </Link>
-              ))}
-            </div>
+            <h2
+              className="font-[family-name:var(--font-cormorant)] font-light mb-8"
+              style={{ fontSize: "clamp(26px, 4vw, 38px)", color: "#1A1A1A", maxWidth: 620 }}
+            >
+              Five numbers. Estimate each one before you see it.
+            </h2>
+            <NumberQuiz place="home" />
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ── YOUR SEAT ── a reading path per role */}
+      <section id="start" className="py-16 md:py-24 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB", scrollMarginTop: 64 }}>
+        <div className="max-w-[900px] mx-auto">
+          <FadeUp>
+            <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Start from your seat</p>
+            <h2
+              className="font-[family-name:var(--font-cormorant)] font-light mb-4"
+              style={{ fontSize: "clamp(26px, 4vw, 38px)", color: "#1A1A1A", maxWidth: 620 }}
+            >
+              A reading path for the chair you sit in.
+            </h2>
+            <p className="mb-8" style={{ color: "#1A1A1A", lineHeight: 1.8, maxWidth: 620, fontSize: "0.95rem" }}>
+              The same shift reaches every member of the executive committee through a different door. <strong style={{ fontWeight: 700 }}>Pick yours: three essays, one tool, one question for your next meeting.</strong>
+            </p>
+            <SeatPaths posts={blogPosts} />
           </FadeUp>
         </div>
       </section>
 
       {/* ── THE ARGUMENT ── condensed framework intro */}
-      <section id="the-argument" className="py-20 md:py-32 px-5 md:px-8">
+      <section id="the-argument" className="py-20 md:py-28 px-5 md:px-8" style={{ background: "#F0ECE3", borderTop: "1px solid #D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>The Argument</p>
@@ -212,37 +219,40 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── ASSESSMENT CTA ── dark section */}
-      <section className="py-20 md:py-28 px-5 md:px-8" style={{ background: "#2B3A52" }}>
+      {/* ── THE LAB ── the working tools, on slate */}
+      <section id="lab" className="py-20 md:py-28 px-5 md:px-8" style={{ background: "#2B3A52" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
               <div>
-                <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Assessment</p>
+                <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#C4AE8C" }}>The Lab</p>
                 <h2
                   className="font-[family-name:var(--font-cormorant)] font-light mb-4"
-                  style={{ fontSize: "clamp(24px, 3.5vw, 36px)", color: "#F7F4EF" }}
+                  style={{ fontSize: "clamp(26px, 4vw, 38px)", color: "#F7F4EF" }}
                 >
-                  How ready is your bank?
+                  Work with the numbers yourself.
                 </h2>
-                <p className="text-sm" style={{ color: "rgba(247,244,239,0.6)", maxWidth: 420, lineHeight: 1.7 }}>
-                  Fifteen questions across five dimensions. Five minutes. Exportable as PDF for your leadership team.
+                <p className="text-sm" style={{ color: "rgba(247,244,239,0.72)", maxWidth: 480, lineHeight: 1.7 }}>
+                  Enter your own process, switch a journey between the bank&apos;s view and the client&apos;s, or place your institution on five dimensions. No registration, and what you enter stays in your browser.
                 </p>
               </div>
               <Link
-                href="/assessment"
+                href="/lab"
                 className="shrink-0 inline-block px-8 py-3 border text-xs uppercase tracking-widest transition-colors duration-300 hover:bg-[#F7F4EF] hover:text-[#2B3A52]"
                 style={{ borderColor: "#F7F4EF", color: "#F7F4EF" }}
               >
-                Begin assessment
+                Open the Lab
               </Link>
             </div>
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <ToolCards ids={["assessment", "calculator", "journey", "figures"]} tone="dark" />
           </FadeUp>
         </div>
       </section>
 
       {/* ── THOUGHTS ── */}
-      <section id="thoughts" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
+      <section id="thoughts" className="py-20 md:py-28 px-5 md:px-8">
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Thoughts</p>
@@ -253,7 +263,10 @@ export default function Home() {
               Recent thinking
             </h2>
           </FadeUp>
+          <ReaderStrip posts={blogPosts} />
           <FadeUp delay={0.1}>
+            <div className="grid lg:grid-cols-[minmax(0,1fr)_300px] gap-10 lg:gap-12 items-start">
+            <div>
             <div className="flex flex-col">
               {blogPosts.slice(0, 3).map((post, i) => (
                 <Link
@@ -298,16 +311,19 @@ export default function Home() {
                   className="text-sm uppercase tracking-widest hover:underline"
                   style={{ color: "#2B3A52" }}
                 >
-                  View all writing
+                  All {blogPosts.length} essays, by theme and length
                 </Link>
               </div>
             )}
+            </div>
+            <WeeklyQuestion {...weekly} />
+            </div>
           </FadeUp>
         </div>
       </section>
 
       {/* ── ABOUT ── */}
-      <section id="about" className="py-20 md:py-32 px-5 md:px-8">
+      <section id="about" className="py-20 md:py-28 px-5 md:px-8" style={{ background: "#F0ECE3", borderTop: "1px solid #D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>About</p>
@@ -352,7 +368,7 @@ export default function Home() {
       </section>
 
       {/* ── CONTACT ── */}
-      <section id="contact" className="py-20 md:py-32 px-5 md:px-8" style={{ background: "#F0ECE3" }}>
+      <section id="contact" className="py-20 md:py-28 px-5 md:px-8" style={{ borderTop: "1px solid #D8D3CB" }}>
         <div className="max-w-[900px] mx-auto">
           <FadeUp>
             <p className="text-xs uppercase tracking-widest mb-3" style={{ color: "#8B7355" }}>Let&apos;s talk</p>

@@ -10,12 +10,13 @@ export default function SiteFooter({ home = false }: { home?: boolean }) {
   return (
     <footer className="px-5 md:px-8 py-10 md:py-12 border-t" style={{ borderColor: "#D8D3CB" }}>
       <div className="max-w-[900px] mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <p className="text-sm" style={{ color: "#6B6B6B" }}>
+        <p className="text-sm whitespace-nowrap" style={{ color: "#6B6B6B" }}>
           agentictom.com &copy; {new Date().getFullYear()} Marc Hauser
         </p>
         <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm" style={{ color: "#6B6B6B" }}>
           <Link href="/framework" className={linkClass}>Framework</Link>
           <Link href="/blog" className={linkClass}>Thoughts</Link>
+          <Link href="/lab" className={linkClass}>Lab</Link>
           <Link href="/assessment" className={linkClass}>Assessment</Link>
           {home ? <a href={aboutHref} className={linkClass}>About</a> : <Link href={aboutHref} className={linkClass}>About</Link>}
           {home ? <a href={contactHref} className={linkClass}>Contact</a> : <Link href={contactHref} className={linkClass}>Contact</Link>}

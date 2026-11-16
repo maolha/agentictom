@@ -33,6 +33,10 @@ export type PostMeta = {
   excerpt: string;
   theme: ThemeKey | null;
   readingTime: number;
+  /** Interactive figures embedded in the essay. */
+  figures: number;
+  /** The essay carries a narrated film. */
+  film: boolean;
 };
 
 export type Post = PostMeta & {
@@ -67,6 +71,8 @@ function readMeta(file: string): PostMeta & { content: string; data: Record<stri
     excerpt: data.excerpt,
     theme,
     readingTime: estimateReadingTime(content),
+    figures: (content.match(/^[ \t]*<!-- (?:viz|funnel):[a-z-]+ -->[ \t]*$/gm) ?? []).length,
+    film: /^[ \t]*<!-- video:[a-z-]+ -->[ \t]*$/m.test(content),
     content,
     data,
   };
@@ -82,7 +88,7 @@ export function getAllPosts(): PostMeta[] {
       const diff = new Date(b.date).getTime() - new Date(a.date).getTime();
       return diff !== 0 ? diff : a.slug.localeCompare(b.slug);
     })
-    .map(({ slug, title, date, excerpt, theme, readingTime }) => ({ slug, title, date, excerpt, theme, readingTime }));
+    .map(({ slug, title, date, excerpt, theme, readingTime, figures, film }) => ({ slug, title, date, excerpt, theme, readingTime, figures, film }));
 }
 
 /** A single live post. Returns null for unknown slugs and for posts whose date has not arrived. */
@@ -100,6 +106,8 @@ export function getPost(slug: string): Post | null {
     excerpt: meta.excerpt,
     theme: meta.theme,
     readingTime: meta.readingTime,
+    figures: meta.figures,
+    film: meta.film,
     content: meta.content,
     standfirst: typeof data.standfirst === "string" ? data.standfirst : undefined,
     dateline: typeof data.dateline === "string" ? data.dateline : undefined,

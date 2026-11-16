@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { preload } from "react-dom";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL, SITE_NAME, RSS_ALTERNATE, X_HANDLE } from "@/lib/site";
+import VisitMarker from "@/components/VisitMarker";
 import "./fonts.css";
 import "./globals.css";
 
@@ -50,6 +51,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <VisitMarker />
         <Analytics />
       </body>
     </html>

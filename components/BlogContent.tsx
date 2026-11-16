@@ -5,6 +5,7 @@ import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import PostVideo from "@/components/PostVideo";
 import ExampleCta from "@/components/ExampleCta";
+import { slugify } from "@/lib/headings";
 
 // Interactive figures are client components, loaded only on the posts that embed them.
 const MortgageFunnel = dynamic(() => import("@/components/MortgageFunnel"));
@@ -85,11 +86,19 @@ function withoutMarker(children: React.ReactNode, marker: string): React.ReactNo
   return out;
 }
 
+/** The plain text of a heading, for its anchor. */
+function textOf(node: React.ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  if (React.isValidElement<{ children?: React.ReactNode }>(node)) return textOf(node.props.children);
+  return "";
+}
+
 const components: Components = {
   // The page renders the title from frontmatter; the h1 in the body is skipped.
   h1: () => null,
   h2: ({ children }) => (
-    <h2 className={`${serif} mt-12 mb-4`} style={{ fontSize: "clamp(22px, 3.5vw, 32px)", color: "#2B3A52" }}>
+    <h2 id={slugify(textOf(children)) || undefined} className={`${serif} mt-12 mb-4`} style={{ fontSize: "clamp(22px, 3.5vw, 32px)", color: "#2B3A52", scrollMarginTop: 88 }}>
       {children}
     </h2>
   ),
@@ -195,7 +204,7 @@ function segment(md: string): ({ kind: "md"; value: string } | { kind: "embed"; 
 
 export default function BlogContent({ content }: { content: string }) {
   return (
-    <div className="font-[family-name:var(--font-dm-sans)]" style={{ lineHeight: 1.8, color: "#1A1A1A", fontSize: "1rem" }}>
+    <div id="essay-body" className="font-[family-name:var(--font-dm-sans)]" style={{ lineHeight: 1.8, color: "#1A1A1A", fontSize: "1rem" }}>
       {segment(content).map((s, i) => {
         if (s.kind === "embed") {
           const Embed = EMBEDS[s.value];
